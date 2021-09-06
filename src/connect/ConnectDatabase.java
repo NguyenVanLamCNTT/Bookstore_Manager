@@ -23,6 +23,6 @@ public class ConnectDatabase {
 		if( con != null) {
 			System.out.println("Connect Success");
 		}else
-			System.out.println("Connect Error");
+			System.out.println("Connect Error!");
 	}
 }
