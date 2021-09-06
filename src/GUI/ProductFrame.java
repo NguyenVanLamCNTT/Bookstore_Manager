@@ -409,12 +409,12 @@ public class ProductFrame extends javax.swing.JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         new HomeFrame().setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_btnThoatActionPerformed
+    }
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
