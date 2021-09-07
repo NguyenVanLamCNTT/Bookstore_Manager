@@ -53,6 +53,7 @@ public class EmployeeFrame extends javax.swing.JFrame {
         btnLuu = new javax.swing.JButton();
         btnSuaTK = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
+        btnQuayLai = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableQLNV = new javax.swing.JTable();
 
@@ -133,6 +134,10 @@ public class EmployeeFrame extends javax.swing.JFrame {
         btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/delete.png"))); // NOI18N
         btnXoa.setText("Xóa");
 
+        btnQuayLai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnQuayLai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/reset.png"))); // NOI18N
+        btnQuayLai.setText("Quay Lại");
+
         javax.swing.GroupLayout panelQuanLyNVLayout = new javax.swing.GroupLayout(panelQuanLyNV);
         panelQuanLyNV.setLayout(panelQuanLyNVLayout);
         panelQuanLyNVLayout.setHorizontalGroup(
@@ -150,28 +155,20 @@ public class EmployeeFrame extends javax.swing.JFrame {
                             .addComponent(jSeparator1))
                         .addContainerGap())
                     .addGroup(panelQuanLyNVLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addGroup(panelQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelMaNV)
+                            .addComponent(labelTenNV)
+                            .addComponent(labelSDT)
+                            .addComponent(btnQuayLai, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(49, 49, 49)
+                        .addGroup(panelQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelQuanLyNVLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addGroup(panelQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelMaNV)
-                                    .addComponent(labelTenNV)
-                                    .addComponent(labelSDT)))
-                            .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(panelQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelQuanLyNVLayout.createSequentialGroup()
-                                .addGap(59, 59, 59)
                                 .addGroup(panelQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtTenNV, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtMaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(58, 58, 58))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelQuanLyNVLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(92, 92, 92)))
-                        .addGroup(panelQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelQuanLyNVLayout.createSequentialGroup()
+                                .addGap(58, 58, 58)
                                 .addGroup(panelQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelDiaChi)
                                     .addComponent(labelEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,12 +177,17 @@ public class EmployeeFrame extends javax.swing.JFrame {
                                 .addGroup(panelQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE))
                             .addGroup(panelQuanLyNVLayout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panelQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(69, 69, 69)
+                                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(70, 70, 70)))
+                        .addGroup(panelQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(panelQuanLyNVLayout.createSequentialGroup()
                                 .addGroup(panelQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelTenTK)
@@ -197,9 +199,9 @@ public class EmployeeFrame extends javax.swing.JFrame {
                                 .addGap(61, 61, 61))
                             .addGroup(panelQuanLyNVLayout.createSequentialGroup()
                                 .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(94, 94, 94)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnSuaTK)
-                                .addGap(52, 52, 52))))))
+                                .addGap(29, 29, 29))))))
         );
         panelQuanLyNVLayout.setVerticalGroup(
             panelQuanLyNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,7 +240,8 @@ public class EmployeeFrame extends javax.swing.JFrame {
                     .addComponent(btnSua)
                     .addComponent(btnLuu)
                     .addComponent(btnSuaTK)
-                    .addComponent(btnXoa))
+                    .addComponent(btnXoa)
+                    .addComponent(btnQuayLai))
                 .addContainerGap())
         );
 
@@ -333,6 +336,7 @@ public class EmployeeFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuu;
+    private javax.swing.JButton btnQuayLai;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnSuaTK;
     private javax.swing.JButton btnThem;

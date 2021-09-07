@@ -45,6 +45,7 @@ public class ProducerFrame extends javax.swing.JFrame {
         btnXoa = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnLuu = new javax.swing.JButton();
+        btnQuayLai = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableCNNCC = new javax.swing.JTable();
 
@@ -110,6 +111,10 @@ public class ProducerFrame extends javax.swing.JFrame {
             }
         });
 
+        btnQuayLai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnQuayLai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/reset.png"))); // NOI18N
+        btnQuayLai.setText("Quay Lại");
+
         javax.swing.GroupLayout panelCapNhatNCCLayout = new javax.swing.GroupLayout(panelCapNhatNCC);
         panelCapNhatNCC.setLayout(panelCapNhatNCCLayout);
         panelCapNhatNCCLayout.setHorizontalGroup(
@@ -122,37 +127,37 @@ public class ProducerFrame extends javax.swing.JFrame {
                 .addComponent(labelCapNhatNCC)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCapNhatNCCLayout.createSequentialGroup()
-                .addGroup(panelCapNhatNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(35, 35, 35)
+                .addGroup(panelCapNhatNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelCapNhatNCCLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(panelCapNhatNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panelCapNhatNCCLayout.createSequentialGroup()
-                                .addComponent(labelDiaChi)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelCapNhatNCCLayout.createSequentialGroup()
-                                .addComponent(labelMaNCC)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtMaNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(140, 140, 140)
-                        .addComponent(labelTenNCC)
+                        .addComponent(labelDiaChi)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelCapNhatNCCLayout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(161, 161, 161)
-                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(158, 158, 158)
-                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
-                .addGroup(panelCapNhatNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelCapNhatNCCLayout.createSequentialGroup()
-                        .addComponent(labelQuocGia)
+                        .addComponent(labelMaNCC)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtQuocGia, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtMaNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(140, 140, 140)
+                .addComponent(labelTenNCC)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtTenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
+                .addComponent(labelQuocGia)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtQuocGia, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
+            .addGroup(panelCapNhatNCCLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(btnQuayLai, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(112, 112, 112)
+                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(102, 102, 102)
+                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(133, 133, 133)
+                .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
         );
         panelCapNhatNCCLayout.setVerticalGroup(
             panelCapNhatNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,7 +185,8 @@ public class ProducerFrame extends javax.swing.JFrame {
                     .addComponent(btnThem)
                     .addComponent(btnXoa)
                     .addComponent(btnSua)
-                    .addComponent(btnLuu))
+                    .addComponent(btnLuu)
+                    .addComponent(btnQuayLai))
                 .addGap(48, 48, 48))
         );
 
@@ -279,6 +285,7 @@ public class ProducerFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuu;
+    private javax.swing.JButton btnQuayLai;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnThoat;
