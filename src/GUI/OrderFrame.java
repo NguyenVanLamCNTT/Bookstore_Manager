@@ -450,7 +450,7 @@ public class OrderFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cbTenSPActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void cbThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbThanhToanActionPerformed

@@ -233,11 +233,11 @@ public class TypeProductFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMaLoaiSPActionPerformed
 
     private void txtTenLoaiSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenLoaiSPActionPerformed
-        // TODO add your handling code here:
+    	
     }//GEN-LAST:event_txtTenLoaiSPActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
