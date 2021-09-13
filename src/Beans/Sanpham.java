@@ -9,12 +9,16 @@ public class Sanpham {
 	private String hinhanh;
 	private LoaiSanpham loaiSp;
 	private NhaCungcap nhaCC;
+	private String tenTacgia;
+	private int sotrang;
+	private String nhaXB;
 	public Sanpham() {
 		// TODO Auto-generated constructor stub
 	}
 	
+
 	public Sanpham(int maSanpham, String tenSanpham, double dongia, int soluongton, String trangthai, String hinhanh,
-			LoaiSanpham loaiSp, NhaCungcap nhaCC) {
+			LoaiSanpham loaiSp, NhaCungcap nhaCC, String tenTacgia, int sotrang, String nhaXB) {
 		super();
 		this.maSanpham = maSanpham;
 		this.tenSanpham = tenSanpham;
@@ -24,6 +28,9 @@ public class Sanpham {
 		this.hinhanh = hinhanh;
 		this.loaiSp = loaiSp;
 		this.nhaCC = nhaCC;
+		this.tenTacgia = tenTacgia;
+		this.sotrang = sotrang;
+		this.nhaXB = nhaXB;
 	}
 
 	public int getMaSanpham() {
@@ -77,6 +84,30 @@ public class Sanpham {
 
 	public void setNhaCC(NhaCungcap nhaCC) {
 		this.nhaCC = nhaCC;
+	}
+
+	public String getTenTacgia() {
+		return tenTacgia;
+	}
+
+	public void setTenTacgia(String tenTacgia) {
+		this.tenTacgia = tenTacgia;
+	}
+
+	public int getSotrang() {
+		return sotrang;
+	}
+
+	public void setSotrang(int sotrang) {
+		this.sotrang = sotrang;
+	}
+
+	public String getNhaXB() {
+		return nhaXB;
+	}
+
+	public void setNhaXB(String nhaXB) {
+		this.nhaXB = nhaXB;
 	}
 	
 }

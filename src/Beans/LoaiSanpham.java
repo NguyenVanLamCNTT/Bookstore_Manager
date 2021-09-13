@@ -4,8 +4,8 @@ public class LoaiSanpham {
 	private String maLoaiSp;
 	private String tenLoaiSp;
 	
-	public LoaiSanpham(String maLoaiSp) {
-		this.maLoaiSp = maLoaiSp;
+	public LoaiSanpham() {
+
 	}
 	public LoaiSanpham(String maLoaiSp, String tenLoaiSp) {
 		super();
