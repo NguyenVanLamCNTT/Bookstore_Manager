@@ -250,6 +250,9 @@ public class TypeProductFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+    	HomeFrame home = new HomeFrame();
+    	home.setVisible(true);
+    	this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnThoatActionPerformed
 
@@ -262,7 +265,10 @@ public class TypeProductFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTenLoaiSPActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-       
+       btnLuu.setEnabled(true);
+       btnQuayLai.setEnabled(true);
+       txtMaLoaiSP.setEnabled(true);
+       txtTenLoaiSP.setEnabled(true);
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
