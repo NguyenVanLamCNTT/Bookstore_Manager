@@ -5,19 +5,37 @@
  */
 package GUI;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
+
+import Beans.LoaiSanpham;
+import DAO.DAO_Loaisanpham;
+
 /**
  *
  * @author Lenovo
  */
 public class TypeProductFrame extends javax.swing.JFrame {
+	DefaultTableModel tableMode;
 
     /**
      * Creates new form TypeProductFrame
+     * @throws SQLException 
      */
-    public TypeProductFrame() {
+    public TypeProductFrame() throws SQLException {
         initComponents();
+        tableMode = (DefaultTableModel) tableCapNhatLoaiSP.getModel();
+        showLoaiSP();
     }
-
+    private void showLoaiSP() throws SQLException{
+    	List<LoaiSanpham> listLoaiSP = DAO_Loaisanpham.getLoaiSanPham();
+    	tableMode.setRowCount(0);
+    	for	(LoaiSanpham loaisp : listLoaiSP) {
+    		tableMode.addRow(new Object[] {loaisp.getMaLoaiSp(),loaisp.getTenLoaiSp()});
+    	}
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,6 +129,13 @@ public class TypeProductFrame extends javax.swing.JFrame {
         btnQuayLai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnQuayLai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/reset.png"))); // NOI18N
         btnQuayLai.setText("Quay Lại");
+        
+        txtMaLoaiSP.setEnabled(false);
+        txtTenLoaiSP.setEnabled(false);
+        btnLuu.setEnabled(false);
+        btnQuayLai.setEnabled(false);
+        btnSua.setEnabled(false);
+        btnXoa.setEnabled(false);
 
         javax.swing.GroupLayout panelCapNhatLSPLayout = new javax.swing.GroupLayout(panelCapNhatLSP);
         panelCapNhatLSP.setLayout(panelCapNhatLSPLayout);
@@ -278,7 +303,12 @@ public class TypeProductFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TypeProductFrame().setVisible(true);
+                try {
+					new TypeProductFrame().setVisible(true);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
     }
