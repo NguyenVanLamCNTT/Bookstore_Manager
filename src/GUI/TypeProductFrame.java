@@ -44,7 +44,6 @@ public class TypeProductFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         panelCapNhatLSP = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         labelCapNhatLSP = new javax.swing.JLabel();
@@ -129,7 +128,11 @@ public class TypeProductFrame extends javax.swing.JFrame {
         btnQuayLai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnQuayLai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/reset.png"))); // NOI18N
         btnQuayLai.setText("Quay Lại");
-        
+        btnQuayLai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	btnQuayLaiActionPerformed(evt);
+            }
+        });
         txtMaLoaiSP.setEnabled(false);
         txtTenLoaiSP.setEnabled(false);
         btnLuu.setEnabled(false);
@@ -261,14 +264,13 @@ public class TypeProductFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMaLoaiSPActionPerformed
 
     private void txtTenLoaiSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenLoaiSPActionPerformed
-    	
     }//GEN-LAST:event_txtTenLoaiSPActionPerformed
-
+   
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-       btnLuu.setEnabled(true);
        btnQuayLai.setEnabled(true);
        txtMaLoaiSP.setEnabled(true);
        txtTenLoaiSP.setEnabled(true);
+       btnLuu.setEnabled(true);
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -278,7 +280,11 @@ public class TypeProductFrame extends javax.swing.JFrame {
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLuuActionPerformed
-
+    private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
+        // TODO add your handling code here:
+    	txtMaLoaiSP.setText("");
+    	txtTenLoaiSP.setText("");
+    }//GEN-LAST:event_btnLuuActionPerformed
     /**
      * @param args the command line arguments
      */
