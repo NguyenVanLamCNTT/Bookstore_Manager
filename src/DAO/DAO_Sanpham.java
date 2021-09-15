@@ -17,7 +17,7 @@ public class DAO_Sanpham {
 	}
 	public List<Sanpham> getSanpham() throws SQLException{
 		String sql = "Select * from sanpham sp inner join loaisanpham lsp "
-				+ "On	sp.MaLoaiSP = lsp.MaLoaiSP inner join nhacungcap ncc "
+				+ "On sp.MaLoaiSP = lsp.MaLoaiSP inner join nhacungcap ncc "
 				+ "On ncc.MaNCC = sp.MaNCC";
 		List<Sanpham> dssp = new ArrayList<Sanpham>();
 		Connection con = ConnectDatabase.getConnection();
@@ -74,7 +74,6 @@ public class DAO_Sanpham {
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = con.prepareStatement(sql);
 		int n = stmt.executeUpdate();
-		return n>0;
-		
+		return n>0;	
 	}
 }
