@@ -26,4 +26,19 @@ public class DAO_Loaisanpham {
 		 }
 		 return dslsp;
 	 }
+	 public static boolean insert(String maLoaiSP, String tenLoaiSP) {
+		 try {
+			 Connection con = ConnectDatabase.getConnection();
+			 String sql = "insert into loaisanpham values(?,?)";
+			 PreparedStatement stmt = con.prepareStatement(sql);
+			 stmt.setString(1, maLoaiSP);
+			 stmt.setString(2, tenLoaiSP);
+			 stmt.executeUpdate();
+			 return true;
+		 }catch (SQLException err) {
+			// TODO: handle exception
+			 System.out.println(err);
+			 return false;
+		}
+	 }
 }

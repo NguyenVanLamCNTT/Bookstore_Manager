@@ -5,9 +5,17 @@
  */
 package GUI;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Beans.LoaiSanpham;
@@ -35,6 +43,18 @@ public class TypeProductFrame extends javax.swing.JFrame {
     	for	(LoaiSanpham loaisp : listLoaiSP) {
     		tableMode.addRow(new Object[] {loaisp.getMaLoaiSp(),loaisp.getTenLoaiSp()});
     	}
+    }
+    private void clickBtnThem(boolean a) {
+    	 btnQuayLai.setEnabled(a);
+         txtMaLoaiSP.setEnabled(a);
+         txtTenLoaiSP.setEnabled(a);
+         btnLuu.setEnabled(a);
+    }
+    private void reset() {
+    	txtMaLoaiSP.setText("");
+    	txtTenLoaiSP.setText("");
+    	txtMaLoaiSP.setBorder(new LineBorder(Color.black));
+    	txtTenLoaiSP.setBorder(new LineBorder(Color.black));
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -121,7 +141,12 @@ public class TypeProductFrame extends javax.swing.JFrame {
         btnLuu.setText("Lưiu");
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLuuActionPerformed(evt);
+                try {
+					btnLuuActionPerformed(evt);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -267,23 +292,41 @@ public class TypeProductFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTenLoaiSPActionPerformed
    
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-       btnQuayLai.setEnabled(true);
-       txtMaLoaiSP.setEnabled(true);
-       txtTenLoaiSP.setEnabled(true);
-       btnLuu.setEnabled(true);
+       clickBtnThem(true);
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSuaActionPerformed
 
-    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
+    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
+    	Pattern reg_maLoaiSP = Pattern.compile("^[A-Z]{1,4}(\\-[1-9]{1,2}){0,1}$");
+    	Pattern reg_tenLoaiSP = Pattern.compile("^([A-Z][a-z]{0,20}.){0,4}[A-Z][a-z]{0,20}$");
+    	String maLoaiSP = txtMaLoaiSP.getText();
+    	String tenLoaiSP = txtTenLoaiSP.getText();
+    	if (reg_maLoaiSP.matcher(maLoaiSP).matches() == false) {
+    		JOptionPane.showMessageDialog(this, "Mã loại sản phẩm không hợp lệ\nVí dụ : SS-1 hoặc TT","Error!",JOptionPane.ERROR_MESSAGE);
+    		txtMaLoaiSP.setBorder(new LineBorder(Color.red));
+    	}else {
+    		txtMaLoaiSP.setBorder(new LineBorder(Color.green));
+    	}
+    	if	(reg_tenLoaiSP.matcher(tenLoaiSP).matches() == false) {
+    		JOptionPane.showMessageDialog(this, "Tên loại sản phẩm không hợp lệ\nVí dụ : Truyen Tranh","Error!",JOptionPane.ERROR_MESSAGE);
+    		txtTenLoaiSP.setBorder(new LineBorder(Color.red));
+    	}else {
+    		txtTenLoaiSP.setBorder(new LineBorder(Color.green));
+    	}
+    	if (reg_maLoaiSP.matcher(maLoaiSP).matches() == true && reg_tenLoaiSP.matcher(tenLoaiSP).matches() == true) {
+    		DAO_Loaisanpham.insert(maLoaiSP, tenLoaiSP);
+    		showLoaiSP();
+    		clickBtnThem(false);
+    		reset();
+    	}
     }//GEN-LAST:event_btnLuuActionPerformed
     private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
-    	txtMaLoaiSP.setText("");
-    	txtTenLoaiSP.setText("");
+    	reset();
     }//GEN-LAST:event_btnLuuActionPerformed
     /**
      * @param args the command line arguments
