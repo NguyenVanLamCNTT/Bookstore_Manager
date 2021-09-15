@@ -5,17 +5,25 @@
  */
 package GUI;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.concurrent.ForkJoinPool;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.swing.*;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -23,8 +31,6 @@ import Beans.LoaiSanpham;
 import Beans.NhaCungcap;
 import Beans.Sanpham;
 import DAO.DAO_Sanpham;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -54,8 +60,8 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     private javax.swing.JPanel panelQuanLySP;
     private javax.swing.JTable tableQuanLySP;
     private javax.swing.JTextField txtDonGia, txtMaSP, txtNXB, txtSoLuongTon, txtSoTrang, txtTenSP, txtTenSPTimKiem, txtTenTG, txtTrangThai;
-
     private DefaultTableModel model;
+    private FileInputStream in=null;
     public ProductFrame() throws SQLException {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -469,7 +475,12 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        // TODO add your handling code here:
+        try {
+			insertSanpham();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInActionPerformed
@@ -500,21 +511,42 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     }//GEN-LAST:event_btnTimActionPerformed
 
     private void btnChonanhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonanhActionPerformed
-        JFileChooser filechooser = new JFileChooser();
-        filechooser.setDialogTitle("Chọn hình ảnh của Sản phẩm");
-        int file = filechooser.showOpenDialog(null);
-        if(file == JFileChooser.APPROVE_OPTION) {
-            String link = filechooser.getCurrentDirectory().toString()+"\\"+filechooser.getSelectedFile().getName();// Khai bao toan cuc
-            ImageIcon icon = new ImageIcon(link);
-            labelHinhAnh.setIcon(icon);
-        }
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        chooser.setDialogTitle("Chọn ảnh");
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Image","jpg", "png");
+        chooser.addChoosableFileFilter(filter);
+        
+        
+        int result = chooser.showSaveDialog(null);
+        File file = chooser.getSelectedFile();
+        String filename = file.getName();
+        if(filename.endsWith(".jpg")||filename.endsWith(".JPG")||filename.endsWith(".png")||filename.endsWith(".PNG")){
+            if(result == JFileChooser.APPROVE_OPTION){
+                String path = file.getAbsolutePath();
+                ImageIcon imgIcon = new ImageIcon(path);
+                Image img = imgIcon.getImage();
+                
+                Image newImg = img.getScaledInstance(labelHinhAnh.getWidth(), labelHinhAnh.getHeight(), Image.SCALE_SMOOTH);
+                
+                ImageIcon icon = new ImageIcon(newImg);
+                labelHinhAnh.setIcon(icon);
+                try {
+                    in = new FileInputStream(path);
+                } catch (FileNotFoundException ex) {
+                   ex.printStackTrace();
+                }
+            }                       
+        }else
+            JOptionPane.showMessageDialog(this,"Chọn sai tệp, vui lòng chọn tệp hình ảnh");
     }//GEN-LAST:event_btnChonanhActionPerformed
 
    
 	private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         enabled();
         btnLuu.setEnabled(true);
-        
+        txtMaSP.setEnabled(false);
         
     }//GEN-LAST:event_btnThemActionPerformed
 	private void tableQuanLySPMouseClicked(MouseEvent evt) {
@@ -525,16 +557,30 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
 		txtTenSP.setText(tableQuanLySP.getValueAt(click, 2).toString());
 		txtDonGia.setText(tableModel.getValueAt(click, 3).toString());
 		txtSoLuongTon.setText(tableModel.getValueAt(click, 4).toString());
-		if(tableModel.getValueAt(click, 5).toString().equals("Con")){
+		if(Integer.parseInt(tableModel.getValueAt(click, 4).toString()) > 0){
 			txtTrangThai.setText("Còn hàng");
 		}else
 			txtTrangThai.setText("Hết hàng");
-		cbMaNCC.setSelectedItem(tableModel.getValueAt(click, 6).toString());
+		cbMaNCC.setSelectedItem(tableModel.getValueAt(click, 1).toString());
 		txtTenTG.setText(tableModel.getValueAt(click, 7).toString());
 		txtSoTrang.setText(tableModel.getValueAt(click, 8).toString());
 		txtNXB.setText(tableModel.getValueAt(click, 8).toString());
 		btnSua.setEnabled(true);
 		btnXoa.setEnabled(true);
+		DAO_Sanpham dao_sanpham = new DAO_Sanpham();
+		try {
+			ImageIcon icon = dao_sanpham.getImg(tableModel.getValueAt(click, 1).toString());
+			Image img = icon.getImage();
+			Image newImg = img.getScaledInstance(labelHinhAnh.getWidth(), labelHinhAnh.getHeight(), Image.SCALE_SMOOTH);
+			ImageIcon imgIcon = new ImageIcon(newImg);
+			labelHinhAnh.setIcon(imgIcon);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
     private void disabled(){
     	txtDonGia.setEnabled(false);
@@ -572,8 +618,14 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     	DAO_Sanpham dao_sanpham = new DAO_Sanpham();
     	List<Sanpham> list = dao_sanpham.getSanpham();
     	for(Sanpham sanpham : list) {
+    		int sotrang = sanpham.getSotrang();
+    		String st ;
+    		if(sotrang == 0){
+    			st = "";
+    		}else
+    			st=sanpham.getSotrang()+"";
     		Object[] tableModel = {sanpham.getLoaiSp().getTenLoaiSp(),sanpham.getMaSanpham(),sanpham.getTenSanpham(),sanpham.getDongia()+""
-    								,sanpham.getSoluongton(),sanpham.getTrangthai(),sanpham.getNhaCC().getTenNCC(),sanpham.getTenTacgia(),sanpham.getSotrang()+""
+    								,sanpham.getSoluongton(),sanpham.getTrangthai(),sanpham.getNhaCC().getTenNCC(),sanpham.getTenTacgia(),st
     								,sanpham.getNhaXB()};
     		model.addRow(tableModel);
     	}
@@ -608,6 +660,67 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     	}
     	showProductTable();
     	disabled();
+    }
+    private void insertSach() throws SQLException {
+    	DAO_Sanpham dao_sanpham = new DAO_Sanpham();
+    	String tenLoaiSP = cbLoaiSP.getSelectedItem().toString();
+    	String tenNhaCC = cbMaNCC.getSelectedItem().toString();
+    	Sanpham sanpham = new Sanpham();
+    	List<LoaiSanpham> dsLoaiSp = dao_sanpham.getLoaiSanpham();
+    	for(LoaiSanpham loaisp : dsLoaiSp) {
+    		if(loaisp.getTenLoaiSp().equals(tenLoaiSP)) {
+    			sanpham.setLoaiSp(new LoaiSanpham(loaisp.getMaLoaiSp(),loaisp.getTenLoaiSp()));
+    		}
+    	}
+    	List<NhaCungcap> dsNhacc = dao_sanpham.getNhacungcap();
+    	for(NhaCungcap nhacc : dsNhacc) {
+    		if(nhacc.getTenNCC().equals(tenNhaCC)) {
+    			sanpham.setNhaCC(new NhaCungcap(nhacc.getMaNCC(),nhacc.getTenNCC(),nhacc.getDiachi()));
+    		}
+    	}
+    	sanpham.setTenSanpham(txtTenSP.getText().trim());
+    	sanpham.setDongia(Double.parseDouble(txtDonGia.getText().trim()));
+    	sanpham.setSoluongton(Integer.parseInt(txtSoLuongTon.getText().trim()));
+    	sanpham.setTrangthai(txtTrangThai.getText());
+    	sanpham.setTenTacgia(txtTenTG.getText().trim());
+    	sanpham.setSotrang(Integer.parseInt(txtSoTrang.getText()));
+    	sanpham.setNhaXB(txtNXB.getText());
+    	if(dao_sanpham.insertSach(sanpham, in)) {
+    		JOptionPane.showMessageDialog(this, "Thêm thành công!!");
+    		showProductTable();
+    	}else {
+    		JOptionPane.showMessageDialog(this, "Thêm không thành công! Hãy thử lại");
+    	}
+
+    }
+    private void insertSanpham() throws SQLException {
+    	DAO_Sanpham dao_sanpham = new DAO_Sanpham();
+    	String tenLoaiSP = cbLoaiSP.getSelectedItem().toString();
+    	String tenNhaCC = cbMaNCC.getSelectedItem().toString();
+    	Sanpham sanpham = new Sanpham();
+    	List<LoaiSanpham> dsLoaiSp = dao_sanpham.getLoaiSanpham();
+    	for(LoaiSanpham loaisp : dsLoaiSp) {
+    		if(loaisp.getTenLoaiSp().equals(tenLoaiSP)) {
+    			sanpham.setLoaiSp(new LoaiSanpham(loaisp.getMaLoaiSp(),loaisp.getTenLoaiSp()));
+    		}
+    	}
+    	List<NhaCungcap> dsNhacc = dao_sanpham.getNhacungcap();
+    	for(NhaCungcap nhacc : dsNhacc) {
+    		if(nhacc.getTenNCC().equals(tenNhaCC)) {
+    			sanpham.setNhaCC(new NhaCungcap(nhacc.getMaNCC(),nhacc.getTenNCC(),nhacc.getDiachi()));
+    		}
+    	}
+    	sanpham.setTenSanpham(txtTenSP.getText().trim());
+    	sanpham.setDongia(Double.parseDouble(txtDonGia.getText().trim()));
+    	sanpham.setSoluongton(Integer.parseInt(txtSoLuongTon.getText().trim()));
+    	sanpham.setTrangthai(txtTrangThai.getText());
+    	if(dao_sanpham.insertSanpham(sanpham, in)) {
+    		JOptionPane.showMessageDialog(this, "Thêm thành công!!");
+    		showProductTable();
+    	}else {
+    		JOptionPane.showMessageDialog(this, "Thêm không thành công! Hãy thử lại");
+    	}
+
     }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

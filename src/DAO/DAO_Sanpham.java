@@ -1,5 +1,10 @@
 package DAO;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,10 +12,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+
 import Beans.LoaiSanpham;
 import Beans.NhaCungcap;
 import Beans.Sanpham;
 import connect.ConnectDatabase;
+
 
 public class DAO_Sanpham {
 	public DAO_Sanpham() {
@@ -32,13 +40,34 @@ public class DAO_Sanpham {
 			sanpham.setTrangthai(rs.getString("TrangThai"));
 			sanpham.setLoaiSp(new LoaiSanpham(rs.getString("MaLoaiSP"),rs.getString("TenLoaiSP")));
 			sanpham.setNhaCC(new NhaCungcap(rs.getString("MaNCC"),rs.getString("TenNCC"), rs.getString("DiaChi")));
-			sanpham.setHinhanh(rs.getString("HinhAnh"));
+//			sanpham.setHinhanh();
 			sanpham.setNhaXB(rs.getString("NXB"));
 			sanpham.setSotrang(rs.getInt("Sotrang"));
 			sanpham.setTenTacgia(rs.getString("TenTacGia"));
 			dssp.add(sanpham);
 		}
 		return dssp;
+	}
+	public ImageIcon getImg(String id) throws SQLException, IOException {
+		 	InputStream in;
+	        FileOutputStream out;
+	        ImageIcon icon = null;
+	        Connection con  = ConnectDatabase.getConnection();
+	        String sql = "Select * from sanpham  where MaSP = "+id;
+	        PreparedStatement stmt = con.prepareStatement(sql);
+	        ResultSet rs = stmt.executeQuery();
+	        File file = new File("brown_nhua.jpg");
+	        out = new FileOutputStream(file);
+	        if(rs.next()){
+	            in = rs.getBinaryStream("HinhAnh");
+	            byte[] buffer = new byte[1024];
+	            while(in.read(buffer) >0){
+	                out.write(buffer);
+	            }
+	            String path = file.getAbsolutePath();
+	            icon = new ImageIcon(path);
+	        }
+	        return icon;
 	}
 	public List<LoaiSanpham> getLoaiSanpham() throws SQLException{
 		String sql = "Select * from loaisanpham";
@@ -75,5 +104,52 @@ public class DAO_Sanpham {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		int n = stmt.executeUpdate();
 		return n>0;	
+	}
+	public boolean insertSach(Sanpham sanpham, FileInputStream in) {
+		String sql = "Insert into sanpham (TenSP, DonGia, SoLuongTon, TrangThai, HinhAnh, TenTacGia, SoTrang, NXB, MaLoaiSP, MaNCC) values (?,?,?,?,?,?,?,?,?,?)";
+		Connection con = ConnectDatabase.getConnection();
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, sanpham.getTenSanpham());
+			stmt.setDouble(2, sanpham.getDongia());
+			stmt.setInt(3, sanpham.getSoluongton());
+			stmt.setString(4,sanpham.getTrangthai());
+			stmt.setBinaryStream(5, in);
+			stmt.setString(6, sanpham.getTenTacgia());
+			stmt.setInt(7,sanpham.getSotrang());
+			stmt.setString(8, sanpham.getNhaXB());
+			stmt.setString(9,sanpham.getLoaiSp().getMaLoaiSp());
+			stmt.setString(10, sanpham.getNhaCC().getMaNCC());
+			int n = stmt.executeUpdate();
+			return n >0;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public boolean insertSanpham(Sanpham sanpham, FileInputStream input) {
+		String sql = "Insert into sanpham (TenSP, DonGia, SoLuongTon, TrangThai, HinhAnh, MaLoaiSP, MaNCC) values (?,?,?,?,?,?,?)";
+		Connection con = ConnectDatabase.getConnection();
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, sanpham.getTenSanpham());
+			stmt.setDouble(2, sanpham.getDongia());
+			stmt.setInt(3, sanpham.getSoluongton());
+			stmt.setString(4,sanpham.getTrangthai());
+			stmt.setBinaryStream(5, input);
+			stmt.setString(6,sanpham.getLoaiSp().getMaLoaiSp());
+			stmt.setString(7, sanpham.getNhaCC().getMaNCC());
+			int n = stmt.executeUpdate();
+			return n >0;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+		
 	}
 }
