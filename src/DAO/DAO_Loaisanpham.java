@@ -41,4 +41,18 @@ public class DAO_Loaisanpham {
 			 return false;
 		}
 	 }
+	 public static boolean delete(String maLoaiSP) {
+		 try {
+			 Connection con = ConnectDatabase.getConnection();
+			 String sql = "delete from loaisanpham where MaLoaiSP=?";
+			 PreparedStatement stmt = con.prepareStatement(sql);
+			 stmt.setString(1, maLoaiSP);
+			 stmt.executeUpdate();
+			 return true;
+		 }catch (SQLException e) {
+			// TODO: handle exception
+			 System.out.println(e);
+			 return false;
+		}
+	 }
 }

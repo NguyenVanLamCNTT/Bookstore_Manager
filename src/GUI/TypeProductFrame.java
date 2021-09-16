@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Insets;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -17,6 +18,9 @@ import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import com.mysql.cj.x.protobuf.MysqlxCrud.Delete;
 
 import Beans.LoaiSanpham;
 import DAO.DAO_Loaisanpham;
@@ -27,7 +31,9 @@ import DAO.DAO_Loaisanpham;
  */
 public class TypeProductFrame extends javax.swing.JFrame {
 	DefaultTableModel tableMode;
-
+	Pattern reg_maLoaiSP = Pattern.compile("^[A-Z]{1,4}(\\-[1-9]{1,2}){0,1}$");
+	Pattern reg_tenLoaiSP = Pattern.compile("^([A-Z][a-z]{0,20}.){0,4}[A-Z][a-z]{0,20}$");
+	List<LoaiSanpham> listLoaiSP;
     /**
      * Creates new form TypeProductFrame
      * @throws SQLException 
@@ -38,7 +44,7 @@ public class TypeProductFrame extends javax.swing.JFrame {
         showLoaiSP();
     }
     private void showLoaiSP() throws SQLException{
-    	List<LoaiSanpham> listLoaiSP = DAO_Loaisanpham.getLoaiSanPham();
+    	listLoaiSP = DAO_Loaisanpham.getLoaiSanPham();
     	tableMode.setRowCount(0);
     	for	(LoaiSanpham loaisp : listLoaiSP) {
     		tableMode.addRow(new Object[] {loaisp.getMaLoaiSp(),loaisp.getTenLoaiSp()});
@@ -55,6 +61,57 @@ public class TypeProductFrame extends javax.swing.JFrame {
     	txtTenLoaiSP.setText("");
     	txtMaLoaiSP.setBorder(new LineBorder(Color.black));
     	txtTenLoaiSP.setBorder(new LineBorder(Color.black));
+    }
+    private void regex() {
+    	String maLoaiSP = txtMaLoaiSP.getText();
+    	String tenLoaiSP = txtTenLoaiSP.getText();
+    	if (reg_maLoaiSP.matcher(maLoaiSP).matches() == false) {
+    		JOptionPane.showMessageDialog(this, "Mã loại sản phẩm không hợp lệ\nVí dụ : SS-1 hoặc TT","Error!",JOptionPane.ERROR_MESSAGE);
+    		txtMaLoaiSP.setBorder(new LineBorder(Color.red));
+    	}else {
+    		txtMaLoaiSP.setBorder(new LineBorder(Color.green));
+    	}
+    	if	(reg_tenLoaiSP.matcher(tenLoaiSP).matches() == false) {
+    		JOptionPane.showMessageDialog(this, "Tên loại sản phẩm không hợp lệ\nVí dụ : Truyen Tranh","Error!",JOptionPane.ERROR_MESSAGE);
+    		txtTenLoaiSP.setBorder(new LineBorder(Color.red));
+    	}else {
+    		txtTenLoaiSP.setBorder(new LineBorder(Color.green));
+    	}
+    	if (checkMaLoaiSP(maLoaiSP) == true) {
+    		JOptionPane.showMessageDialog(this, "Tên loại sản phẩm tồn tại","Error!",JOptionPane.ERROR_MESSAGE);
+    		txtMaLoaiSP.setBorder(new LineBorder(Color.red));
+    	}else {
+    		txtMaLoaiSP.setBorder(new LineBorder(Color.green));
+    	}
+    }
+    private boolean checkMaLoaiSP(String maLoaiSP) {
+    	for(LoaiSanpham lsp: listLoaiSP) {
+    		if(maLoaiSP.equals(lsp.getMaLoaiSp())) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    private boolean checkInput() {
+    	String maLoaiSP = txtMaLoaiSP.getText();
+    	String tenLoaiSP = txtTenLoaiSP.getText();
+    	if(reg_maLoaiSP.matcher(maLoaiSP).matches() == true && reg_tenLoaiSP.matcher(tenLoaiSP).matches() == true && checkMaLoaiSP(maLoaiSP) == false) {
+    		return true;
+    	}else {
+			return false;
+		}
+    }
+    private boolean search(String maLoaiSP) {
+    	int selectedIndex = tableCapNhatLoaiSP.getSelectedRow();
+    	if(selectedIndex == -1) {
+    		return false;
+    	}else {
+    		if(maLoaiSP.equals(listLoaiSP.get(selectedIndex).getMaLoaiSp())) {
+        		return true;
+        	}else {
+    			return false;
+    		}
+		}
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -252,6 +309,11 @@ public class TypeProductFrame extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tableCapNhatLoaiSP);
+        tableCapNhatLoaiSP.addMouseListener(new java.awt.event.MouseAdapter() {
+       	 public void mouseClicked(java.awt.event.MouseEvent evt) {
+       		tableCapNhatLoaiSPMouseClicked(evt);
+         }
+    });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -276,7 +338,15 @@ public class TypeProductFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private void tableCapNhatLoaiSPMouseClicked(MouseEvent evt) {
+		// TODO Auto-generated method stub
+		int index = tableCapNhatLoaiSP.getSelectedRow();
+		btnSua.setEnabled(true);
+		btnXoa.setEnabled(true);
+		txtMaLoaiSP.setText(listLoaiSP.get(index).getMaLoaiSp());
+		txtTenLoaiSP.setText(listLoaiSP.get(index).getTenLoaiSp());
+	}
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
     	HomeFrame home = new HomeFrame();
     	home.setVisible(true);
@@ -293,36 +363,46 @@ public class TypeProductFrame extends javax.swing.JFrame {
    
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
        clickBtnThem(true);
+       btnSua.setEnabled(false);
+	   btnXoa.setEnabled(false);
+       reset();
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
+    	clickBtnThem(true);
+    	txtMaLoaiSP.setEnabled(false);
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnLuuActionPerformed
-        // TODO add your handling code here:
-    	Pattern reg_maLoaiSP = Pattern.compile("^[A-Z]{1,4}(\\-[1-9]{1,2}){0,1}$");
-    	Pattern reg_tenLoaiSP = Pattern.compile("^([A-Z][a-z]{0,20}.){0,4}[A-Z][a-z]{0,20}$");
     	String maLoaiSP = txtMaLoaiSP.getText();
     	String tenLoaiSP = txtTenLoaiSP.getText();
-    	if (reg_maLoaiSP.matcher(maLoaiSP).matches() == false) {
-    		JOptionPane.showMessageDialog(this, "Mã loại sản phẩm không hợp lệ\nVí dụ : SS-1 hoặc TT","Error!",JOptionPane.ERROR_MESSAGE);
-    		txtMaLoaiSP.setBorder(new LineBorder(Color.red));
+    	if(search(maLoaiSP) == true) {
+    		DAO_Loaisanpham.delete(maLoaiSP);
+    		regex();
+            // TODO add your handling code here:
+        	if(checkInput() == true)  {
+        		DAO_Loaisanpham.insert(maLoaiSP, tenLoaiSP);
+        		showLoaiSP();
+        		clickBtnThem(false);
+        		reset();
+        		btnSua.setEnabled(false);
+        		btnXoa.setEnabled(false);
+        		showLoaiSP();
+        	}
     	}else {
-    		txtMaLoaiSP.setBorder(new LineBorder(Color.green));
-    	}
-    	if	(reg_tenLoaiSP.matcher(tenLoaiSP).matches() == false) {
-    		JOptionPane.showMessageDialog(this, "Tên loại sản phẩm không hợp lệ\nVí dụ : Truyen Tranh","Error!",JOptionPane.ERROR_MESSAGE);
-    		txtTenLoaiSP.setBorder(new LineBorder(Color.red));
-    	}else {
-    		txtTenLoaiSP.setBorder(new LineBorder(Color.green));
-    	}
-    	if (reg_maLoaiSP.matcher(maLoaiSP).matches() == true && reg_tenLoaiSP.matcher(tenLoaiSP).matches() == true) {
-    		DAO_Loaisanpham.insert(maLoaiSP, tenLoaiSP);
-    		showLoaiSP();
-    		clickBtnThem(false);
-    		reset();
-    	}
+    		regex();
+            // TODO add your handling code here:
+        	if(checkInput() == true)  {
+        		DAO_Loaisanpham.insert(maLoaiSP, tenLoaiSP);
+        		showLoaiSP();
+        		clickBtnThem(false);
+        		reset();
+        		btnSua.setEnabled(false);
+        		btnXoa.setEnabled(false);
+        		showLoaiSP();
+        	}
+		}
     }//GEN-LAST:event_btnLuuActionPerformed
     private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
