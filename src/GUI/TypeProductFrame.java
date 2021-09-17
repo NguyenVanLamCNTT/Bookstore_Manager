@@ -59,6 +59,8 @@ public class TypeProductFrame extends javax.swing.JFrame {
     private void reset() {
     	txtMaLoaiSP.setText("");
     	txtTenLoaiSP.setText("");
+    	btnSua.setEnabled(false);
+    	btnXoa.setEnabled(false);
     	txtMaLoaiSP.setBorder(new LineBorder(Color.black));
     	txtTenLoaiSP.setBorder(new LineBorder(Color.black));
     }
@@ -77,25 +79,26 @@ public class TypeProductFrame extends javax.swing.JFrame {
     	}else {
     		txtTenLoaiSP.setBorder(new LineBorder(Color.green));
     	}
-    	if (checkMaLoaiSP(maLoaiSP) == true) {
-    		JOptionPane.showMessageDialog(this, "Tên loại sản phẩm tồn tại","Error!",JOptionPane.ERROR_MESSAGE);
-    		txtMaLoaiSP.setBorder(new LineBorder(Color.red));
-    	}else {
-    		txtMaLoaiSP.setBorder(new LineBorder(Color.green));
-    	}
     }
     private boolean checkMaLoaiSP(String maLoaiSP) {
     	for(LoaiSanpham lsp: listLoaiSP) {
     		if(maLoaiSP.equals(lsp.getMaLoaiSp())) {
+    			JOptionPane.showMessageDialog(this, "Tên loại sản phẩm tồn tại","Error!",JOptionPane.ERROR_MESSAGE);
+        		txtMaLoaiSP.setBorder(new LineBorder(Color.red));
     			return true;
     		}
     	}
+    	txtMaLoaiSP.setBorder(new LineBorder(Color.green));
     	return false;
+    }
+    private int notify(String title, String message) {
+    	int n = JOptionPane.showConfirmDialog(this, message,title,JOptionPane.YES_NO_OPTION);
+    	return n;
     }
     private boolean checkInput() {
     	String maLoaiSP = txtMaLoaiSP.getText();
     	String tenLoaiSP = txtTenLoaiSP.getText();
-    	if(reg_maLoaiSP.matcher(maLoaiSP).matches() == true && reg_tenLoaiSP.matcher(tenLoaiSP).matches() == true && checkMaLoaiSP(maLoaiSP) == false) {
+    	if(reg_maLoaiSP.matcher(maLoaiSP).matches() == true && reg_tenLoaiSP.matcher(tenLoaiSP).matches() == true) {
     		return true;
     	}else {
 			return false;
@@ -183,7 +186,17 @@ public class TypeProductFrame extends javax.swing.JFrame {
         btnXoa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/delete.png"))); // NOI18N
         btnXoa.setText("Xóa");
-
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+					btnXoaActionPerformed(evt);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        });
+        
         btnSua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fix.png"))); // NOI18N
         btnSua.setText("Sửa");
@@ -195,7 +208,7 @@ public class TypeProductFrame extends javax.swing.JFrame {
 
         btnLuu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnLuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/save.png"))); // NOI18N
-        btnLuu.setText("Lưiu");
+        btnLuu.setText("Lưu");
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -342,10 +355,13 @@ public class TypeProductFrame extends javax.swing.JFrame {
     private void tableCapNhatLoaiSPMouseClicked(MouseEvent evt) {
 		// TODO Auto-generated method stub
 		int index = tableCapNhatLoaiSP.getSelectedRow();
+		reset();
 		btnSua.setEnabled(true);
 		btnXoa.setEnabled(true);
 		txtMaLoaiSP.setText(listLoaiSP.get(index).getMaLoaiSp());
 		txtTenLoaiSP.setText(listLoaiSP.get(index).getTenLoaiSp());
+		txtMaLoaiSP.setEnabled(false);
+		txtTenLoaiSP.setEnabled(false);
 	}
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
     	HomeFrame home = new HomeFrame();
@@ -360,7 +376,20 @@ public class TypeProductFrame extends javax.swing.JFrame {
 
     private void txtTenLoaiSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenLoaiSPActionPerformed
     }//GEN-LAST:event_txtTenLoaiSPActionPerformed
-   
+    
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
+    	String maLoaiSP = txtMaLoaiSP.getText();
+    	if(notify("", "Bạn có chắc muốn xóa loại sản phẩm có mã "+maLoaiSP) == 0) {
+    		boolean success =  DAO_Loaisanpham.delete(maLoaiSP);
+    		if(success == true) {
+    			JOptionPane.showMessageDialog(this,"Bạn đã xóa thành công!");
+    			showLoaiSP();
+    		}else {
+    			JOptionPane.showMessageDialog(this,"Lỗi không thể xóa!","", JOptionPane.ERROR_MESSAGE);
+    			showLoaiSP();
+			}
+    	}
+    }
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
        clickBtnThem(true);
        btnSua.setEnabled(false);
@@ -381,25 +410,27 @@ public class TypeProductFrame extends javax.swing.JFrame {
     		DAO_Loaisanpham.delete(maLoaiSP);
     		regex();
             // TODO add your handling code here:
-        	if(checkInput() == true)  {
+        	if(checkInput() == true && notify("", "Bạn có chắc muốn lưu thay đổi không ?") == 0)  {
         		DAO_Loaisanpham.insert(maLoaiSP, tenLoaiSP);
         		showLoaiSP();
         		clickBtnThem(false);
         		reset();
         		btnSua.setEnabled(false);
         		btnXoa.setEnabled(false);
+        		JOptionPane.showMessageDialog(this,"Bạn đã cập nhật thành công!");
         		showLoaiSP();
         	}
     	}else {
     		regex();
             // TODO add your handling code here:
-        	if(checkInput() == true)  {
+        	if(checkInput() == true && notify("", "Bạn có chắc muốn lưu thông tin vừa nhập không ?") == 0 && checkMaLoaiSP(maLoaiSP) == false)  {
         		DAO_Loaisanpham.insert(maLoaiSP, tenLoaiSP);
         		showLoaiSP();
         		clickBtnThem(false);
         		reset();
         		btnSua.setEnabled(false);
         		btnXoa.setEnabled(false);
+        		JOptionPane.showMessageDialog(this,"Bạn đã lưu thành công!");
         		showLoaiSP();
         	}
 		}
