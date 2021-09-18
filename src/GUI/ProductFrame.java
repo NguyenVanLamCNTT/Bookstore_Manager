@@ -8,6 +8,7 @@ package GUI;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -23,6 +24,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -36,7 +39,7 @@ import DAO.DAO_Sanpham;
  *
  * @author Lenovo
  */
-public class ProductFrame extends javax.swing.JFrame implements MouseListener {
+public class ProductFrame extends javax.swing.JFrame{
 
 
     private JButton btnChonanh,btnIn,btnLuu, btnReset, btnSua, btnThem, btnThoat, btnTim, btnXoa;
@@ -62,6 +65,8 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     private javax.swing.JTextField txtDonGia, txtMaSP, txtNXB, txtSoLuongTon, txtSoTrang, txtTenSP, txtTenSPTimKiem, txtTenTG, txtTrangThai;
     private DefaultTableModel model;
     private FileInputStream in=null;
+    private String path = "";
+    private int chucnang= 0;
     public ProductFrame() throws SQLException {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -225,7 +230,27 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
         labelLoaiSP.setText("Loại sản phẩm");
 
         cbLoaiSP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
+        cbLoaiSP.addPopupMenuListener(new PopupMenuListener() {
+			
+			@Override
+			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+				cbLoaiSPPopupMenuWillBecomeInvisible(e);
+				
+			}
+			
+			@Override
+			public void popupMenuCanceled(PopupMenuEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        
         btnChonanh.setText("Chọn ảnh");
         btnChonanh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -471,16 +496,28 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     }//GEN-LAST:event_btnThoatActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
+    	enabled();
+    	btnLuu.setEnabled(true);
+    	btnThem.setEnabled(false);
+    	btnXoa.setEnabled(false);
+    	chucnang=0;
+    	
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         try {
-			insertSanpham();
+        	if(chucnang == 1) {
+        		insertSanpham();
+        	}else {
+        		updateSanpham();
+        	}
+			path = "";
+			refesh();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInActionPerformed
@@ -490,20 +527,7 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     	deleteSanpham(txtMaSP.getText().trim());
     }
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        disabled();
-        txtDonGia.setText("");
-        txtMaSP.setText("");
-        txtNXB.setText("");
-        txtSoLuongTon.setText("");
-        txtSoLuongTon.setText("");
-        txtSoTrang.setText("");
-        txtTenSP.setText("");
-        txtTenSPTimKiem.setText("");
-        txtTenTG.setText("");
-        txtTrangThai.setText("");
-        cbLoaiSP.setSelectedIndex(0);
-        cbMaNCC.setSelectedIndex(0);
-    	
+       refesh();
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
@@ -524,7 +548,7 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
         String filename = file.getName();
         if(filename.endsWith(".jpg")||filename.endsWith(".JPG")||filename.endsWith(".png")||filename.endsWith(".PNG")){
             if(result == JFileChooser.APPROVE_OPTION){
-                String path = file.getAbsolutePath();
+                path = file.getAbsolutePath();
                 ImageIcon imgIcon = new ImageIcon(path);
                 Image img = imgIcon.getImage();
                 
@@ -532,11 +556,6 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
                 
                 ImageIcon icon = new ImageIcon(newImg);
                 labelHinhAnh.setIcon(icon);
-                try {
-                    in = new FileInputStream(path);
-                } catch (FileNotFoundException ex) {
-                   ex.printStackTrace();
-                }
             }                       
         }else
             JOptionPane.showMessageDialog(this,"Chọn sai tệp, vui lòng chọn tệp hình ảnh");
@@ -547,7 +566,10 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
         enabled();
         btnLuu.setEnabled(true);
         txtMaSP.setEnabled(false);
-        
+        labelHinhAnh.setIcon(null);
+        btnSua.setEnabled(false);
+        btnXoa.setEnabled(false);
+        chucnang=1;
     }//GEN-LAST:event_btnThemActionPerformed
 	private void tableQuanLySPMouseClicked(MouseEvent evt) {
 		int click = tableQuanLySP.getSelectedRow();
@@ -569,17 +591,32 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
 		btnXoa.setEnabled(true);
 		DAO_Sanpham dao_sanpham = new DAO_Sanpham();
 		try {
-			ImageIcon icon = dao_sanpham.getImg(tableModel.getValueAt(click, 1).toString());
+			
+			path = dao_sanpham.getImg(tableModel.getValueAt(click, 1).toString());
+			ImageIcon icon = new ImageIcon(path);
 			Image img = icon.getImage();
 			Image newImg = img.getScaledInstance(labelHinhAnh.getWidth(), labelHinhAnh.getHeight(), Image.SCALE_SMOOTH);
 			ImageIcon imgIcon = new ImageIcon(newImg);
 			labelHinhAnh.setIcon(imgIcon);
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	private void cbLoaiSPPopupMenuWillBecomeInvisible(PopupMenuEvent e) {
+		String tenLoaiSP = cbLoaiSP.getSelectedItem().toString();
+		if(tenLoaiSP.equals("Sách")||tenLoaiSP.equals("Truyện")) {
+			txtTenTG.setEnabled(true);
+			txtNXB.setEnabled(true);
+			txtSoTrang.setEnabled(true);
+		}else {
+			txtTenTG.setEnabled(false);
+			txtNXB.setEnabled(false);
+			txtSoTrang.setEnabled(false);
 		}
 	}
     private void disabled(){
@@ -612,6 +649,23 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     	btnChonanh.setEnabled(true);
     	cbLoaiSP.setEnabled(true);
     	cbMaNCC.setEnabled(true);
+    }
+    private void refesh() {
+    	disabled();
+    	btnThem.setEnabled(true);
+        txtDonGia.setText("");
+        txtMaSP.setText("");
+        txtNXB.setText("");
+        txtSoLuongTon.setText("");
+        txtSoLuongTon.setText("");
+        txtSoTrang.setText("");
+        txtTenSP.setText("");
+        txtTenSPTimKiem.setText("");
+        txtTenTG.setText("");
+        txtTrangThai.setText("");
+        cbLoaiSP.setSelectedIndex(0);
+        cbMaNCC.setSelectedIndex(0);
+        labelHinhAnh.setIcon(null);
     }
     private void showProductTable() throws SQLException {
         model = new DefaultTableModel(new Object[]{ "Loại sản phẩm", "Mã sản phẩm", "Tên sản phẩm", "Đơn giá", "Số lượng tồn", "Trạng thái", "Nhà sản xuất", "Tên tác giả", "Số trang", "Nhà xuất bản"}, 0);
@@ -661,8 +715,10 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     	showProductTable();
     	disabled();
     }
-    private void insertSach() throws SQLException {
+    private void insertSanpham() throws SQLException {
+
     	DAO_Sanpham dao_sanpham = new DAO_Sanpham();
+
     	String tenLoaiSP = cbLoaiSP.getSelectedItem().toString();
     	String tenNhaCC = cbMaNCC.getSelectedItem().toString();
     	Sanpham sanpham = new Sanpham();
@@ -671,6 +727,12 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     		if(loaisp.getTenLoaiSp().equals(tenLoaiSP)) {
     			sanpham.setLoaiSp(new LoaiSanpham(loaisp.getMaLoaiSp(),loaisp.getTenLoaiSp()));
     		}
+    		
+    	}
+    	if(txtSoTrang.getText().equals("")) {
+    		sanpham.setSotrang(0);
+    	}else {
+    		sanpham.setSotrang(Integer.parseInt(txtSoTrang.getText().trim()));
     	}
     	List<NhaCungcap> dsNhacc = dao_sanpham.getNhacungcap();
     	for(NhaCungcap nhacc : dsNhacc) {
@@ -683,9 +745,8 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     	sanpham.setSoluongton(Integer.parseInt(txtSoLuongTon.getText().trim()));
     	sanpham.setTrangthai(txtTrangThai.getText());
     	sanpham.setTenTacgia(txtTenTG.getText().trim());
-    	sanpham.setSotrang(Integer.parseInt(txtSoTrang.getText()));
     	sanpham.setNhaXB(txtNXB.getText());
-    	if(dao_sanpham.insertSach(sanpham, in)) {
+    	if(dao_sanpham.insertSanpham(sanpham, path)) {
     		JOptionPane.showMessageDialog(this, "Thêm thành công!!");
     		showProductTable();
     	}else {
@@ -693,7 +754,7 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     	}
 
     }
-    private void insertSanpham() throws SQLException {
+    private void updateSanpham() throws SQLException {
     	DAO_Sanpham dao_sanpham = new DAO_Sanpham();
     	String tenLoaiSP = cbLoaiSP.getSelectedItem().toString();
     	String tenNhaCC = cbMaNCC.getSelectedItem().toString();
@@ -703,6 +764,12 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     		if(loaisp.getTenLoaiSp().equals(tenLoaiSP)) {
     			sanpham.setLoaiSp(new LoaiSanpham(loaisp.getMaLoaiSp(),loaisp.getTenLoaiSp()));
     		}
+    		
+    	}
+    	if(txtSoTrang.getText().equals("")) {
+    		sanpham.setSotrang(0);
+    	}else {
+    		sanpham.setSotrang(Integer.parseInt(txtSoTrang.getText().trim()));
     	}
     	List<NhaCungcap> dsNhacc = dao_sanpham.getNhacungcap();
     	for(NhaCungcap nhacc : dsNhacc) {
@@ -710,17 +777,21 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
     			sanpham.setNhaCC(new NhaCungcap(nhacc.getMaNCC(),nhacc.getTenNCC(),nhacc.getDiachi()));
     		}
     	}
+    	sanpham.setMaSanpham(Integer.parseInt(txtMaSP.getText().trim()));
     	sanpham.setTenSanpham(txtTenSP.getText().trim());
     	sanpham.setDongia(Double.parseDouble(txtDonGia.getText().trim()));
     	sanpham.setSoluongton(Integer.parseInt(txtSoLuongTon.getText().trim()));
     	sanpham.setTrangthai(txtTrangThai.getText());
-    	if(dao_sanpham.insertSanpham(sanpham, in)) {
-    		JOptionPane.showMessageDialog(this, "Thêm thành công!!");
+    	sanpham.setTenTacgia(txtTenTG.getText().trim());
+    	sanpham.setNhaXB(txtNXB.getText());
+    	if(dao_sanpham.updateSanpham(sanpham, path)) {
+    		JOptionPane.showMessageDialog(this, "Cập nhật Sản phẩm thành công!");
     		showProductTable();
-    	}else {
-    		JOptionPane.showMessageDialog(this, "Thêm không thành công! Hãy thử lại");
     	}
+    	else {
+    		JOptionPane.showMessageDialog(this, "Cập nhật Sản phẩm thất bại, Hãy thử lại!");
 
+    	}
     }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -759,33 +830,4 @@ public class ProductFrame extends javax.swing.JFrame implements MouseListener {
         });
     }
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -2,6 +2,7 @@ package DAO;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,10 +49,10 @@ public class DAO_Sanpham {
 		}
 		return dssp;
 	}
-	public ImageIcon getImg(String id) throws SQLException, IOException {
+	public String getImg(String id) throws SQLException, IOException {
 		 	InputStream in;
 	        FileOutputStream out;
-	        ImageIcon icon = null;
+	        String path = "";
 	        Connection con  = ConnectDatabase.getConnection();
 	        String sql = "Select * from sanpham  where MaSP = "+id;
 	        PreparedStatement stmt = con.prepareStatement(sql);
@@ -64,10 +65,10 @@ public class DAO_Sanpham {
 	            while(in.read(buffer) >0){
 	                out.write(buffer);
 	            }
-	            String path = file.getAbsolutePath();
-	            icon = new ImageIcon(path);
+	            path = file.getAbsolutePath();
 	        }
-	        return icon;
+	        out.close();
+	        return path;
 	}
 	public List<LoaiSanpham> getLoaiSanpham() throws SQLException{
 		String sql = "Select * from loaisanpham";
@@ -105,11 +106,12 @@ public class DAO_Sanpham {
 		int n = stmt.executeUpdate();
 		return n>0;	
 	}
-	public boolean insertSach(Sanpham sanpham, FileInputStream in) {
+	public boolean insertSanpham(Sanpham sanpham, String path) {
 		String sql = "Insert into sanpham (TenSP, DonGia, SoLuongTon, TrangThai, HinhAnh, TenTacGia, SoTrang, NXB, MaLoaiSP, MaNCC) values (?,?,?,?,?,?,?,?,?,?)";
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt;
 		try {
+			FileInputStream in = new FileInputStream(path);
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, sanpham.getTenSanpham());
 			stmt.setDouble(2, sanpham.getDongia());
@@ -127,29 +129,40 @@ public class DAO_Sanpham {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
-		}
-	}
-	public boolean insertSanpham(Sanpham sanpham, FileInputStream input) {
-		String sql = "Insert into sanpham (TenSP, DonGia, SoLuongTon, TrangThai, HinhAnh, MaLoaiSP, MaNCC) values (?,?,?,?,?,?,?)";
-		Connection con = ConnectDatabase.getConnection();
-		try {
-			PreparedStatement stmt = con.prepareStatement(sql);
-			stmt = con.prepareStatement(sql);
-			stmt.setString(1, sanpham.getTenSanpham());
-			stmt.setDouble(2, sanpham.getDongia());
-			stmt.setInt(3, sanpham.getSoluongton());
-			stmt.setString(4,sanpham.getTrangthai());
-			stmt.setBinaryStream(5, input);
-			stmt.setString(6,sanpham.getLoaiSp().getMaLoaiSp());
-			stmt.setString(7, sanpham.getNhaCC().getMaNCC());
-			int n = stmt.executeUpdate();
-			return n >0;
-		} catch (SQLException e) {
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
-		
-		
+	}
+
+	public boolean updateSanpham(Sanpham sanpham, String path)  {
+		String sql = "UPDATE sanpham SET TenSP = ?, DonGia = ?, SoLuongTon = ?,TrangThai = ?,HinhAnh = ?,TenTacGia=?,SoTrang = ?,NXB=?,MaLoaiSP = ?, ManCC=?  WHERE MaSP = ?";
+		Connection con = ConnectDatabase.getConnection();
+		try {
+			FileInputStream in = new FileInputStream(path);
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, sanpham.getTenSanpham());
+			stmt.setDouble(2, sanpham.getDongia());
+			stmt.setInt(3, sanpham.getSoluongton());
+			stmt.setString(4, sanpham.getTrangthai());
+			stmt.setBinaryStream(5, in);
+			stmt.setString(6, sanpham.getTenTacgia());
+			stmt.setInt(7, sanpham.getSotrang());
+			stmt.setString(8, sanpham.getNhaXB());
+			stmt.setString(9, sanpham.getLoaiSp().getMaLoaiSp());
+			stmt.setString(10,sanpham.getNhaCC().getMaNCC());
+			stmt.setInt(11, sanpham.getMaSanpham());
+			int n = stmt.executeUpdate();
+			return n>0;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 }
