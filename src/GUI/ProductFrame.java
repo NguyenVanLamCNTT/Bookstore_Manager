@@ -509,7 +509,10 @@ public class ProductFrame extends javax.swing.JFrame{
         	if(chucnang == 1) {
         		insertSanpham();
         	}else {
-        		updateSanpham();
+        		int yes = JOptionPane.showConfirmDialog(this,"Bạn có chắc muốn cập nhật Sản phẩm này?","Cảnh báo", JOptionPane.YES_NO_CANCEL_OPTION);
+        		if(yes == JOptionPane.YES_OPTION) {
+            		updateSanpham();
+        		}
         	}
 			path = "";
 			refesh();
@@ -527,11 +530,24 @@ public class ProductFrame extends javax.swing.JFrame{
     	deleteSanpham(txtMaSP.getText().trim());
     }
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-       refesh();
+       try {
+		refesh();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
         // TODO add your handling code here:
+    	try {
+    		tableQuanLySP.removeAll();
+			showProductTable();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }//GEN-LAST:event_btnTimActionPerformed
 
     private void btnChonanhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonanhActionPerformed
@@ -650,7 +666,7 @@ public class ProductFrame extends javax.swing.JFrame{
     	cbLoaiSP.setEnabled(true);
     	cbMaNCC.setEnabled(true);
     }
-    private void refesh() {
+    private void refesh() throws SQLException {
     	disabled();
     	btnThem.setEnabled(true);
         txtDonGia.setText("");
@@ -666,24 +682,30 @@ public class ProductFrame extends javax.swing.JFrame{
         cbLoaiSP.setSelectedIndex(0);
         cbMaNCC.setSelectedIndex(0);
         labelHinhAnh.setIcon(null);
+        showProductTable();
     }
     private void showProductTable() throws SQLException {
         model = new DefaultTableModel(new Object[]{ "Loại sản phẩm", "Mã sản phẩm", "Tên sản phẩm", "Đơn giá", "Số lượng tồn", "Trạng thái", "Nhà sản xuất", "Tên tác giả", "Số trang", "Nhà xuất bản"}, 0);
     	DAO_Sanpham dao_sanpham = new DAO_Sanpham();
-    	List<Sanpham> list = dao_sanpham.getSanpham();
-    	for(Sanpham sanpham : list) {
-    		int sotrang = sanpham.getSotrang();
-    		String st ;
-    		if(sotrang == 0){
-    			st = "";
-    		}else
-    			st=sanpham.getSotrang()+"";
-    		Object[] tableModel = {sanpham.getLoaiSp().getTenLoaiSp(),sanpham.getMaSanpham(),sanpham.getTenSanpham(),sanpham.getDongia()+""
-    								,sanpham.getSoluongton(),sanpham.getTrangthai(),sanpham.getNhaCC().getTenNCC(),sanpham.getTenTacgia(),st
-    								,sanpham.getNhaXB()};
-    		model.addRow(tableModel);
+    	List<Sanpham> list = dao_sanpham.getSanpham(txtTenSPTimKiem.getText());
+    	if(list.size()==0) {
+    		JOptionPane.showMessageDialog(this,"Không tìm thấy sản phẩm, Vui lòng thử lại");
+    	}else {
+        	for(Sanpham sanpham : list) {
+        		int sotrang = sanpham.getSotrang();
+        		String st ;
+        		if(sotrang == 0){
+        			st = "";
+        		}else
+        			st=sanpham.getSotrang()+"";
+        		Object[] tableModel = {sanpham.getLoaiSp().getTenLoaiSp(),sanpham.getMaSanpham(),sanpham.getTenSanpham(),sanpham.getDongia()+""
+        								,sanpham.getSoluongton(),sanpham.getTrangthai(),sanpham.getNhaCC().getTenNCC(),sanpham.getTenTacgia(),st
+        								,sanpham.getNhaXB()};
+        		model.addRow(tableModel);
+        	}
+        	tableQuanLySP.setModel(model);
     	}
-    	tableQuanLySP.setModel(model);
+
     }
     private void loadCbLoaiSp() throws SQLException {
     	DAO_Sanpham dao_sanpham = new DAO_Sanpham();

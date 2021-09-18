@@ -24,10 +24,10 @@ import connect.ConnectDatabase;
 public class DAO_Sanpham {
 	public DAO_Sanpham() {
 	}
-	public List<Sanpham> getSanpham() throws SQLException{
+	public List<Sanpham> getSanpham(String name) throws SQLException{
 		String sql = "Select * from sanpham sp inner join loaisanpham lsp "
 				+ "On sp.MaLoaiSP = lsp.MaLoaiSP inner join nhacungcap ncc "
-				+ "On ncc.MaNCC = sp.MaNCC";
+				+ "On ncc.MaNCC = sp.MaNCC where TenSP like '%"+name+"%'";
 		List<Sanpham> dssp = new ArrayList<Sanpham>();
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = con.prepareStatement(sql);
@@ -165,4 +165,25 @@ public class DAO_Sanpham {
 			return false;
 		}
 	}
+//	public List<Sanpham> findSanpham(String name){
+//		String sql = "Select * from sanpham where TenSp like '%?%'";
+//		List<Sanpham> listSanpham = new ArrayList<Sanpham>();
+//		Connection con = ConnectDatabase.getConnection();
+//		PreparedStatement stmt;
+//		try {
+//			stmt = con.prepareStatement(sql);
+//			stmt.setString(1, name);
+//			ResultSet rs = stmt.executeQuery();
+//			while(rs.next()) {
+//				Sanpham sanpham = new Sanpham();
+//				sanpham.setMaSanpham(rs.getInt("MaSP"));
+//				sanpham.setTenSanpham(rs.getString("TenSP"));
+//				sanpham.setDon
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//	}
 }
