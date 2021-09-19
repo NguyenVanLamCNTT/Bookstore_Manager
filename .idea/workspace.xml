@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7452f042-fa3c-4656-9c74-bad31e0764f2" name="Default Changelist" comment="" />
+    <list default="true" id="7452f042-fa3c-4656-9c74-bad31e0764f2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/brown_nhua.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/brown_nhua.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DAO/DAO_Sanpham.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/DAO_Sanpham.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GUI/ProductFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/ProductFrame.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,7 +34,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1632064676509</updated>
-      <workItem from="1632064677845" duration="324000" />
+      <workItem from="1632064677845" duration="808000" />
     </task>
     <servers />
   </component>

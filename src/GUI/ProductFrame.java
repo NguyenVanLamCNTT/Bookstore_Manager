@@ -581,6 +581,12 @@ public class ProductFrame extends javax.swing.JFrame{
 
    
 	private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        try {
+			refesh();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         enabled();
         btnLuu.setEnabled(true);
         txtMaSP.setEnabled(false);
