@@ -489,8 +489,7 @@ public class ProductFrame extends javax.swing.JFrame{
         );
 
         pack();
-
-
+        
     }
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
@@ -664,7 +663,6 @@ public class ProductFrame extends javax.swing.JFrame{
     	txtTenSP.setEnabled(true);
     	txtTenSPTimKiem.setEnabled(true);
     	txtTenTG.setEnabled(true);
-    	txtTrangThai.setEnabled(true);
     	btnChonanh.setEnabled(true);
     	cbLoaiSP.setEnabled(true);
     	cbMaNCC.setEnabled(true);
@@ -765,6 +763,11 @@ public class ProductFrame extends javax.swing.JFrame{
     			sanpham.setNhaCC(new NhaCungcap(nhacc.getMaNCC(),nhacc.getTenNCC(),nhacc.getDiachi()));
     		}
     	}
+    	if(Integer.parseInt(txtSoLuongTon.getText().trim()) >0) {
+    		txtTrangThai.setText("Còn hàng");
+    	}else {
+    		txtTrangThai.setText("Hết hàng");
+    	}
     	sanpham.setTenSanpham(txtTenSP.getText().trim());
     	sanpham.setDongia(Double.parseDouble(txtDonGia.getText().trim()));
     	sanpham.setSoluongton(Integer.parseInt(txtSoLuongTon.getText().trim()));
@@ -801,6 +804,11 @@ public class ProductFrame extends javax.swing.JFrame{
     		if(nhacc.getTenNCC().equals(tenNhaCC)) {
     			sanpham.setNhaCC(new NhaCungcap(nhacc.getMaNCC(),nhacc.getTenNCC(),nhacc.getDiachi()));
     		}
+    	}
+    	if(Integer.parseInt(txtSoLuongTon.getText().trim()) >0) {
+    		txtTrangThai.setText("Còn hàng");
+    	}else {
+    		txtTrangThai.setText("Hết hàng");
     	}
     	sanpham.setMaSanpham(Integer.parseInt(txtMaSP.getText().trim()));
     	sanpham.setTenSanpham(txtTenSP.getText().trim());
