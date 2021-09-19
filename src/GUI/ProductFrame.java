@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -70,6 +71,7 @@ public class ProductFrame extends javax.swing.JFrame{
     public ProductFrame() throws SQLException {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         disabled();
         showProductTable();
         loadCbLoaiSp();
@@ -487,6 +489,7 @@ public class ProductFrame extends javax.swing.JFrame{
         );
 
         pack();
+
 
     }
 
