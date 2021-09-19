@@ -1,20 +1,30 @@
 package Beans;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.Blob;
+
+import javax.swing.ImageIcon;
+
 public class Sanpham {
 	private int maSanpham;
 	private String tenSanpham;
 	private double dongia;
 	private int soluongton;
 	private String trangthai;
-	private String hinhanh;
+	private ImageIcon hinhanh;
 	private LoaiSanpham loaiSp;
 	private NhaCungcap nhaCC;
+	private String tenTacgia;
+	private int sotrang;
+	private String nhaXB;
 	public Sanpham() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Sanpham(int maSanpham, String tenSanpham, double dongia, int soluongton, String trangthai, String hinhanh,
-			LoaiSanpham loaiSp, NhaCungcap nhaCC) {
+
+	public Sanpham(int maSanpham, String tenSanpham, double dongia, int soluongton, String trangthai, ImageIcon hinhanh,
+			LoaiSanpham loaiSp, NhaCungcap nhaCC, String tenTacgia, int sotrang, String nhaXB) {
 		super();
 		this.maSanpham = maSanpham;
 		this.tenSanpham = tenSanpham;
@@ -24,6 +34,9 @@ public class Sanpham {
 		this.hinhanh = hinhanh;
 		this.loaiSp = loaiSp;
 		this.nhaCC = nhaCC;
+		this.tenTacgia = tenTacgia;
+		this.sotrang = sotrang;
+		this.nhaXB = nhaXB;
 	}
 
 	public int getMaSanpham() {
@@ -56,10 +69,10 @@ public class Sanpham {
 	public void setTrangthai(String trangthai) {
 		this.trangthai = trangthai;
 	}
-	public String getHinhanh() {
+	public ImageIcon getHinhanh() {
 		return hinhanh;
 	}
-	public void setHinhanh(String hinhanh) {
+	public void setHinhanh(ImageIcon hinhanh) {
 		this.hinhanh = hinhanh;
 	}
 
@@ -77,6 +90,30 @@ public class Sanpham {
 
 	public void setNhaCC(NhaCungcap nhaCC) {
 		this.nhaCC = nhaCC;
+	}
+
+	public String getTenTacgia() {
+		return tenTacgia;
+	}
+
+	public void setTenTacgia(String tenTacgia) {
+		this.tenTacgia = tenTacgia;
+	}
+
+	public int getSotrang() {
+		return sotrang;
+	}
+
+	public void setSotrang(int sotrang) {
+		this.sotrang = sotrang;
+	}
+
+	public String getNhaXB() {
+		return nhaXB;
+	}
+
+	public void setNhaXB(String nhaXB) {
+		this.nhaXB = nhaXB;
 	}
 	
 }

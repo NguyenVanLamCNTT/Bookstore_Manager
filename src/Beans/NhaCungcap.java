@@ -5,7 +5,7 @@ public class NhaCungcap {
 	private String tenNCC;
 	private String diachi;
 	
-	public NhaCungcap(String maNCC) {
+	public NhaCungcap() {
 		this.maNCC = maNCC;
 	}
 	public NhaCungcap(String maNCC, String tenNCC, String diachi) {
