@@ -5,6 +5,13 @@
  */
 package GUI;
 
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import DAO.DAO_Login;
 import connect.ConnectDatabase;
 
 
@@ -70,7 +77,12 @@ class LoginFrame extends javax.swing.JFrame {
                 btnDangNhapActionPerformed(evt);
             }
         });
-
+        
+            btnThoat.addActionListener(new java.awt.event.ActionListener() {
+        	 public void actionPerformed(java.awt.event.ActionEvent evt) {
+        		 btnThoatActionPerformed(evt);
+             }
+        });
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/multiply.png"))); // NOI18N
         btnThoat.setText("Thoát");
 
@@ -162,8 +174,23 @@ class LoginFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent e) {//GEN-FIRST:event_btnDangNhapActionPerformed
         // TODO add your handling code here:
+    	if(txtTenTK.getText().equals("") || txtMK.getText().equals("")) {
+    		JOptionPane.showMessageDialog(this,"Vui lòng nhập đầy đủ thông tin!");
+    		txtMK.setText("");
+    	}else try {
+    		if(dao_login.checkLogin(txtTenTK.getText(),txtMK.getText())) {
+    			HomeFrame home=new HomeFrame();   			
+    			home.setVisible(true);
+    			home.setLocationRelativeTo(null);
+    		}else {
+    			JOptionPane.showMessageDialog(this,"Sai thông tin tài khoản!!");
+    			txtMK.setText("");
+    		}
+    	}catch(Exception e1){
+    		System.err.println(e1);
+    	}
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void txtMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMKActionPerformed
@@ -176,8 +203,18 @@ class LoginFrame extends javax.swing.JFrame {
 
     private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
         // TODO add your handling code here:
+    	ChangePasswordFrame changepass=new ChangePasswordFrame();
+    	
+    	changepass.setVisible(true);
+    	changepass.setLocationRelativeTo(null);
+    	
+    	
     }//GEN-LAST:event_btnDoiMKActionPerformed
-
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt)  {//GEN-FIRST:event_txtTenTKActionPerformed
+        // TODO add your handling code here:
+    	WindowEvent closingEvent = new WindowEvent( this, WindowEvent.WINDOW_CLOSING);
+    	Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closingEvent);
+    }
     /**
      * @param args the command line arguments
      */
@@ -225,5 +262,6 @@ class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JPanel panelDangNhap;
     private javax.swing.JPasswordField txtMK;
     private javax.swing.JTextField txtTenTK;
+    DAO_Login dao_login=new DAO_Login();
     // End of variables declaration//GEN-END:variables
 }
