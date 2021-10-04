@@ -1,7 +1,7 @@
 package Beans;
 
 public class Nhanvien {
-	private int maNV;
+	private String maNV;
 	private String tenNV;
 	private String sodienthoai;
 	private String chucvu;
@@ -11,7 +11,7 @@ public class Nhanvien {
 	public Nhanvien() {
 		// TODO Auto-generated constructor stub
 	}
-	public Nhanvien(int maNV, String tenNV, String sodienthoai, String chucvu, String diachi, String email,
+	public Nhanvien(String maNV, String tenNV, String sodienthoai, String chucvu, String diachi, String email,
 			Taikhoan taikhoan) {
 		super();
 		this.maNV = maNV;
@@ -22,10 +22,10 @@ public class Nhanvien {
 		this.email = email;
 		this.taikhoan = taikhoan;
 	}
-	public int getMaNV() {
+	public String getMaNV() {
 		return maNV;
 	}
-	public void setMaNV(int maNV) {
+	public void setMaNV(String maNV) {
 		this.maNV = maNV;
 	}
 	public String getTenNV() {

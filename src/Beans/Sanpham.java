@@ -12,7 +12,7 @@ public class Sanpham {
 	private double dongia;
 	private int soluongton;
 	private String trangthai;
-	private ImageIcon hinhanh;
+	private byte[] hinhanh;
 	private LoaiSanpham loaiSp;
 	private NhaCungcap nhaCC;
 	private String tenTacgia;
@@ -23,7 +23,7 @@ public class Sanpham {
 	}
 	
 
-	public Sanpham(int maSanpham, String tenSanpham, double dongia, int soluongton, String trangthai, ImageIcon hinhanh,
+	public Sanpham(int maSanpham, String tenSanpham, double dongia, int soluongton, String trangthai, byte[] hinhanh,
 			LoaiSanpham loaiSp, NhaCungcap nhaCC, String tenTacgia, int sotrang, String nhaXB) {
 		super();
 		this.maSanpham = maSanpham;
@@ -69,10 +69,10 @@ public class Sanpham {
 	public void setTrangthai(String trangthai) {
 		this.trangthai = trangthai;
 	}
-	public ImageIcon getHinhanh() {
+	public byte[] getHinhanh() {
 		return hinhanh;
 	}
-	public void setHinhanh(ImageIcon hinhanh) {
+	public void setHinhanh(byte[] hinhanh) {
 		this.hinhanh = hinhanh;
 	}
 

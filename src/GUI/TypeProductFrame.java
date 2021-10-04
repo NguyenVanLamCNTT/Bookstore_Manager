@@ -6,21 +6,14 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import com.mysql.cj.x.protobuf.MysqlxCrud.Delete;
 
 import Beans.LoaiSanpham;
 import DAO.DAO_Loaisanpham;
