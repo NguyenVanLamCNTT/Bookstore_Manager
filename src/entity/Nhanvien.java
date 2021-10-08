@@ -8,11 +8,11 @@ public class Nhanvien {
 	private String diachi;
 	private String email;
 	private String matkhau;
-		
+	private double luongcoban;
 	public Nhanvien() {
 		super();
 	}
-	public Nhanvien(String maNV, String tenNV, String sodienthoai, String chucvu, String diachi, String email, String matkhau) {
+	public Nhanvien(String maNV, String tenNV, String sodienthoai, String chucvu, String diachi, String email, String matkhau, double luongcoban) {
 		super();
 		this.maNV = maNV;
 		this.tenNV = tenNV;
@@ -21,6 +21,7 @@ public class Nhanvien {
 		this.diachi = diachi;
 		this.email = email;
 		this.matkhau = matkhau;
+		this.luongcoban = luongcoban;
 	}
 	public String getMaNV() {
 		return maNV;
@@ -64,6 +65,13 @@ public class Nhanvien {
 	}
 	public void setMatkhau(String matkhau) {
 		this.matkhau = matkhau;
+	}
+	
+	public double getLuongcoban() {
+		return luongcoban;
+	}
+	public void setLuongcoban(double luongcoban) {
+		this.luongcoban = luongcoban;
 	}
 	@Override
 	public String toString() {
