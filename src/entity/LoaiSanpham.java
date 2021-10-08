@@ -1,4 +1,4 @@
-package Beans;
+package entity;
 
 public class LoaiSanpham {
 	private String maLoaiSp;

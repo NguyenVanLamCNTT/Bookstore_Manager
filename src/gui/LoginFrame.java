@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package gui;
 
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -11,8 +11,8 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import DAO.DAO_Login;
 import connect.ConnectDatabase;
+import dao.DAO_Login;
 
 
 class LoginFrame extends javax.swing.JFrame {

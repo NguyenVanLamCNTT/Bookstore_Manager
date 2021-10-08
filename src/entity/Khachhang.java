@@ -1,4 +1,4 @@
-package Beans;
+package entity;
 
 public class Khachhang {
 	private int maKH;

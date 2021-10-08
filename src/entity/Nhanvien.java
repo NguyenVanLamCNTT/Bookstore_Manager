@@ -1,4 +1,4 @@
-package Beans;
+package entity;
 
 public class Nhanvien {
 	private String maNV;
@@ -7,12 +7,12 @@ public class Nhanvien {
 	private String chucvu;
 	private String diachi;
 	private String email;
-	private Taikhoan taikhoan;
+	private String matkhau;
+		
 	public Nhanvien() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
-	public Nhanvien(String maNV, String tenNV, String sodienthoai, String chucvu, String diachi, String email,
-			Taikhoan taikhoan) {
+	public Nhanvien(String maNV, String tenNV, String sodienthoai, String chucvu, String diachi, String email, String matkhau) {
 		super();
 		this.maNV = maNV;
 		this.tenNV = tenNV;
@@ -20,7 +20,7 @@ public class Nhanvien {
 		this.chucvu = chucvu;
 		this.diachi = diachi;
 		this.email = email;
-		this.taikhoan = taikhoan;
+		this.matkhau = matkhau;
 	}
 	public String getMaNV() {
 		return maNV;
@@ -58,11 +58,19 @@ public class Nhanvien {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Taikhoan getTaikhoan() {
-		return taikhoan;
+
+	public String getMatkhau() {
+		return matkhau;
 	}
-	public void setTaikhoan(Taikhoan taikhoan) {
-		this.taikhoan = taikhoan;
+	public void setMatkhau(String matkhau) {
+		this.matkhau = matkhau;
 	}
+	@Override
+	public String toString() {
+		return "Nhanvien [maNV=" + maNV + ", tenNV=" + tenNV + ", sodienthoai=" + sodienthoai + ", chucvu=" + chucvu
+				+ ", diachi=" + diachi + ", email=" + email + ", taikhoan=" + ", matkhau=" + matkhau + "]";
+	}
+	
+
 	
 }

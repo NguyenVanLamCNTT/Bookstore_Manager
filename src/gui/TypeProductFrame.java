@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package gui;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -15,8 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Beans.LoaiSanpham;
-import DAO.DAO_Loaisanpham;
+import dao.DAO_Loaisanpham;
+import entity.LoaiSanpham;
 
 /**
  *

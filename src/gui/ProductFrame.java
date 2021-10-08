@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package gui;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -31,10 +31,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import Beans.LoaiSanpham;
-import Beans.NhaCungcap;
-import Beans.Sanpham;
-import DAO.DAO_Sanpham;
+import dao.DAO_Sanpham;
+import entity.LoaiSanpham;
+import entity.NhaCungcap;
+import entity.Sanpham;
 
 /**
  *

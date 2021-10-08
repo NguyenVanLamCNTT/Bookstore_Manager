@@ -1,4 +1,4 @@
-package DAO;
+package dao;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,10 +15,10 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-import Beans.LoaiSanpham;
-import Beans.NhaCungcap;
-import Beans.Sanpham;
 import connect.ConnectDatabase;
+import entity.LoaiSanpham;
+import entity.NhaCungcap;
+import entity.Sanpham;
 
 
 public class DAO_Sanpham {

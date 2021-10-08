@@ -1,4 +1,4 @@
-package DAO;
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import Beans.Taikhoan;
 import connect.ConnectDatabase;
+import entity.Taikhoan;
 
 public class DAO_Login {
 	ArrayList<Taikhoan> dstk;

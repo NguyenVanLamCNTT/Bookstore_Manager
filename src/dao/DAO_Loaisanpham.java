@@ -1,4 +1,4 @@
-package DAO;
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Beans.LoaiSanpham;
 import connect.ConnectDatabase;
+import entity.LoaiSanpham;
 
 public class DAO_Loaisanpham {
 	 public DAO_Loaisanpham() {

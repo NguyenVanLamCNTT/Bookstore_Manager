@@ -1,4 +1,4 @@
-package Beans;
+package entity;
 
 public class NhaCungcap {
 	private String maNCC;
