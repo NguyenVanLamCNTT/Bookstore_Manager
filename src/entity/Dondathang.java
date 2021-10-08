@@ -9,6 +9,7 @@ public class Dondathang {
 	private Date ngaydat;
 	private Date ngaygiao;
 	private double tongtien;
+	private TrangthaiDondathang trangthai;
 	
 	public Dondathang() {
 		// TODO Auto-generated constructor stub
@@ -16,7 +17,7 @@ public class Dondathang {
 
 	
 	public Dondathang(int maDonhang, Khachhang khachHang, Nhanvien nhanvien, Date ngaydat, Date ngaygiao,
-			double tongtien) {
+			double tongtien, TrangthaiDondathang trangthai) {
 		super();
 		this.maDonhang = maDonhang;
 		this.khachHang = khachHang;
@@ -24,6 +25,7 @@ public class Dondathang {
 		this.ngaydat = ngaydat;
 		this.ngaygiao = ngaygiao;
 		this.tongtien = tongtien;
+		this.trangthai = trangthai;
 	}
 
 
@@ -74,6 +76,17 @@ public class Dondathang {
 	public void setTongtien(double tongtien) {
 		this.tongtien = tongtien;
 	}
+
+	
+	public TrangthaiDondathang getTrangthai() {
+		return trangthai;
+	}
+
+
+	public void setTrangthai(TrangthaiDondathang trangthai) {
+		this.trangthai = trangthai;
+	}
+
 
 	@Override
 	public String toString() {
