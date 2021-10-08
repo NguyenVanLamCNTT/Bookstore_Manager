@@ -23,28 +23,27 @@ import connect.ConnectDatabase;
 
 public class DAO_Sanpham {
 	public DAO_Sanpham() {
+		
 	}
 	public List<Sanpham> getSanpham(String name) throws SQLException{
-		String sql = "Select * from sanpham sp inner join loaisanpham lsp "
-				+ "On sp.MaLoaiSP = lsp.MaLoaiSP inner join nhacungcap ncc "
-				+ "On ncc.MaNCC = sp.MaNCC where TenSP like '%"+name+"%'";
+		String sql = "Select * from sanpham sp inner join loaisanpham lsp On sp.ma_loaisp = lsp.ma_loaisp inner join nhacungcap ncc On ncc.ma_ncc = sp.ma_ncc where sp.ten_sp like N'%"+name+"%'";
 		List<Sanpham> dssp = new ArrayList<Sanpham>();
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = con.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			Sanpham sanpham = new Sanpham();
-			sanpham.setMaSanpham(rs.getInt("MaSP"));
-			sanpham.setTenSanpham(rs.getString("TenSP"));
-			sanpham.setDongia(rs.getDouble("DonGia"));
-			sanpham.setSoluongton(rs.getInt("SoLuongTon"));
-			sanpham.setTrangthai(rs.getString("TrangThai"));
-			sanpham.setLoaiSp(new LoaiSanpham(rs.getString("MaLoaiSP"),rs.getString("TenLoaiSP")));
-			sanpham.setNhaCC(new NhaCungcap(rs.getString("MaNCC"),rs.getString("TenNCC"), rs.getString("DiaChi")));
+			sanpham.setMaSanpham(rs.getInt("ma_sanpham"));
+			sanpham.setTenSanpham(rs.getString("ten_sp"));
+			sanpham.setDongia(rs.getDouble("dongia"));
+			sanpham.setSoluongton(rs.getInt("soluongton"));
+			sanpham.setTrangthai(rs.getString("trangthai"));
+			sanpham.setLoaiSp(new LoaiSanpham(rs.getString("ma_loaisp"),rs.getString("tenloaisp")));
+			sanpham.setNhaCC(new NhaCungcap(rs.getString("ma_ncc"),rs.getString("ten_ncc"), rs.getString("diachi")));
 //			sanpham.setHinhanh();
-			sanpham.setNhaXB(rs.getString("NXB"));
-			sanpham.setSotrang(rs.getInt("Sotrang"));
-			sanpham.setTenTacgia(rs.getString("TenTacGia"));
+			sanpham.setNhaXB(rs.getString("nhaxuatban"));
+			sanpham.setSotrang(rs.getInt("sotrang"));
+			sanpham.setTenTacgia(rs.getString("ten_tacgia"));
 			dssp.add(sanpham);
 		}
 		return dssp;
@@ -54,13 +53,13 @@ public class DAO_Sanpham {
 	        FileOutputStream out;
 	        String path = "";
 	        Connection con  = ConnectDatabase.getConnection();
-	        String sql = "Select * from sanpham  where MaSP = "+id;
+	        String sql = "Select * from sanpham  where ma_sanpham = "+id;
 	        PreparedStatement stmt = con.prepareStatement(sql);
 	        ResultSet rs = stmt.executeQuery();
 	        File file = new File("brown_nhua.jpg");
 	        out = new FileOutputStream(file);
 	        if(rs.next()){
-	            in = rs.getBinaryStream("HinhAnh");
+	            in = rs.getBinaryStream("hinhanh");
 	            byte[] buffer = new byte[1024];
 	            while(in.read(buffer) >0){
 	                out.write(buffer);
@@ -78,8 +77,8 @@ public class DAO_Sanpham {
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			LoaiSanpham loaisp = new LoaiSanpham();
-			loaisp.setMaLoaiSp(rs.getString("MaLoaiSP"));
-			loaisp.setTenLoaiSp(rs.getString("TenLoaiSP"));
+			loaisp.setMaLoaiSp(rs.getString("ma_loaisp"));
+			loaisp.setTenLoaiSp(rs.getString("tenloaisp"));
 			dsLoaiSp.add(loaisp);
 		}
 		return dsLoaiSp;
@@ -92,9 +91,9 @@ public class DAO_Sanpham {
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			NhaCungcap nhacungcap = new NhaCungcap();
-			nhacungcap.setMaNCC(rs.getString("MaNCC"));
-			nhacungcap.setTenNCC(rs.getString("TenNCC"));
-			nhacungcap.setDiachi(rs.getString("DiaChi"));
+			nhacungcap.setMaNCC(rs.getString("ma_ncc"));
+			nhacungcap.setTenNCC(rs.getString("ten_ncc"));
+			nhacungcap.setDiachi(rs.getString("diachi"));
 			dsNhacungcap.add(nhacungcap);
 		}
 		return dsNhacungcap;
@@ -107,7 +106,7 @@ public class DAO_Sanpham {
 		return n>0;	
 	}
 	public boolean insertSanpham(Sanpham sanpham, String path) {
-		String sql = "Insert into sanpham (TenSP, DonGia, SoLuongTon, TrangThai, HinhAnh, TenTacGia, SoTrang, NXB, MaLoaiSP, MaNCC) values (?,?,?,?,?,?,?,?,?,?)";
+		String sql = "Insert into sanpham (ten_sp, dongia, soluongton, trangthai, hinhanh, ten_tacgia, sotrang, nhaxuatban, ma_loaisp, ma_ncc) values (?,?,?,?,?,?,?,?,?,?)";
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt;
 		try {

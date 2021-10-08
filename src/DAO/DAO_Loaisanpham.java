@@ -21,7 +21,7 @@ public class DAO_Loaisanpham {
 		 PreparedStatement stmt = con.prepareStatement(sql);
 		 ResultSet rs = stmt.executeQuery();
 		 while(rs.next()) {
-			 LoaiSanpham loaisp = new LoaiSanpham(rs.getString("MaLoaiSP"), rs.getString("TenLoaiSP"));
+			 LoaiSanpham loaisp = new LoaiSanpham(rs.getString("ma_loaisp"), rs.getString("tenloaisp"));
 			 dslsp.add(loaisp); 
 		 }
 		 return dslsp;
@@ -44,7 +44,7 @@ public class DAO_Loaisanpham {
 	 public static boolean delete(String maLoaiSP) {
 		 try {
 			 Connection con = ConnectDatabase.getConnection();
-			 String sql = "delete from loaisanpham where MaLoaiSP=?";
+			 String sql = "delete from loaisanpham where ma_loaisp=?";
 			 PreparedStatement stmt = con.prepareStatement(sql);
 			 stmt.setString(1, maLoaiSP);
 			 stmt.executeUpdate();
