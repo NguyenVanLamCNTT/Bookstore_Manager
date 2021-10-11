@@ -5,6 +5,17 @@
  */
 package gui;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import dao.DAO_Hoadon;
+import dao.DAO_Khachhang;
+import dao.DAO_Loaisanpham;
+import entity.Hoadon;
+import entity.Khachhang;
+import entity.LoaiSanpham;
+import entity.Sanpham;
+
 /**
  *
  * @author Lenovo
@@ -16,8 +27,11 @@ public class SaleFrame extends javax.swing.JFrame {
      */
     public SaleFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        disabled();
+        loadCbxLoaiSanpham();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -151,6 +165,15 @@ public class SaleFrame extends javax.swing.JFrame {
         labelLoaiSanPham.setText("Loại sản phẩm");
 
         cbLoaiSP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbLoaiSP.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cbLoaiSPPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         labelTenSP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelTenSP.setText("Tên sản phẩm");
@@ -286,29 +309,28 @@ public class SaleFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(358, 358, 358)
-                                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(22, 22, 22)
                                 .addComponent(btnThoat)
                                 .addGap(503, 503, 503)
                                 .addComponent(labelBanHang))
-                            .addComponent(btnThemSP, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnThemSP, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                                    .addComponent(btnHoaDonMoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(165, 165, 165)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(358, 358, 358)
-                                        .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(119, 119, 119)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnQuayLai, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(75, 75, 75)
-                                        .addComponent(btnHoaDonMoi)
-                                        .addGap(69, 69, 69)
-                                        .addComponent(btnInHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(119, 119, 119)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnQuayLai, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(73, 73, 73)
+                                                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(99, 99, 99)
+                                                .addComponent(btnInHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(labelTongTienHD)
@@ -398,19 +420,19 @@ public class SaleFrame extends javax.swing.JFrame {
                             .addComponent(valueThanhTien))
                         .addGap(54, 54, 54)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnThemSP)
                     .addComponent(btnLuu)
-                    .addComponent(btnQuayLai))
+                    .addComponent(btnQuayLai)
+                    .addComponent(btnHoaDonMoi))
                 .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSua)
-                    .addComponent(btnXoa)
                     .addComponent(btnThanhToan)
-                    .addComponent(btnHoaDonMoi)
-                    .addComponent(btnInHoaDon))
+                    .addComponent(btnInHoaDon)
+                    .addComponent(btnThemSP)
+                    .addComponent(btnXoa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelMaHD)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelTongTienHD)
                     .addComponent(labelTienNhanTuKH)
@@ -420,7 +442,7 @@ public class SaleFrame extends javax.swing.JFrame {
                     .addComponent(txtTienNhanTuKH, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(valueTienDu)
                     .addComponent(valueTongTien))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(18, 18, Short.MAX_VALUE))
         );
 
         tableBanHang.setModel(new javax.swing.table.DefaultTableModel(
@@ -470,11 +492,16 @@ public class SaleFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThoatActionPerformed
 
     private void btnThemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPActionPerformed
-        // TODO add your handling code here:
+        btnLuu.setEnabled(true);
+        
+    	
     }//GEN-LAST:event_btnThemSPActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
+    	insertKhachhang();
+    	
+    	
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -487,6 +514,7 @@ public class SaleFrame extends javax.swing.JFrame {
 
     private void btnHoaDonMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonMoiActionPerformed
         // TODO add your handling code here:
+    	enabled();
     }//GEN-LAST:event_btnHoaDonMoiActionPerformed
 
     private void btnInHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHoaDonActionPerformed
@@ -501,9 +529,81 @@ public class SaleFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void cbLoaiSPPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cbLoaiSPPopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+    	String name = cbLoaiSP.getSelectedItem().toString();
+    	loadSanphamByName(name);
+    }//GEN-LAST:event_cbLoaiSPPopupMenuWillBecomeInvisible
+
+    private void disabled() {
+    	btnLuu.setEnabled(false);
+    	btnXoa.setEnabled(false);
+    	btnThanhToan.setEnabled(false);
+    	btnThemSP.setEnabled(false);
+    	btnInHoaDon.setEnabled(false);
+    	btnSua.setEnabled(false);
+    	txtTienNhanTuKH.setEnabled(false);
+    	txtDiaChi.setEnabled(false);
+    	txtEmail.setEnabled(false);
+    	txtMaTimKiem.setEnabled(false);
+    	txtSDT.setEnabled(false);
+    	txtSoLuong.setEnabled(false);
+    	txtTenKH.setEnabled(false);
+    	cbLoaiSP.setEnabled(false);
+    	cbTenSP.setEnabled(false);
+    }
+    
+    private void enabled(){
+    	txtTienNhanTuKH.setEnabled(true);
+    	txtDiaChi.setEnabled(true);
+    	txtEmail.setEnabled(true);
+    	txtMaTimKiem.setEnabled(true);
+    	txtSDT.setEnabled(true);
+    	txtSoLuong.setEnabled(true);
+    	txtTenKH.setEnabled(true);
+    	cbLoaiSP.setEnabled(true);
+    	cbTenSP.setEnabled(true);
+    	btnThemSP.setEnabled(true);
+    }
+    
+    private void loadCbxLoaiSanpham() {
+    	cbLoaiSP.removeAllItems();
+    	DAO_Loaisanpham dao_loaisanpham = new DAO_Loaisanpham();
+    	try {
+			List<LoaiSanpham> dsLoaiSP = dao_loaisanpham.getLoaiSanPham();
+			for(LoaiSanpham loaisp : dsLoaiSP) {
+				cbLoaiSP.addItem(loaisp.getTenLoaiSp());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+    
+    private void loadSanphamByName(String name) {
+    	cbTenSP.removeAllItems();
+    	DAO_Loaisanpham dao_Loaisanpham = new DAO_Loaisanpham();
+    	List<Sanpham> dsSanpham = dao_Loaisanpham.getSanpham(name);
+    	for(Sanpham sanpham : dsSanpham) {
+    		cbTenSP.addItem(sanpham.getTenSanpham());
+    	}
+    }
+    
+    private void insertKhachhang() {
+    	DAO_Khachhang dao_khachhang = new DAO_Khachhang();
+    	Khachhang khachhang = new Khachhang();
+    	khachhang.setTenKH(txtTenKH.getText());
+    	khachhang.setSodienthoai(txtSDT.getText());
+    	khachhang.setEmail(txtEmail.getText());
+    	khachhang.setDiachi(txtDiaChi.getText());
+    	dao_khachhang.insertKhachhang(khachhang);
+    }
+    private void insertHoadon(Hoadon hoadon) {
+    	DAO_Hoadon dao_Hoadon = new DAO_Hoadon();
+    	dao_Hoadon.insertHoadon(hoadon);
+    	
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
