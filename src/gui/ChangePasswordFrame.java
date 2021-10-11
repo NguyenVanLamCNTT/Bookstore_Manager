@@ -199,6 +199,7 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
 
     private void btnKetThucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKetThucActionPerformed
         // TODO add your handling code here:
+    	
     }//GEN-LAST:event_btnKetThucActionPerformed
 
     private void txtTenTKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenTKActionPerformed
