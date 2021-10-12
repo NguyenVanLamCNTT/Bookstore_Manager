@@ -11,9 +11,11 @@ import java.util.List;
 import dao.DAO_Hoadon;
 import dao.DAO_Khachhang;
 import dao.DAO_Loaisanpham;
+import dao.DAO_Sanpham;
 import entity.Hoadon;
 import entity.Khachhang;
 import entity.LoaiSanpham;
+import entity.Nhanvien;
 import entity.Sanpham;
 
 /**
@@ -179,12 +181,27 @@ public class SaleFrame extends javax.swing.JFrame {
         labelTenSP.setText("Tên sản phẩm");
 
         cbTenSP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbTenSP.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cbTenSPPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         labelDonGia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelDonGia.setText("Đơn giá");
 
         labelSoLuong.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelSoLuong.setText("Số lượng");
+
+        txtSoLuong.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSoLuongKeyReleased(evt);
+            }
+        });
 
         labelThanhTien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelThanhTien.setText("Thành tiền");
@@ -499,8 +516,20 @@ public class SaleFrame extends javax.swing.JFrame {
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
-    	insertKhachhang();
-    	
+//    	insertKhachhang();
+    	Khachhang khachhang = new Khachhang();
+    	khachhang.setTenKH(txtTenKH.getText());
+    	khachhang.setDiachi(txtDiaChi.getText());
+    	khachhang.setEmail(txtEmail.getText());
+    	khachhang.setSodienthoai(txtSDT.getText());
+    	if(kiemtratontaiKhachhang(khachhang)) {
+    		khachhang.setMaKH(new DAO_Khachhang().getMaKhachhang(txtSDT.getText()));
+    		insertHoadon(khachhang);
+    	}else {
+    		insertKhachhang(khachhang);
+    		khachhang.setMaKH(new DAO_Khachhang().getMaKhachhang(txtSDT.getText()));
+    		insertHoadon(khachhang);
+    	}
     	
     }//GEN-LAST:event_btnLuuActionPerformed
 
@@ -534,6 +563,31 @@ public class SaleFrame extends javax.swing.JFrame {
     	String name = cbLoaiSP.getSelectedItem().toString();
     	loadSanphamByName(name);
     }//GEN-LAST:event_cbLoaiSPPopupMenuWillBecomeInvisible
+
+    private void cbTenSPPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cbTenSPPopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+    	DAO_Sanpham dao_sanpham = new DAO_Sanpham();
+//    	Sanpham sanpham = new Sanpham();
+    	try {
+			List<Sanpham> dsSanpham = dao_sanpham.getSanpham(cbTenSP.getSelectedItem().toString());
+			for(Sanpham sanpham : dsSanpham) {
+				valueDonGia.setText(sanpham.getDongia()+"");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }//GEN-LAST:event_cbTenSPPopupMenuWillBecomeInvisible
+
+    private void txtSoLuongKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSoLuongKeyReleased
+        // TODO add your handling code here:
+        int soluong = Integer.parseInt(txtSoLuong.getText());
+        double dongia = Double.parseDouble(valueDonGia.getText());
+        double tongtien = soluong * dongia;
+        valueThanhTien.setText(tongtien+"");
+    }//GEN-LAST:event_txtSoLuongKeyReleased
 
     private void disabled() {
     	btnLuu.setEnabled(false);
@@ -590,19 +644,27 @@ public class SaleFrame extends javax.swing.JFrame {
     	}
     }
     
-    private void insertKhachhang() {
+    private void insertKhachhang(Khachhang khachhang) {
     	DAO_Khachhang dao_khachhang = new DAO_Khachhang();
-    	Khachhang khachhang = new Khachhang();
-    	khachhang.setTenKH(txtTenKH.getText());
-    	khachhang.setSodienthoai(txtSDT.getText());
-    	khachhang.setEmail(txtEmail.getText());
-    	khachhang.setDiachi(txtDiaChi.getText());
     	dao_khachhang.insertKhachhang(khachhang);
     }
-    private void insertHoadon(Hoadon hoadon) {
+    private void insertHoadon(Khachhang khachhang) {
     	DAO_Hoadon dao_Hoadon = new DAO_Hoadon();
+    	Nhanvien nhanvien = new Nhanvien();
+    	nhanvien.setMaNV("NVLam");
+    	Hoadon hoadon = new Hoadon();
+    	hoadon.setKhachhang(khachhang);
+    	hoadon.setNhanvien(nhanvien);
+    	hoadon.setTongtien(Double.parseDouble(valueThanhTien.getText()));
     	dao_Hoadon.insertHoadon(hoadon);
-    	
+    }
+    private boolean kiemtratontaiKhachhang(Khachhang khachhang) {
+    	DAO_Khachhang dao_khachang = new DAO_Khachhang();
+    	List<Khachhang> dsKhachang = dao_khachang.kiemtratontaiKhachhang(khachhang);
+    	if(dsKhachang.size() != 0)
+    		return true;
+    	else
+    		return false;
     }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

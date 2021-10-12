@@ -30,7 +30,7 @@ public class DAO_Khachhang {
 		
 		return false;
 	}
-	public boolean kiemtratontaiKhachhang(Khachhang khachhang) {
+	public List<Khachhang> kiemtratontaiKhachhang(Khachhang khachhang) {
 		List<Khachhang> dsKhachhang = new ArrayList<Khachhang>();
 		Connection con = ConnectDatabase.getConnection();
 		String sql = "Select * from khachhang where tenkh = N'"+khachhang.getTenKH()+"' and sodienthoai = '"+khachhang.getSodienthoai() +"' and diachi = '"+khachhang.getDiachi()+"' and email ='"+khachhang.getEmail()+"'";
@@ -38,17 +38,31 @@ public class DAO_Khachhang {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				Khachhang khachhang1 = new Khachhang();
-				khachhang1.setMaKH(rs.getInt("ma_kh"));
-				dsKhachhang.add(khachhang1);
+				khachhang.setMaKH(rs.getInt("ma_kh"));
+				dsKhachhang.add(khachhang);
 			}
-			if(dsKhachhang.size()==0) {
-				return true;
-			}
+			return dsKhachhang;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
-		return false;
+	}
+	public int getMaKhachhang(String sodienthoai) {
+		int makh = 0 ;
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "Select ma_kh from khachhang where sodienthoai = '"+sodienthoai+"'";
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				makh = rs.getInt("ma_kh");
+			}
+			return makh;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
 	}
 }
