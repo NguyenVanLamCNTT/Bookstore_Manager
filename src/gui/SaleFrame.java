@@ -8,10 +8,14 @@ package gui;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.table.DefaultTableModel;
+
+import dao.DAO_ChitietHoadon;
 import dao.DAO_Hoadon;
 import dao.DAO_Khachhang;
 import dao.DAO_Loaisanpham;
 import dao.DAO_Sanpham;
+import entity.ChitietHoadon;
 import entity.Hoadon;
 import entity.Khachhang;
 import entity.LoaiSanpham;
@@ -27,6 +31,9 @@ public class SaleFrame extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
+	int chucnang=0;
+	int hoadonmoi = 0;
+	double tongtien =0;
     public SaleFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -227,6 +234,11 @@ public class SaleFrame extends javax.swing.JFrame {
         btnQuayLai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnQuayLai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/reset.png"))); // NOI18N
         btnQuayLai.setText("Quay Lại");
+        btnQuayLai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuayLaiActionPerformed(evt);
+            }
+        });
 
         btnSua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fix.png"))); // NOI18N
@@ -279,6 +291,11 @@ public class SaleFrame extends javax.swing.JFrame {
                 txtTienNhanTuKHActionPerformed(evt);
             }
         });
+        txtTienNhanTuKH.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTienNhanTuKHKeyReleased(evt);
+            }
+        });
 
         labelTienDu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         labelTienDu.setText("Tiền dư:");
@@ -296,10 +313,8 @@ public class SaleFrame extends javax.swing.JFrame {
         labelMaHD.setText("Mã Hóa đơn");
 
         valueTienDu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        valueTienDu.setText("value Tien Du");
 
         valueTongTien.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        valueTongTien.setText("value tổng tiền");
 
         valueDonGia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         valueDonGia.setText("0");
@@ -348,7 +363,7 @@ public class SaleFrame extends javax.swing.JFrame {
                                                 .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(99, 99, 99)
                                                 .addComponent(btnInHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(264, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(labelTongTienHD)
                         .addGap(18, 18, 18)
@@ -361,17 +376,17 @@ public class SaleFrame extends javax.swing.JFrame {
                         .addComponent(labelTienDu)
                         .addGap(18, 18, 18)
                         .addComponent(valueTienDu, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addComponent(txtMaTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(labelMaHD)
-                                .addGap(67, 67, 67))))
+                                .addGap(67, 67, 67))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(txtMaTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(25, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -467,11 +482,11 @@ public class SaleFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Loại sản phẩm", "Tên sản phẩm", "Số lượng", "Tiền"
+                "Mã sản phẩm", "Tên sản phẩm", "Só lượng", "Thành tiền"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -488,7 +503,7 @@ public class SaleFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -496,9 +511,9 @@ public class SaleFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -510,27 +525,47 @@ public class SaleFrame extends javax.swing.JFrame {
 
     private void btnThemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPActionPerformed
         btnLuu.setEnabled(true);
-        
-    	
+        chucnang = 1;
+    	cbLoaiSP.setEnabled(true);
+    	cbTenSP.setEnabled(true);
+    	txtSoLuong.setEnabled(true);
     }//GEN-LAST:event_btnThemSPActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
 //    	insertKhachhang();
-    	Khachhang khachhang = new Khachhang();
-    	khachhang.setTenKH(txtTenKH.getText());
-    	khachhang.setDiachi(txtDiaChi.getText());
-    	khachhang.setEmail(txtEmail.getText());
-    	khachhang.setSodienthoai(txtSDT.getText());
-    	if(kiemtratontaiKhachhang(khachhang)) {
-    		khachhang.setMaKH(new DAO_Khachhang().getMaKhachhang(txtSDT.getText()));
-    		insertHoadon(khachhang);
+    	if(hoadonmoi == 1) {
+        	Khachhang khachhang = new Khachhang();
+        	khachhang.setTenKH(txtTenKH.getText());
+        	khachhang.setDiachi(txtDiaChi.getText());
+        	khachhang.setEmail(txtEmail.getText());
+        	khachhang.setSodienthoai(txtSDT.getText());
+        	if(kiemtratontaiKhachhang(khachhang)) {
+        		khachhang.setMaKH(new DAO_Khachhang().getMaKhachhang(txtSDT.getText()));
+        		insertHoadon(khachhang);
+        	}else {
+        		insertKhachhang(khachhang);
+        		khachhang.setMaKH(new DAO_Khachhang().getMaKhachhang(txtSDT.getText()));
+        		insertHoadon(khachhang);
+        	}
+        	if(chucnang == 1) {
+            	int madonhang = new DAO_Hoadon().getMahoadon();
+            	themSanpham(madonhang);
+            	chucnang = 0;
+        	}
+        	else {
+        		
+        	}
     	}else {
-    		insertKhachhang(khachhang);
-    		khachhang.setMaKH(new DAO_Khachhang().getMaKhachhang(txtSDT.getText()));
-    		insertHoadon(khachhang);
+    		int madonhang = new DAO_Hoadon().getMahoadon();
+    		themSanpham(madonhang);
+    		chucnang = 0;
     	}
-    	
+    	tongtien += Double.parseDouble(valueThanhTien.getText());
+    	if(capnhatTongtien(tongtien));
+    	valueTongTien.setText(tongtien+"");
+    	hoadonmoi = 0;
+    	docbangBanhang();
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -544,6 +579,10 @@ public class SaleFrame extends javax.swing.JFrame {
     private void btnHoaDonMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonMoiActionPerformed
         // TODO add your handling code here:
     	enabled();
+    	cbLoaiSP.setEnabled(false);
+    	cbTenSP.setEnabled(false);
+    	txtSoLuong.setEnabled(false);
+    	hoadonmoi = 1;
     }//GEN-LAST:event_btnHoaDonMoiActionPerformed
 
     private void btnInHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHoaDonActionPerformed
@@ -580,7 +619,7 @@ public class SaleFrame extends javax.swing.JFrame {
 		}
     	
     }//GEN-LAST:event_cbTenSPPopupMenuWillBecomeInvisible
-
+    
     private void txtSoLuongKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSoLuongKeyReleased
         // TODO add your handling code here:
         int soluong = Integer.parseInt(txtSoLuong.getText());
@@ -588,6 +627,24 @@ public class SaleFrame extends javax.swing.JFrame {
         double tongtien = soluong * dongia;
         valueThanhTien.setText(tongtien+"");
     }//GEN-LAST:event_txtSoLuongKeyReleased
+
+    private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuayLaiActionPerformed
+        // TODO add your handling code here:
+        tongtien = 0;
+        clearTable();
+        clearText();
+        disabled();
+        chucnang = 0;
+        hoadonmoi = 0;
+    }//GEN-LAST:event_btnQuayLaiActionPerformed
+
+    private void txtTienNhanTuKHKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTienNhanTuKHKeyReleased
+        // TODO add your handling code here:
+        double tiendu = Double.parseDouble(valueTongTien.getText()) - Double.parseDouble(txtTienNhanTuKH.getText());
+        
+        valueTienDu.setText(tiendu+"");
+                
+    }//GEN-LAST:event_txtTienNhanTuKHKeyReleased
 
     private void disabled() {
     	btnLuu.setEnabled(false);
@@ -665,6 +722,64 @@ public class SaleFrame extends javax.swing.JFrame {
     		return true;
     	else
     		return false;
+    }
+    private void themSanpham(int mahoadon) {
+    	DAO_Sanpham  dao_sanpham = new DAO_Sanpham();
+    	DAO_ChitietHoadon dao_chitiethoadon = new DAO_ChitietHoadon();
+    	int masanpham = 0;
+    	try {
+			List<Sanpham> dsSanpham = dao_sanpham.getSanpham(cbTenSP.getSelectedItem().toString());
+			for(Sanpham sanpham : dsSanpham) {
+				masanpham = sanpham.getMaSanpham();
+			}
+			ChitietHoadon ctHoadon = new ChitietHoadon();
+			ctHoadon.setDongia(Double.parseDouble(valueDonGia.getText()));
+			ctHoadon.setSoluong(Integer.parseInt(txtSoLuong.getText()));
+			ctHoadon.setSanpham(new Sanpham(masanpham));
+			ctHoadon.setHoadon(new Hoadon(mahoadon));
+			dao_chitiethoadon.themSanphamvaoCTHD(ctHoadon);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    
+    }
+    private double getTongtien() {
+    	DAO_Hoadon dao_hoadon = new DAO_Hoadon();
+    	
+    	return dao_hoadon.getTongtien();
+    }
+    
+    private boolean capnhatTongtien(double tongtien) {
+    	DAO_Hoadon dao_hoadon = new DAO_Hoadon();
+    	return dao_hoadon.capnhatTongtien(tongtien);
+    }
+    
+    
+    private void docbangBanhang() {
+    	DefaultTableModel model = new DefaultTableModel( new Object[] {"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Thành tiền"}, 0);
+    	DAO_ChitietHoadon dao_ChitietHoadon = new DAO_ChitietHoadon();
+    	List<ChitietHoadon> chitietHoadons = dao_ChitietHoadon.getDsChitietHoadon();
+    	for(ChitietHoadon cthd : chitietHoadons) {
+    		Object[] tableModel = {cthd.getSanpham().getMaSanpham(), cthd.getSanpham().getTenSanpham(), cthd.getSoluong(), valueThanhTien.getText()};
+    		model.addRow(tableModel);
+    	}
+    	tableBanHang.setModel(model);
+    }
+    private void clearTable() {
+    	DefaultTableModel model = new DefaultTableModel( new Object[] {"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Thành tiền"}, 0);
+    	tableBanHang.setModel(model);
+    }
+    
+    private void clearText() {
+    	txtDiaChi.setText("");
+    	txtEmail.setText("");
+    	txtMaTimKiem.setText("");
+    	txtSDT.setText("");
+    	txtSoLuong.setText("");
+    	txtTenKH.setText("");
+    	txtTienNhanTuKH.setText("");
     }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

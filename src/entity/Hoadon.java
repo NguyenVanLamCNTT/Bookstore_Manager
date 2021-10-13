@@ -22,6 +22,11 @@ public class Hoadon {
 		this.ngaylapHd = ngaylapHd;
 	}
 
+	public Hoadon(int mahoadon) {
+		super();
+		this.mahoadon = mahoadon;
+	}
+
 	public int getMahoadon() {
 		return mahoadon;
 	}

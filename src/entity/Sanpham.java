@@ -38,6 +38,18 @@ public class Sanpham {
 		this.sotrang = sotrang;
 		this.nhaXB = nhaXB;
 	}
+	
+	public Sanpham(int maSanpham) {
+		super();
+		this.maSanpham = maSanpham;
+	}
+	
+	public Sanpham(int maSanpham, String tenSanpham) {
+		super();
+		this.maSanpham = maSanpham;
+		this.tenSanpham = tenSanpham;
+	}
+
 
 	public int getMaSanpham() {
 		return maSanpham;

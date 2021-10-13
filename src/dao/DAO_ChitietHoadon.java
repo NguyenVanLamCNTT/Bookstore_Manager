@@ -2,10 +2,15 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import connect.ConnectDatabase;
 import entity.ChitietHoadon;
+import entity.Hoadon;
+import entity.Sanpham;
 
 public class DAO_ChitietHoadon {
 	
@@ -26,5 +31,29 @@ public class DAO_ChitietHoadon {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	public List<ChitietHoadon> getDsChitietHoadon(){
+		List<ChitietHoadon> dsCTHD = new ArrayList<ChitietHoadon>();
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "select * from chitiethoadon cthd join sanpham sp\r\n"
+				+ "On cthd.masp = sp.ma_sanpham\r\n"
+				+ "where mahd =  (SELECT IDENT_CURRENT('hoadon'))";
+		
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				ChitietHoadon chitiethoadon = new ChitietHoadon();
+				chitiethoadon.setHoadon(new Hoadon(rs.getInt("mahd")));
+				chitiethoadon.setSanpham(new Sanpham(rs.getInt("masp"), rs.getString("ten_sp")));
+				chitiethoadon.setDongia(rs.getDouble("dongia"));
+				chitiethoadon.setSoluong(rs.getInt("soluong"));
+				dsCTHD.add(chitiethoadon);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dsCTHD;
 	}
 }

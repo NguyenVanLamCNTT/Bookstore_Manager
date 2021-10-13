@@ -23,6 +23,12 @@ public class Nhanvien {
 		this.matkhau = matkhau;
 		this.luongcoban = luongcoban;
 	}
+	
+	
+	public Nhanvien(String maNV) {
+		super();
+		this.maNV = maNV;
+	}
 	public String getMaNV() {
 		return maNV;
 	}
