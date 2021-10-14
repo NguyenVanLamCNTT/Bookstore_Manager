@@ -1,6 +1,8 @@
 package entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Hoadon {
 	private int mahoadon;
@@ -8,20 +10,28 @@ public class Hoadon {
 	private Nhanvien nhanvien;
 	private double tongtien;
 	private Date ngaylapHd;
+	private List<ChitietHoadon> chitietHoadon;
 	
 	public Hoadon() {
 		// TODO Auto-generated constructor stub
+		this.chitietHoadon = new ArrayList<ChitietHoadon>();
 	}
 
-	public Hoadon(int mahoadon, Khachhang khachhang, Nhanvien nhanvien, double tongtien, Date ngaylapHd) {
+	public Hoadon(int mahoadon, Khachhang khachhang, Nhanvien nhanvien, Date ngaylapHd) {
 		super();
 		this.mahoadon = mahoadon;
 		this.khachhang = khachhang;
 		this.nhanvien = nhanvien;
-		this.tongtien = tongtien;
+		this.chitietHoadon = new ArrayList<ChitietHoadon>();
 		this.ngaylapHd = ngaylapHd;
 	}
-
+	
+	public void addChitietHoadon(Hoadon hoadon, Sanpham sanpham, double dongia, int soluong) {
+		ChitietHoadon cthd = new ChitietHoadon(hoadon, sanpham, dongia, soluong);
+		chitietHoadon.add(cthd);
+		this.tongtien += (cthd.getDongia()*cthd.getSoluong());
+	}
+	
 	public Hoadon(int mahoadon) {
 		super();
 		this.mahoadon = mahoadon;

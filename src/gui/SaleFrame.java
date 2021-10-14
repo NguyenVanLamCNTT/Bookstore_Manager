@@ -33,7 +33,7 @@ public class SaleFrame extends javax.swing.JFrame {
      */
 	int chucnang=0;
 	int hoadonmoi = 0;
-	double tongtien =0;
+	Hoadon hoadon;
     public SaleFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -535,6 +535,7 @@ public class SaleFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
 //    	insertKhachhang();
     	if(hoadonmoi == 1) {
+    		Hoadon hoadonmoi ;
         	Khachhang khachhang = new Khachhang();
         	khachhang.setTenKH(txtTenKH.getText());
         	khachhang.setDiachi(txtDiaChi.getText());
@@ -542,30 +543,31 @@ public class SaleFrame extends javax.swing.JFrame {
         	khachhang.setSodienthoai(txtSDT.getText());
         	if(kiemtratontaiKhachhang(khachhang)) {
         		khachhang.setMaKH(new DAO_Khachhang().getMaKhachhang(txtSDT.getText()));
-        		insertHoadon(khachhang);
+        		hoadonmoi = insertHoadon(khachhang);
         	}else {
         		insertKhachhang(khachhang);
         		khachhang.setMaKH(new DAO_Khachhang().getMaKhachhang(txtSDT.getText()));
-        		insertHoadon(khachhang);
+        		hoadonmoi = insertHoadon(khachhang);
         	}
         	if(chucnang == 1) {
             	int madonhang = new DAO_Hoadon().getMahoadon();
-            	themSanpham(madonhang);
+            	hoadonmoi = themSanpham(madonhang, hoadonmoi);
             	chucnang = 0;
         	}
         	else {
         		
         	}
+        	hoadon = hoadonmoi;
     	}else {
     		int madonhang = new DAO_Hoadon().getMahoadon();
-    		themSanpham(madonhang);
+    		hoadon = themSanpham(madonhang, hoadon);
     		chucnang = 0;
     	}
-    	tongtien += Double.parseDouble(valueThanhTien.getText());
-    	if(capnhatTongtien(tongtien));
-    	valueTongTien.setText(tongtien+"");
+    	if(capnhatTongtien(hoadon.getTongtien()));
+    	valueTongTien.setText(hoadon.getTongtien()+"");
     	hoadonmoi = 0;
     	docbangBanhang();
+    	clearTextSanpham();
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -630,7 +632,6 @@ public class SaleFrame extends javax.swing.JFrame {
 
     private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuayLaiActionPerformed
         // TODO add your handling code here:
-        tongtien = 0;
         clearTable();
         clearText();
         disabled();
@@ -705,15 +706,21 @@ public class SaleFrame extends javax.swing.JFrame {
     	DAO_Khachhang dao_khachhang = new DAO_Khachhang();
     	dao_khachhang.insertKhachhang(khachhang);
     }
-    private void insertHoadon(Khachhang khachhang) {
-    	DAO_Hoadon dao_Hoadon = new DAO_Hoadon();
+    
+    private Hoadon taoHoadon() {
+    	Hoadon hoadon = new Hoadon();
     	Nhanvien nhanvien = new Nhanvien();
     	nhanvien.setMaNV("NVLam");
-    	Hoadon hoadon = new Hoadon();
-    	hoadon.setKhachhang(khachhang);
     	hoadon.setNhanvien(nhanvien);
-    	hoadon.setTongtien(Double.parseDouble(valueThanhTien.getText()));
+    	return hoadon;
+    }
+    private Hoadon insertHoadon(Khachhang khachhang) {
+    	DAO_Hoadon dao_Hoadon = new DAO_Hoadon();
+
+    	Hoadon hoadon = taoHoadon();
+    	hoadon.setKhachhang(khachhang);
     	dao_Hoadon.insertHoadon(hoadon);
+    	return hoadon;
     }
     private boolean kiemtratontaiKhachhang(Khachhang khachhang) {
     	DAO_Khachhang dao_khachang = new DAO_Khachhang();
@@ -723,7 +730,7 @@ public class SaleFrame extends javax.swing.JFrame {
     	else
     		return false;
     }
-    private void themSanpham(int mahoadon) {
+    private Hoadon themSanpham(int mahoadon, Hoadon hoadon) {
     	DAO_Sanpham  dao_sanpham = new DAO_Sanpham();
     	DAO_ChitietHoadon dao_chitiethoadon = new DAO_ChitietHoadon();
     	int masanpham = 0;
@@ -732,18 +739,22 @@ public class SaleFrame extends javax.swing.JFrame {
 			for(Sanpham sanpham : dsSanpham) {
 				masanpham = sanpham.getMaSanpham();
 			}
+			hoadon.setMahoadon(mahoadon);
+			hoadon.addChitietHoadon(hoadon, new Sanpham(masanpham), Double.parseDouble(valueDonGia.getText()), Integer.parseInt(txtSoLuong.getText()));
+			
+			
 			ChitietHoadon ctHoadon = new ChitietHoadon();
 			ctHoadon.setDongia(Double.parseDouble(valueDonGia.getText()));
 			ctHoadon.setSoluong(Integer.parseInt(txtSoLuong.getText()));
 			ctHoadon.setSanpham(new Sanpham(masanpham));
 			ctHoadon.setHoadon(new Hoadon(mahoadon));
 			dao_chitiethoadon.themSanphamvaoCTHD(ctHoadon);
+			return hoadon;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
-    	
-    
     }
     private double getTongtien() {
     	DAO_Hoadon dao_hoadon = new DAO_Hoadon();
@@ -762,7 +773,8 @@ public class SaleFrame extends javax.swing.JFrame {
     	DAO_ChitietHoadon dao_ChitietHoadon = new DAO_ChitietHoadon();
     	List<ChitietHoadon> chitietHoadons = dao_ChitietHoadon.getDsChitietHoadon();
     	for(ChitietHoadon cthd : chitietHoadons) {
-    		Object[] tableModel = {cthd.getSanpham().getMaSanpham(), cthd.getSanpham().getTenSanpham(), cthd.getSoluong(), valueThanhTien.getText()};
+    		double thanhtien = cthd.getDongia()*cthd.getSoluong();
+    		Object[] tableModel = {cthd.getSanpham().getMaSanpham(), cthd.getSanpham().getTenSanpham(), cthd.getSoluong(), thanhtien};
     		model.addRow(tableModel);
     	}
     	tableBanHang.setModel(model);
@@ -780,6 +792,16 @@ public class SaleFrame extends javax.swing.JFrame {
     	txtSoLuong.setText("");
     	txtTenKH.setText("");
     	txtTienNhanTuKH.setText("");
+    }
+    private void clearTextSanpham() {
+        btnLuu.setEnabled(false);
+        chucnang = 0;
+    	cbLoaiSP.setEnabled(false);
+    	cbTenSP.setEnabled(false);
+    	txtSoLuong.setEnabled(false);
+    	txtSoLuong.setText("");
+    	valueDonGia.setText("0");
+    	valueThanhTien.setText("0");
     }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
