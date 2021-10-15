@@ -8,7 +8,9 @@ package gui;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import dao.DAO_ChitietHoadon;
 import dao.DAO_Hoadon;
@@ -34,6 +36,9 @@ public class SaleFrame extends javax.swing.JFrame {
 	int chucnang=0;
 	int hoadonmoi = 0;
 	Hoadon hoadon;
+	int masanpham = 0;
+	double tongtien=0;
+	double tientru = 0;
     public SaleFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -252,6 +257,11 @@ public class SaleFrame extends javax.swing.JFrame {
         btnXoa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/delete.png"))); // NOI18N
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         btnThanhToan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnThanhToan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/pay.png"))); // NOI18N
@@ -482,15 +492,20 @@ public class SaleFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã sản phẩm", "Tên sản phẩm", "Só lượng", "Thành tiền"
+                "Mã sản phẩm", "Tên sản phẩm", "Só lượng", "Đơn giá", "Thành tiền"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tableBanHang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableBanHangMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tableBanHang);
@@ -554,9 +569,9 @@ public class SaleFrame extends javax.swing.JFrame {
             	hoadonmoi = themSanpham(madonhang, hoadonmoi);
             	chucnang = 0;
         	}
-        	else {
-        		
-        	}
+//        	else if(chucnang == 2) { //Bug
+//        		capnhatChitietHd();
+//        	}
         	hoadon = hoadonmoi;
     	}else {
     		int madonhang = new DAO_Hoadon().getMahoadon();
@@ -565,6 +580,7 @@ public class SaleFrame extends javax.swing.JFrame {
     	}
     	if(capnhatTongtien(hoadon.getTongtien()));
     	valueTongTien.setText(hoadon.getTongtien()+"");
+    	tongtien = hoadon.getTongtien();
     	hoadonmoi = 0;
     	docbangBanhang();
     	clearTextSanpham();
@@ -572,6 +588,12 @@ public class SaleFrame extends javax.swing.JFrame {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
+    	chucnang = 2;
+    	btnThemSP.setEnabled(false);
+    	btnXoa.setEnabled(false);
+    	btnLuu.setEnabled(true);
+    	cbLoaiSP.setEnabled(true);
+    	cbTenSP.setEnabled(true);
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
@@ -585,6 +607,8 @@ public class SaleFrame extends javax.swing.JFrame {
     	cbTenSP.setEnabled(false);
     	txtSoLuong.setEnabled(false);
     	hoadonmoi = 1;
+    	tongtien = 0;
+    	tientru = 0;
     }//GEN-LAST:event_btnHoaDonMoiActionPerformed
 
     private void btnInHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHoaDonActionPerformed
@@ -641,11 +665,43 @@ public class SaleFrame extends javax.swing.JFrame {
 
     private void txtTienNhanTuKHKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTienNhanTuKHKeyReleased
         // TODO add your handling code here:
-        double tiendu = Double.parseDouble(valueTongTien.getText()) - Double.parseDouble(txtTienNhanTuKH.getText());
+        double tiendu =Double.parseDouble(txtTienNhanTuKH.getText())- Double.parseDouble(valueTongTien.getText());
         
         valueTienDu.setText(tiendu+"");
                 
     }//GEN-LAST:event_txtTienNhanTuKHKeyReleased
+
+    private void tableBanHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableBanHangMouseClicked
+        // TODO add your handling code here:
+    	DAO_Sanpham dao_Sanpham = new DAO_Sanpham();
+    	int click = tableBanHang.getSelectedRow();
+    	TableModel tableModel = tableBanHang.getModel();
+    	masanpham = Integer.parseInt(tableModel.getValueAt(click, 0).toString());
+    	cbTenSP.setSelectedItem(tableModel.getValueAt(click, 1).toString());
+    	txtSoLuong.setText(tableModel.getValueAt(click, 2).toString());
+    	valueThanhTien.setText(tableModel.getValueAt(click, 4).toString());
+    	tientru = Double.parseDouble(tableModel.getValueAt(click, 4).toString());
+    	valueDonGia.setText(tableModel.getValueAt(click, 3).toString());
+    	try {
+			List<Sanpham> dsSp = dao_Sanpham.getSanpham(tableModel.getValueAt(click, 1).toString());
+			for(Sanpham sp : dsSp) {
+				cbLoaiSP.setSelectedItem(sp.getLoaiSp().getTenLoaiSp());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	btnSua.setEnabled(true);
+    	btnXoa.setEnabled(true);
+    }//GEN-LAST:event_tableBanHangMouseClicked
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+    	int yes = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa Sản phẩm này?", "Cảnh báo", JOptionPane.YES_NO_CANCEL_OPTION);
+    	if(yes == JOptionPane.YES_OPTION) {
+    		xoaSanpham();
+    	}
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     private void disabled() {
     	btnLuu.setEnabled(false);
@@ -769,12 +825,12 @@ public class SaleFrame extends javax.swing.JFrame {
     
     
     private void docbangBanhang() {
-    	DefaultTableModel model = new DefaultTableModel( new Object[] {"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Thành tiền"}, 0);
+    	DefaultTableModel model = new DefaultTableModel( new Object[] {"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá","Thành tiền"}, 0);
     	DAO_ChitietHoadon dao_ChitietHoadon = new DAO_ChitietHoadon();
     	List<ChitietHoadon> chitietHoadons = dao_ChitietHoadon.getDsChitietHoadon();
     	for(ChitietHoadon cthd : chitietHoadons) {
     		double thanhtien = cthd.getDongia()*cthd.getSoluong();
-    		Object[] tableModel = {cthd.getSanpham().getMaSanpham(), cthd.getSanpham().getTenSanpham(), cthd.getSoluong(), thanhtien};
+    		Object[] tableModel = {cthd.getSanpham().getMaSanpham(), cthd.getSanpham().getTenSanpham(), cthd.getSoluong(), cthd.getDongia(),thanhtien};
     		model.addRow(tableModel);
     	}
     	tableBanHang.setModel(model);
@@ -803,6 +859,42 @@ public class SaleFrame extends javax.swing.JFrame {
     	valueDonGia.setText("0");
     	valueThanhTien.setText("0");
     }
+    private void xoaSanpham() {
+    	DAO_ChitietHoadon dao_cthd = new DAO_ChitietHoadon();
+    	DAO_Hoadon dao_hoadon = new DAO_Hoadon();
+    	if(dao_cthd.xoaSanpham(masanpham)) {
+    		JOptionPane.showMessageDialog(this, "Xóa thành công!!");
+    		masanpham = 0;
+    		if(dao_hoadon.capnhatTongtien(tongtien - tientru));
+    		docbangBanhang();
+    	}else {
+    		JOptionPane.showMessageDialog(this, "Xóa không thành công!!");
+    	}
+    	tientru = 0;
+    }
+    private void capnhatChitietHd() {
+    	TableModel tableModel = tableBanHang.getModel();
+    	int click = tableBanHang.getSelectedRow();
+    	DAO_ChitietHoadon dao_cthd = new DAO_ChitietHoadon();
+    	DAO_Hoadon dao_hoadon = new DAO_Hoadon();
+    	
+    	int mahoadon1 = dao_hoadon.getMahoadon();  
+    	double tiencu = Double.parseDouble(tableModel.getValueAt(click, 4).toString());
+    	double tienmoi = Double.parseDouble(valueThanhTien.getText());
+    	ChitietHoadon cthd = new ChitietHoadon();
+    	cthd.setHoadon(new Hoadon(mahoadon1));
+    	cthd.setSanpham(new Sanpham(Integer.parseInt(tableModel.getValueAt(click, 0).toString())));
+    	cthd.setDongia(Integer.parseInt(valueDonGia.getText()));
+    	cthd.setSoluong(Integer.parseInt(txtSoLuong.getText()));
+    	if(dao_cthd.capnhatChitietHD(cthd)) {
+    		tongtien = tongtien - tiencu + tienmoi ;
+    		JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+    		docbangBanhang();
+    		dao_hoadon.capnhatTongtien(tongtien);
+    	}else
+    		JOptionPane.showMessageDialog(this, "Cập nhật không thành công!");
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

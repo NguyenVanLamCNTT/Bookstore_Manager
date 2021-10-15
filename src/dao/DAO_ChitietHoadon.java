@@ -56,4 +56,38 @@ public class DAO_ChitietHoadon {
 		}
 		return dsCTHD;
 	}
+	public boolean xoaSanpham(int masanpham) {
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "delete from chitiethoadon where mahd = (SELECT IDENT_CURRENT('hoadon')) and masp = "+masanpham; 
+		
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			int n = stmt.executeUpdate();
+			return n>0;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	public boolean capnhatChitietHD(ChitietHoadon cthd) {
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "update chitiethoadon set masp = ?, dongia = ?, soluong = ?  where mahd = ? and masp = ?";
+		
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setInt(1, cthd.getSanpham().getMaSanpham());
+			stmt.setDouble(2, cthd.getDongia());
+			stmt.setInt(3, cthd.getSoluong());
+			stmt.setInt(4, cthd.getHoadon().getMahoadon());
+			stmt.setInt(5, cthd.getSanpham().getMaSanpham());
+			int n = stmt.executeUpdate();
+			return n>0;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
