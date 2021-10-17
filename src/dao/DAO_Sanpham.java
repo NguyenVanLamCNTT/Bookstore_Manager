@@ -164,5 +164,21 @@ public class DAO_Sanpham {
 			return false;
 		}
 	}
-
+	public int getSoluongton(String tenSanpham) {
+		int soluongton = 0;
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "select soluongton from sanpham where ten_sp = N'"+tenSanpham+"'";
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				soluongton = rs.getInt("soluongton");
+			}
+			return soluongton;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
+	}
 }
