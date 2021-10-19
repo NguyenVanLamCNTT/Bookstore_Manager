@@ -5,6 +5,9 @@
  */
 package gui;
 
+import java.awt.Container;
+import java.sql.SQLException;
+
 /**
  *
  * @author Lenovo
@@ -30,7 +33,7 @@ public class SearchFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnThoat = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        labelDD = new javax.swing.JLabel();
+        labelTK = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         labelMaDH = new javax.swing.JLabel();
@@ -95,8 +98,8 @@ public class SearchFrame extends javax.swing.JFrame {
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");
 
-        labelDD.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        labelDD.setText("Tìm kiếm");
+        labelTK.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        labelTK.setText("Tìm kiếm");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -106,7 +109,7 @@ public class SearchFrame extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(btnThoat)
                 .addGap(421, 421, 421)
-                .addComponent(labelDD)
+                .addComponent(labelTK)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 1419, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -118,7 +121,7 @@ public class SearchFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnThoat)
-                    .addComponent(labelDD, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(labelTK, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -660,18 +663,17 @@ public class SearchFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTimSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimSPActionPerformed
-        // TODO add your handling code here:
-        try {
-            tableQuanLySP.removeAll();
-            showProductTable();
-
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        Container tableQuanLySP = null;
+		tableQuanLySP.removeAll();
+		showProductTable();
     }//GEN-LAST:event_btnTimSPActionPerformed
 
-    private void txtMaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaSPActionPerformed
+    private void showProductTable() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void txtMaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaSPActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaSPActionPerformed
 
@@ -782,7 +784,6 @@ public class SearchFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JLabel labelDD;
     private javax.swing.JLabel labelHinhAnh;
     private javax.swing.JLabel labelLSP;
     private javax.swing.JLabel labelMaDH;
@@ -796,6 +797,7 @@ public class SearchFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelMaSP;
     private javax.swing.JLabel labelNgayDat;
     private javax.swing.JLabel labelNgayGiao;
+    private javax.swing.JLabel labelTK;
     private javax.swing.JLabel labelTenKH;
     private javax.swing.JLabel labelTenKH_HD;
     private javax.swing.JLabel labelTenLSP;
