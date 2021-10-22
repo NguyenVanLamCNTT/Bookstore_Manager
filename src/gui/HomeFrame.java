@@ -5,8 +5,11 @@
  */
 package gui;
 
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -67,27 +70,27 @@ public class HomeFrame extends javax.swing.JFrame {
         btnThongKeDT = new javax.swing.JButton();
         panelDongHo = new javax.swing.JPanel();
         labelDongHo = new javax.swing.JLabel();
-        btnDiemDanh = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        btnChamCong = new javax.swing.JButton();
+        menuBarHome = new javax.swing.JMenuBar();
+        mnuDanhMuc = new javax.swing.JMenu();
+        mnuItemSP = new javax.swing.JMenuItem();
+        mnuItemDH = new javax.swing.JMenuItem();
+        mnuItemNV = new javax.swing.JMenuItem();
+        mnuItemLSP = new javax.swing.JMenuItem();
+        mnuItemNCC = new javax.swing.JMenuItem();
+        mnuThongKe = new javax.swing.JMenu();
+        mnuItemThongKeSP = new javax.swing.JMenuItem();
+        mnuItemThongKeDT = new javax.swing.JMenuItem();
+        mnuTmKiem = new javax.swing.JMenu();
+        mnuItemTKSP = new javax.swing.JMenuItem();
+        mnuItemTKHD = new javax.swing.JMenuItem();
+        mnuItemTKDH = new javax.swing.JMenuItem();
+        mnuItemTKNCC = new javax.swing.JMenuItem();
+        mnuitemTKLSP = new javax.swing.JMenuItem();
+        mnuXuLy = new javax.swing.JMenu();
+        mnuItemChamCong = new javax.swing.JMenuItem();
+        mnuItemBanHang = new javax.swing.JMenuItem();
+        mnuItemDoiMatKhau = new javax.swing.JMenuItem();
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/money.png"))); // NOI18N
         jButton5.setText("Bán Hàng");
@@ -249,9 +252,9 @@ public class HomeFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btnDiemDanh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnDiemDanh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/attendance.png"))); // NOI18N
-        btnDiemDanh.setText("Chấm công");
+        btnChamCong.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnChamCong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/attendance.png"))); // NOI18N
+        btnChamCong.setText("Chấm công");
 
         javax.swing.GroupLayout panelManHinhChinhLayout = new javax.swing.GroupLayout(panelManHinhChinh);
         panelManHinhChinh.setLayout(panelManHinhChinhLayout);
@@ -290,7 +293,7 @@ public class HomeFrame extends javax.swing.JFrame {
                             .addGroup(panelManHinhChinhLayout.createSequentialGroup()
                                 .addGroup(panelManHinhChinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panelManHinhChinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btnDiemDanh, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnChamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(panelManHinhChinhLayout.createSequentialGroup()
                                             .addComponent(labelHoTenNV)
                                             .addGap(656, 656, 656)))
@@ -309,7 +312,7 @@ public class HomeFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDiemDanh, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnChamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(panelDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(69, 69, 69)
@@ -339,78 +342,108 @@ public class HomeFrame extends javax.swing.JFrame {
                         .addContainerGap(29, Short.MAX_VALUE))))
         );
 
-        jMenu1.setText("Danh mục");
+        mnuDanhMuc.setText("Danh mục");
 
-        jMenuItem1.setText("Sản phẩm");
-        jMenu1.add(jMenuItem1);
-
-        jMenuItem2.setText("Đơn hàng");
-        jMenu1.add(jMenuItem2);
-
-        jMenuItem3.setText("Nhân viên");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        mnuItemSP.setText("Sản phẩm");
+        mnuItemSP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                mnuItemSPActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        mnuDanhMuc.add(mnuItemSP);
 
-        jMenuItem8.setText("Loại sản phẩm");
-        jMenu1.add(jMenuItem8);
-
-        jMenuItem9.setText("Nhà cung cấp");
-        jMenu1.add(jMenuItem9);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Thống kê");
-
-        jMenuItem4.setText("Thống kê sản phẩm");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        mnuItemDH.setText("Đơn hàng");
+        mnuItemDH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                mnuItemDHActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
+        mnuDanhMuc.add(mnuItemDH);
 
-        jMenuItem5.setText("Thống kê doanh thu");
-        jMenu2.add(jMenuItem5);
+        mnuItemNV.setText("Nhân viên");
+        mnuItemNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuItemNVActionPerformed(evt);
+            }
+        });
+        mnuDanhMuc.add(mnuItemNV);
 
-        jMenuBar1.add(jMenu2);
+        mnuItemLSP.setText("Loại sản phẩm");
+        mnuItemLSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuItemLSPActionPerformed(evt);
+            }
+        });
+        mnuDanhMuc.add(mnuItemLSP);
 
-        jMenu3.setText("Tìm kiếm");
+        mnuItemNCC.setText("Nhà cung cấp");
+        mnuItemNCC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuItemNCCActionPerformed(evt);
+            }
+        });
+        mnuDanhMuc.add(mnuItemNCC);
 
-        jMenuItem11.setText("Tìm kiếm sản phẩm");
-        jMenu3.add(jMenuItem11);
+        menuBarHome.add(mnuDanhMuc);
 
-        jMenuItem12.setText("Tìm kiếm hóa đơn");
-        jMenu3.add(jMenuItem12);
+        mnuThongKe.setText("Thống kê");
 
-        jMenuItem13.setText("Tìm kiếm đơn hàng");
-        jMenu3.add(jMenuItem13);
+        mnuItemThongKeSP.setText("Thống kê sản phẩm");
+        mnuItemThongKeSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuItemThongKeSPActionPerformed(evt);
+            }
+        });
+        mnuThongKe.add(mnuItemThongKeSP);
 
-        jMenuItem14.setText("Tìm kiếm nhà cung cấp");
-        jMenu3.add(jMenuItem14);
+        mnuItemThongKeDT.setText("Thống kê doanh thu");
+        mnuItemThongKeDT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuItemThongKeDTActionPerformed(evt);
+            }
+        });
+        mnuThongKe.add(mnuItemThongKeDT);
 
-        jMenuItem15.setText("Tìm kiếm loại sản phẩm");
-        jMenu3.add(jMenuItem15);
+        menuBarHome.add(mnuThongKe);
 
-        jMenuBar1.add(jMenu3);
+        mnuTmKiem.setText("Tìm kiếm");
 
-        jMenu5.setText("Xử lý");
+        mnuItemTKSP.setText("Tìm kiếm sản phẩm");
+        mnuItemTKSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuItemTKSPActionPerformed(evt);
+            }
+        });
+        mnuTmKiem.add(mnuItemTKSP);
 
-        jMenuItem6.setText("Chấm công");
-        jMenu5.add(jMenuItem6);
+        mnuItemTKHD.setText("Tìm kiếm hóa đơn");
+        mnuTmKiem.add(mnuItemTKHD);
 
-        jMenuItem7.setText("Bán hàng");
-        jMenu5.add(jMenuItem7);
+        mnuItemTKDH.setText("Tìm kiếm đơn hàng");
+        mnuTmKiem.add(mnuItemTKDH);
 
-        jMenuItem10.setText("Đổi mật khẩu");
-        jMenu5.add(jMenuItem10);
+        mnuItemTKNCC.setText("Tìm kiếm nhà cung cấp");
+        mnuTmKiem.add(mnuItemTKNCC);
 
-        jMenuBar1.add(jMenu5);
+        mnuitemTKLSP.setText("Tìm kiếm loại sản phẩm");
+        mnuTmKiem.add(mnuitemTKLSP);
 
-        setJMenuBar(jMenuBar1);
+        menuBarHome.add(mnuTmKiem);
+
+        mnuXuLy.setText("Xử lý");
+
+        mnuItemChamCong.setText("Chấm công");
+        mnuXuLy.add(mnuItemChamCong);
+
+        mnuItemBanHang.setText("Bán hàng");
+        mnuXuLy.add(mnuItemBanHang);
+
+        mnuItemDoiMatKhau.setText("Đổi mật khẩu");
+        mnuXuLy.add(mnuItemDoiMatKhau);
+
+        menuBarHome.add(mnuXuLy);
+
+        setJMenuBar(menuBarHome);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -478,13 +511,62 @@ public class HomeFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnThongKeDTActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void mnuItemThongKeSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemThongKeSPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+        ProductStatisticsFrame productStatisticsFrame = new ProductStatisticsFrame();
+        productStatisticsFrame.setVisible(true);
+    }//GEN-LAST:event_mnuItemThongKeSPActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void mnuItemNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemNVActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+        EmployeeFrame employeeFrame = new EmployeeFrame();
+        employeeFrame.setVisible(true);
+    }//GEN-LAST:event_mnuItemNVActionPerformed
+
+    private void mnuItemThongKeDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemThongKeDTActionPerformed
+        // TODO add your handling code here:
+        StatisticalFrame statisticalFrame = new StatisticalFrame();
+        statisticalFrame.setVisible(true);
+    }//GEN-LAST:event_mnuItemThongKeDTActionPerformed
+
+    private void mnuItemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemSPActionPerformed
+        try {
+            // TODO add your handling code here:
+            ProductFrame productFrame = new ProductFrame();
+            productFrame.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_mnuItemSPActionPerformed
+
+    private void mnuItemDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemDHActionPerformed
+        // TODO add your handling code here:
+        OrderFrame orderFrame = new OrderFrame();
+        orderFrame.setVisible(true);
+    }//GEN-LAST:event_mnuItemDHActionPerformed
+
+    private void mnuItemLSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemLSPActionPerformed
+        // TODO add your handling code here:
+        TypeProductFrame typeProductFrame;
+        try {
+            typeProductFrame = new TypeProductFrame();
+            typeProductFrame.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_mnuItemLSPActionPerformed
+
+    private void mnuItemNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemNCCActionPerformed
+        // TODO add your handling code here:
+        ProducerFrame producerFrame = new ProducerFrame();
+        producerFrame.setVisible(true);
+    }//GEN-LAST:event_mnuItemNCCActionPerformed
+
+    private void mnuItemTKSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemTKSPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnuItemTKSPActionPerformed
 
     /**
      * @param args the command line arguments
@@ -526,8 +608,8 @@ public class HomeFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnBanHang;
     private javax.swing.JButton btnCapNhatLSP;
     private javax.swing.JButton btnCapNhatNCC;
+    private javax.swing.JButton btnChamCong;
     private javax.swing.JButton btnDangXuat;
-    private javax.swing.JButton btnDiemDanh;
     private javax.swing.JButton btnQuanLyDH;
     private javax.swing.JButton btnQuanLyNV;
     private javax.swing.JButton btnQuanLySP;
@@ -535,30 +617,30 @@ public class HomeFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnThongKeDT;
     private javax.swing.JButton btnThongKeSP;
     private javax.swing.JButton jButton5;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel labelDongHo;
     private javax.swing.JLabel labelHoTenNV;
     private javax.swing.JLabel labelManHinhChinh;
+    private javax.swing.JMenuBar menuBarHome;
+    private javax.swing.JMenu mnuDanhMuc;
+    private javax.swing.JMenuItem mnuItemBanHang;
+    private javax.swing.JMenuItem mnuItemChamCong;
+    private javax.swing.JMenuItem mnuItemDH;
+    private javax.swing.JMenuItem mnuItemDoiMatKhau;
+    private javax.swing.JMenuItem mnuItemLSP;
+    private javax.swing.JMenuItem mnuItemNCC;
+    private javax.swing.JMenuItem mnuItemNV;
+    private javax.swing.JMenuItem mnuItemSP;
+    private javax.swing.JMenuItem mnuItemTKDH;
+    private javax.swing.JMenuItem mnuItemTKHD;
+    private javax.swing.JMenuItem mnuItemTKNCC;
+    private javax.swing.JMenuItem mnuItemTKSP;
+    private javax.swing.JMenuItem mnuItemThongKeDT;
+    private javax.swing.JMenuItem mnuItemThongKeSP;
+    private javax.swing.JMenu mnuThongKe;
+    private javax.swing.JMenu mnuTmKiem;
+    private javax.swing.JMenu mnuXuLy;
+    private javax.swing.JMenuItem mnuitemTKLSP;
     private javax.swing.JPanel panelDongHo;
     private javax.swing.JPanel panelManHinhChinh;
     // End of variables declaration//GEN-END:variables

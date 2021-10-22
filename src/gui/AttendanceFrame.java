@@ -56,7 +56,7 @@ public class AttendanceFrame extends javax.swing.JFrame {
         btnThoat = new javax.swing.JButton();
         cbThang = new javax.swing.JComboBox<>();
         labelNam = new javax.swing.JLabel();
-        btnDiemDanh = new javax.swing.JButton();
+        btnChamCong = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         labelDongHo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -79,9 +79,9 @@ public class AttendanceFrame extends javax.swing.JFrame {
         labelNam.setText(" Năm: ");
         labelNam.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        btnDiemDanh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnDiemDanh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/attendance.png"))); // NOI18N
-        btnDiemDanh.setText("Chấm công");
+        btnChamCong.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnChamCong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/attendance.png"))); // NOI18N
+        btnChamCong.setText("Chấm công");
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -127,7 +127,7 @@ public class AttendanceFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnDiemDanh, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnChamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
         );
         panelDDLayout.setVerticalGroup(
@@ -144,7 +144,7 @@ public class AttendanceFrame extends javax.swing.JFrame {
                     .addGroup(panelDDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(cbThang, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                         .addComponent(labelNam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnDiemDanh, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnChamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -227,7 +227,7 @@ public class AttendanceFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDiemDanh;
+    private javax.swing.JButton btnChamCong;
     private javax.swing.JButton btnThoat;
     private javax.swing.JComboBox<String> cbThang;
     private javax.swing.JPanel jPanel1;
