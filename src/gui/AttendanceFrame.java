@@ -5,6 +5,9 @@
  */
 package gui;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 /**
  *
  * @author Lenovo
@@ -16,6 +19,26 @@ public class AttendanceFrame extends javax.swing.JFrame {
      */
     public AttendanceFrame() {
         initComponents();
+          new Thread(){
+            public void run(){
+                while(true){
+                    Calendar ca = new GregorianCalendar();
+                    int hour = ca.get(Calendar.HOUR);
+                    int minute = ca.get(Calendar.MINUTE);
+                    int second = ca.get(Calendar.SECOND);
+                    int PM_AM = ca.get(Calendar.AM_PM);
+                    
+                    String day;
+                    if (PM_AM == 1) {
+                        day = "PM";
+                    }else{
+                        day = "AM";
+                    }
+                    String time = hour + ":"+minute+":"+second+ " " +day;
+                    labelDongHo.setText(time);
+                }
+            }
+        }.start();
     }
 
     /**
@@ -34,6 +57,8 @@ public class AttendanceFrame extends javax.swing.JFrame {
         cbThang = new javax.swing.JComboBox<>();
         labelNam = new javax.swing.JLabel();
         btnDiemDanh = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        labelDongHo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableDiemDanh = new javax.swing.JTable();
 
@@ -42,7 +67,7 @@ public class AttendanceFrame extends javax.swing.JFrame {
         panelDD.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         labelDD.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        labelDD.setText("ĐIỂM DANH");
+        labelDD.setText("Chấm Công");
 
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");
@@ -56,7 +81,32 @@ public class AttendanceFrame extends javax.swing.JFrame {
 
         btnDiemDanh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnDiemDanh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/attendance.png"))); // NOI18N
-        btnDiemDanh.setText("Điểm danh");
+        btnDiemDanh.setText("Chấm công");
+
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+
+        labelDongHo.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        labelDongHo.setForeground(new java.awt.Color(0, 0, 204));
+        labelDongHo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelDongHo.setText("7:40:00 AM");
+        labelDongHo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(labelDongHo, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelDongHo, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout panelDDLayout = new javax.swing.GroupLayout(panelDD);
         panelDD.setLayout(panelDDLayout);
@@ -68,12 +118,14 @@ public class AttendanceFrame extends javax.swing.JFrame {
                 .addComponent(btnThoat)
                 .addGap(421, 421, 421)
                 .addComponent(labelDD)
-                .addContainerGap(604, Short.MAX_VALUE))
+                .addContainerGap(616, Short.MAX_VALUE))
             .addGroup(panelDDLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cbThang, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(labelNam, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnDiemDanh, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
@@ -87,13 +139,14 @@ public class AttendanceFrame extends javax.swing.JFrame {
                     .addComponent(labelDD, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelDDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(cbThang, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                         .addComponent(labelNam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnDiemDanh, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                    .addComponent(btnDiemDanh, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tableDiemDanh.setModel(new javax.swing.table.DefaultTableModel(
@@ -177,9 +230,11 @@ public class AttendanceFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnDiemDanh;
     private javax.swing.JButton btnThoat;
     private javax.swing.JComboBox<String> cbThang;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel labelDD;
+    private javax.swing.JLabel labelDongHo;
     private javax.swing.JLabel labelNam;
     private javax.swing.JPanel panelDD;
     private javax.swing.JTable tableDiemDanh;
