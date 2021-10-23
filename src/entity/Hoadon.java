@@ -1,6 +1,8 @@
 package entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Hoadon {
 	private int mahoadon;
@@ -8,18 +10,41 @@ public class Hoadon {
 	private Nhanvien nhanvien;
 	private double tongtien;
 	private Date ngaylapHd;
+	private List<ChitietHoadon> chitietHoadon;
 	
 	public Hoadon() {
 		// TODO Auto-generated constructor stub
+		this.chitietHoadon = new ArrayList<ChitietHoadon>();
 	}
 
-	public Hoadon(int mahoadon, Khachhang khachhang, Nhanvien nhanvien, double tongtien, Date ngaylapHd) {
+	public Hoadon(int mahoadon, Khachhang khachhang, Nhanvien nhanvien, Date ngaylapHd) {
 		super();
 		this.mahoadon = mahoadon;
 		this.khachhang = khachhang;
 		this.nhanvien = nhanvien;
-		this.tongtien = tongtien;
+		this.chitietHoadon = new ArrayList<ChitietHoadon>();
 		this.ngaylapHd = ngaylapHd;
+	}
+	
+	public void addChitietHoadon(Hoadon hoadon, Sanpham sanpham, double dongia, int soluong) {
+		ChitietHoadon cthd = new ChitietHoadon(hoadon, sanpham, dongia, soluong);
+		chitietHoadon.add(cthd);
+		this.tongtien += (cthd.getDongia()*cthd.getSoluong());
+	}
+	public void removeChitietHoadon(int i) {
+		double tientru = (chitietHoadon.get(i).getDongia() * chitietHoadon.get(i).getSoluong()) ;
+		chitietHoadon.remove(i);
+		this.tongtien -= tientru;
+	}
+	public void updateChitietHoadon(int i, int soluong) {
+		double tientru = (chitietHoadon.get(i).getDongia() * chitietHoadon.get(i).getSoluong()) ;
+		this.tongtien -= tientru;
+		chitietHoadon.get(i).setSoluong(soluong);
+		this.tongtien += (chitietHoadon.get(i).getDongia() * chitietHoadon.get(i).getSoluong()) ;
+	}
+	public Hoadon(int mahoadon) {
+		super();
+		this.mahoadon = mahoadon;
 	}
 
 	public int getMahoadon() {
@@ -61,6 +86,11 @@ public class Hoadon {
 	public void setNgaylapHd(Date ngaylapHd) {
 		this.ngaylapHd = ngaylapHd;
 	}
+
+	public List<ChitietHoadon> getChitietHoadon() {
+		return chitietHoadon;
+	}
+
 
 	@Override
 	public String toString() {

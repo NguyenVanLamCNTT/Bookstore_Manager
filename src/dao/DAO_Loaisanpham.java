@@ -9,6 +9,8 @@ import java.util.List;
 
 import connect.ConnectDatabase;
 import entity.LoaiSanpham;
+import entity.NhaCungcap;
+import entity.Sanpham;
 
 public class DAO_Loaisanpham {
 	 public DAO_Loaisanpham() {
@@ -54,5 +56,35 @@ public class DAO_Loaisanpham {
 			 System.out.println(e);
 			 return false;
 		}
+	 }
+	 public List<Sanpham> getSanpham(String name){
+		 List<Sanpham> dsSanpham = new ArrayList<Sanpham>();
+		 Connection con = ConnectDatabase.getConnection();
+		 String sql = "Select * from loaisanpham lsp Join sanpham sp On lsp.ma_loaisp = sp.ma_loaisp where tenloaisp = N'"+name+"'";
+		 
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				Sanpham sanpham = new Sanpham();
+				sanpham.setMaSanpham(rs.getInt("ma_sanpham"));
+				sanpham.setTenSanpham(rs.getString("ten_sp"));
+				sanpham.setDongia(rs.getDouble("dongia"));
+				sanpham.setSoluongton(rs.getInt("soluongton"));
+				sanpham.setTrangthai(rs.getString("trangthai"));
+				sanpham.setLoaiSp(new LoaiSanpham(rs.getString("ma_loaisp"),rs.getString("tenloaisp")));
+//				sanpham.setHinhanh();
+				sanpham.setNhaXB(rs.getString("nhaxuatban"));
+				sanpham.setSotrang(rs.getInt("sotrang"));
+				sanpham.setTenTacgia(rs.getString("ten_tacgia"));
+				dsSanpham.add(sanpham);
+			}
+			 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		 return dsSanpham;
 	 }
 }

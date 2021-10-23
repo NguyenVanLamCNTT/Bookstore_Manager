@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-16.0.2"/>
 	<classpathentry kind="lib" path="libary/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="libary/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="libary/jasperreports-5.5.0-javadoc.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

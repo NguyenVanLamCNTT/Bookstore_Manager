@@ -47,5 +47,10 @@ public class Khachhang {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	@Override
+	public String toString() {
+		return "Khachhang [maKH=" + maKH + ", tenKH=" + tenKH + ", sodienthoai=" + sodienthoai + ", diachi=" + diachi
+				+ ", email=" + email + "]";
+	}
 	
 }

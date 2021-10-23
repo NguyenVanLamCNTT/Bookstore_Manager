@@ -3,6 +3,7 @@ package entity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Blob;
+import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 
@@ -38,6 +39,18 @@ public class Sanpham {
 		this.sotrang = sotrang;
 		this.nhaXB = nhaXB;
 	}
+	
+	public Sanpham(int maSanpham) {
+		super();
+		this.maSanpham = maSanpham;
+	}
+	
+	public Sanpham(int maSanpham, String tenSanpham) {
+		super();
+		this.maSanpham = maSanpham;
+		this.tenSanpham = tenSanpham;
+	}
+
 
 	public int getMaSanpham() {
 		return maSanpham;
@@ -114,6 +127,15 @@ public class Sanpham {
 
 	public void setNhaXB(String nhaXB) {
 		this.nhaXB = nhaXB;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Sanpham [maSanpham=" + maSanpham + ", tenSanpham=" + tenSanpham + ", dongia=" + dongia + ", soluongton="
+				+ soluongton + ", trangthai=" + trangthai + ", hinhanh=" + Arrays.toString(hinhanh) + ", loaiSp="
+				+ loaiSp + ", nhaCC=" + nhaCC + ", tenTacgia=" + tenTacgia + ", sotrang=" + sotrang + ", nhaXB=" + nhaXB
+				+ "]";
 	}
 	
 }
