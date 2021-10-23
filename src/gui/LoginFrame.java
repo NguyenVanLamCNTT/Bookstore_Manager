@@ -18,6 +18,7 @@ import dao.DAO_Login;
 class LoginFrame extends javax.swing.JFrame {
 
 	ConnectDatabase con;
+        DAO_Login dao_login = new DAO_Login();
     public LoginFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -44,7 +45,6 @@ class LoginFrame extends javax.swing.JFrame {
         btnThoat = new javax.swing.JButton();
         labelDangNhap = new javax.swing.JLabel();
         txtTenTK = new javax.swing.JTextField();
-        btnDoiMK = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -77,12 +77,7 @@ class LoginFrame extends javax.swing.JFrame {
                 btnDangNhapActionPerformed(evt);
             }
         });
-        
-            btnThoat.addActionListener(new java.awt.event.ActionListener() {
-        	 public void actionPerformed(java.awt.event.ActionEvent evt) {
-        		 btnThoatActionPerformed(evt);
-             }
-        });
+
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/multiply.png"))); // NOI18N
         btnThoat.setText("Thoát");
 
@@ -96,14 +91,6 @@ class LoginFrame extends javax.swing.JFrame {
             }
         });
 
-        btnDoiMK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fix.png"))); // NOI18N
-        btnDoiMK.setText("Đổi mật khẩu");
-        btnDoiMK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDoiMKActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelDangNhapLayout = new javax.swing.GroupLayout(panelDangNhap);
         panelDangNhap.setLayout(panelDangNhapLayout);
         panelDangNhapLayout.setHorizontalGroup(
@@ -114,16 +101,11 @@ class LoginFrame extends javax.swing.JFrame {
                         .addGap(193, 193, 193)
                         .addComponent(labelDangNhap))
                     .addGroup(panelDangNhapLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
                         .addGroup(panelDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelDangNhapLayout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addGroup(panelDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelMK)
-                                    .addComponent(labelTenTK, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(panelDangNhapLayout.createSequentialGroup()
-                                .addGap(84, 84, 84)
-                                .addComponent(btnDoiMK)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(labelMK)
+                            .addComponent(labelTenTK, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(16, 16, 16)
                         .addGroup(panelDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDangNhapLayout.createSequentialGroup()
                                 .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -149,8 +131,7 @@ class LoginFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(panelDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDangNhap)
-                    .addComponent(btnThoat)
-                    .addComponent(btnDoiMK))
+                    .addComponent(btnThoat))
                 .addGap(58, 58, 58))
         );
 
@@ -200,17 +181,7 @@ class LoginFrame extends javax.swing.JFrame {
     private void txtTenTKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenTKActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTenTKActionPerformed
-
-    private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
-        // TODO add your handling code here:
-    	ChangePasswordFrame changepass=new ChangePasswordFrame();
-    	dispose();
-    	changepass.setVisible(true);
-    	changepass.setLocationRelativeTo(null);
-    	
-    	
-    }//GEN-LAST:event_btnDoiMKActionPerformed
-    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt)  {//GEN-FIRST:event_txtTenTKActionPerformed
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt)  {                                         
         // TODO add your handling code here:
     	WindowEvent closingEvent = new WindowEvent( this, WindowEvent.WINDOW_CLOSING);
     	Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closingEvent);
@@ -252,7 +223,6 @@ class LoginFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangNhap;
-    private javax.swing.JButton btnDoiMK;
     private javax.swing.JButton btnThoat;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -262,6 +232,5 @@ class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JPanel panelDangNhap;
     private javax.swing.JPasswordField txtMK;
     private javax.swing.JTextField txtTenTK;
-    DAO_Login dao_login=new DAO_Login();
     // End of variables declaration//GEN-END:variables
 }

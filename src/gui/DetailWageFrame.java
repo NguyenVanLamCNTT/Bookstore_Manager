@@ -46,7 +46,7 @@ public class DetailWageFrame extends javax.swing.JFrame {
         labelLuongNV.setText("Lương nhân viên");
 
         labelSoNgayTre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelSoNgayTre.setText("Số ngày đi làm trể:");
+        labelSoNgayTre.setText("Số ngày đi làm trễ:");
 
         labelSoNgayDungGio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelSoNgayDungGio.setText("Số ngày đi làm đúng giờ:");

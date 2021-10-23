@@ -630,6 +630,7 @@ public class SaleFrame extends javax.swing.JFrame {
         	clearText();
         	clearTextSanpham();
         	btnThanhToan.setEnabled(true);
+        	clearTable();
     	}
     	
     }//GEN-LAST:event_btnHoaDonMoiActionPerformed

@@ -91,6 +91,7 @@ public class HomeFrame extends javax.swing.JFrame {
         mnuItemChamCong = new javax.swing.JMenuItem();
         mnuItemBanHang = new javax.swing.JMenuItem();
         mnuItemDoiMatKhau = new javax.swing.JMenuItem();
+        mnuItemDatHang = new javax.swing.JMenuItem();
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/money.png"))); // NOI18N
         jButton5.setText("Bán Hàng");
@@ -227,7 +228,7 @@ public class HomeFrame extends javax.swing.JFrame {
             }
         });
 
-        panelDongHo.setBackground(new java.awt.Color(0, 0, 0));
+        panelDongHo.setBackground(new java.awt.Color(153, 255, 153));
 
         labelDongHo.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         labelDongHo.setForeground(new java.awt.Color(0, 0, 204));
@@ -441,6 +442,9 @@ public class HomeFrame extends javax.swing.JFrame {
         mnuItemDoiMatKhau.setText("Đổi mật khẩu");
         mnuXuLy.add(mnuItemDoiMatKhau);
 
+        mnuItemDatHang.setText("Đặt hàng");
+        mnuXuLy.add(mnuItemDatHang);
+
         menuBarHome.add(mnuXuLy);
 
         setJMenuBar(menuBarHome);
@@ -626,6 +630,7 @@ public class HomeFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuItemBanHang;
     private javax.swing.JMenuItem mnuItemChamCong;
     private javax.swing.JMenuItem mnuItemDH;
+    private javax.swing.JMenuItem mnuItemDatHang;
     private javax.swing.JMenuItem mnuItemDoiMatKhau;
     private javax.swing.JMenuItem mnuItemLSP;
     private javax.swing.JMenuItem mnuItemNCC;

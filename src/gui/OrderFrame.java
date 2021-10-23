@@ -67,8 +67,11 @@ public class OrderFrame extends javax.swing.JFrame {
         btnSuaSP = new javax.swing.JButton();
         btnLuu = new javax.swing.JButton();
         labelMaDH = new javax.swing.JLabel();
-        cbMaDH = new javax.swing.JComboBox<>();
         btnQuayLai = new javax.swing.JButton();
+        txtMaDH = new javax.swing.JTextField();
+        btnTim = new javax.swing.JButton();
+        cbTrangThai = new javax.swing.JComboBox<>();
+        labelTrangThai = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableQLDH = new javax.swing.JTable();
 
@@ -282,6 +285,11 @@ public class OrderFrame extends javax.swing.JFrame {
         btnXoaDH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnXoaDH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/delete.png"))); // NOI18N
         btnXoaDH.setText("Đơn hàng");
+        btnXoaDH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaDHActionPerformed(evt);
+            }
+        });
 
         btnSuaDH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSuaDH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fix.png"))); // NOI18N
@@ -315,11 +323,27 @@ public class OrderFrame extends javax.swing.JFrame {
         labelMaDH.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelMaDH.setText("Mã đơn hàng");
 
-        cbMaDH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnQuayLai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnQuayLai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/reset.png"))); // NOI18N
         btnQuayLai.setText("Quay Lại");
+
+        txtMaDH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtMaDH.setText("jTextField1");
+
+        btnTim.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnTim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/search.png"))); // NOI18N
+        btnTim.setText("Tìm");
+        btnTim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimActionPerformed(evt);
+            }
+        });
+
+        cbTrangThai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mới", "Đã xác nhận", "Đang giao", "Thành công" }));
+
+        labelTrangThai.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        labelTrangThai.setText("Trạng thái:");
 
         javax.swing.GroupLayout panelQuanLyDHLayout = new javax.swing.GroupLayout(panelQuanLyDH);
         panelQuanLyDH.setLayout(panelQuanLyDHLayout);
@@ -332,39 +356,55 @@ public class OrderFrame extends javax.swing.JFrame {
                     .addGroup(panelQuanLyDHLayout.createSequentialGroup()
                         .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelQuanLyDHLayout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(labelMaDH)
-                                .addGap(18, 18, 18)
-                                .addComponent(cbMaDH, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnThoat)
+                                .addGap(489, 489, 489)
+                                .addComponent(labelQuanLyDH))
                             .addGroup(panelQuanLyDHLayout.createSequentialGroup()
-                                .addComponent(btnThemDH)
+                                .addComponent(panelNhapKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
+                                .addComponent(panelNhapSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelQuanLyDHLayout.createSequentialGroup()
+                        .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelQuanLyDHLayout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(labelMaDH))
+                            .addComponent(btnThemDH))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelQuanLyDHLayout.createSequentialGroup()
+                                .addComponent(txtMaDH, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(btnTim, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(57, 57, 57)
+                                .addComponent(btnInDH))
+                            .addGroup(panelQuanLyDHLayout.createSequentialGroup()
+                                .addGap(93, 93, 93)
                                 .addComponent(btnXoaDH)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSuaDH, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(120, 120, 120)
+                                .addComponent(btnSuaDH, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelQuanLyDHLayout.createSequentialGroup()
                                 .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnInDH)
-                                .addGap(18, 18, 18)
                                 .addComponent(btnQuayLai, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSuaSP, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnXoaSP)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnThemSP, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(49, 49, 49))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelQuanLyDHLayout.createSequentialGroup()
+                                .addComponent(btnThemSP, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(117, 117, 117)))
+                        .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnSuaSP, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelTrangThai))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelQuanLyDHLayout.createSequentialGroup()
-                        .addComponent(btnThoat)
-                        .addGap(489, 489, 489)
-                        .addComponent(labelQuanLyDH))
-                    .addGroup(panelQuanLyDHLayout.createSequentialGroup()
-                        .addComponent(panelNhapKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(panelNhapSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelQuanLyDHLayout.createSequentialGroup()
+                                .addComponent(cbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelQuanLyDHLayout.createSequentialGroup()
+                                .addComponent(btnXoaSP)
+                                .addGap(100, 100, 100))))))
         );
         panelQuanLyDHLayout.setVerticalGroup(
             panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,20 +425,36 @@ public class OrderFrame extends javax.swing.JFrame {
                         .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelQuanLyDHLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelMaDH)
-                            .addComponent(cbMaDH, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelQuanLyDHLayout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(labelMaDH)
+                                    .addComponent(txtMaDH, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnTim))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelQuanLyDHLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                                .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelQuanLyDHLayout.createSequentialGroup()
+                                        .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(cbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(labelTrangThai))
+                                        .addGap(57, 57, 57))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelQuanLyDHLayout.createSequentialGroup()
+                                        .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(btnInDH)
+                                            .addComponent(btnLuu)
+                                            .addComponent(btnQuayLai))
+                                        .addGap(18, 18, 18)))))
+                        .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnXoaDH)
+                                .addComponent(btnThemDH))
                             .addComponent(btnSuaDH)
-                            .addComponent(btnXoaDH)
-                            .addComponent(btnThemDH)
-                            .addComponent(btnLuu)
-                            .addComponent(btnInDH)
-                            .addComponent(btnQuayLai)
-                            .addComponent(btnSuaSP)
-                            .addComponent(btnXoaSP)
+                            .addGroup(panelQuanLyDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnSuaSP)
+                                .addComponent(btnXoaSP))
                             .addComponent(btnThemSP))
                         .addGap(31, 31, 31))))
         );
@@ -408,11 +464,11 @@ public class OrderFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã đơn hàng", "Tên khách hàng", "Địa chỉ", "Số điện thoại", "Tên sản phẩm", "Số lượng", "Đơn giá", "Thành tiền", "Ngày đặt", "Ngày giao", "Thanh toán", "Trạng thái"
+                "Tên sản phẩm", "Số lượng", "Đơn giá", "Thành tiền"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -446,10 +502,6 @@ public class OrderFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbTenSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTenSPActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbTenSPActionPerformed
-
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         
     }//GEN-LAST:event_btnLuuActionPerformed
@@ -457,6 +509,18 @@ public class OrderFrame extends javax.swing.JFrame {
     private void cbThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbThanhToanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbThanhToanActionPerformed
+
+    private void cbTenSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTenSPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTenSPActionPerformed
+
+    private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTimActionPerformed
+
+    private void btnXoaDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaDHActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnXoaDHActionPerformed
 
     /**
      * @param args the command line arguments
@@ -503,12 +567,13 @@ public class OrderFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnThemDH;
     private javax.swing.JButton btnThemSP;
     private javax.swing.JButton btnThoat;
+    private javax.swing.JButton btnTim;
     private javax.swing.JButton btnXoaDH;
     private javax.swing.JButton btnXoaSP;
     private javax.swing.JComboBox<String> cbLoaiSP;
-    private javax.swing.JComboBox<String> cbMaDH;
     private javax.swing.JComboBox<String> cbTenSP;
     private javax.swing.JComboBox<String> cbThanhToan;
+    private javax.swing.JComboBox<String> cbTrangThai;
     private com.toedter.calendar.JDateChooser dateNgayDat;
     private com.toedter.calendar.JDateChooser dateNgayGui;
     private javax.swing.JLayeredPane jLayeredPane1;
@@ -528,6 +593,7 @@ public class OrderFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelTenSP;
     private javax.swing.JLabel labelThanhTien;
     private javax.swing.JLabel labelThanhToan;
+    private javax.swing.JLabel labelTrangThai;
     private javax.swing.JPanel panelNhapKH;
     private javax.swing.JPanel panelNhapSP;
     private javax.swing.JPanel panelQuanLyDH;
@@ -535,6 +601,7 @@ public class OrderFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtDonGia;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtMaDH;
     private javax.swing.JTextField txtSDT;
     private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtTenKH;

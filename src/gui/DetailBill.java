@@ -27,7 +27,7 @@ public class DetailBill extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelChiTietHD = new javax.swing.JPanel();
         labelCTHD = new javax.swing.JLabel();
         labelMaHD = new javax.swing.JLabel();
         labelTenNV = new javax.swing.JLabel();
@@ -38,13 +38,14 @@ public class DetailBill extends javax.swing.JFrame {
         valueMaHD = new javax.swing.JLabel();
         valueTenNV = new javax.swing.JLabel();
         valueTenKH = new javax.swing.JLabel();
-        valueDSSP = new javax.swing.JLabel();
         valueNgayLHD = new javax.swing.JLabel();
         valueTongTien = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableDanhSachSP = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panelChiTietHD.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         labelCTHD.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         labelCTHD.setText("CHI TIẾT HÓA ĐƠN");
@@ -76,83 +77,107 @@ public class DetailBill extends javax.swing.JFrame {
         valueTenKH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         valueTenKH.setText("value_TKH");
 
-        valueDSSP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        valueDSSP.setText("value_DSSP");
-
         valueNgayLHD.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         valueNgayLHD.setText("value_NgayLHD");
 
         valueTongTien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         valueTongTien.setText("value_TongTien");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(287, 287, 287)
-                        .addComponent(labelCTHD))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelTenNV)
-                                .addGap(18, 18, 18)
-                                .addComponent(valueTenNV))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+        tableDanhSachSP.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Tên sản phẩm", "Số lượng", "Đơn giá ", "Thành tiền"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tableDanhSachSP);
+
+        javax.swing.GroupLayout panelChiTietHDLayout = new javax.swing.GroupLayout(panelChiTietHD);
+        panelChiTietHD.setLayout(panelChiTietHDLayout);
+        panelChiTietHDLayout.setHorizontalGroup(
+            panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelChiTietHDLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelChiTietHDLayout.createSequentialGroup()
+                        .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelChiTietHDLayout.createSequentialGroup()
                                 .addComponent(labelMaHD)
                                 .addGap(18, 18, 18)
                                 .addComponent(valueMaHD))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(panelChiTietHDLayout.createSequentialGroup()
                                 .addComponent(labelTenKH)
                                 .addGap(18, 18, 18)
-                                .addComponent(valueTenKH))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelDSSP)
+                                .addComponent(valueTenKH)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelTongTien, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelNgayLHD, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(64, 64, 64)
+                        .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(valueTongTien)
+                            .addComponent(valueNgayLHD))
+                        .addGap(26, 26, 26))
+                    .addGroup(panelChiTietHDLayout.createSequentialGroup()
+                        .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelChiTietHDLayout.createSequentialGroup()
+                                .addComponent(labelTenNV)
                                 .addGap(18, 18, 18)
-                                .addComponent(valueDSSP))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelNgayLHD)
-                                .addGap(18, 18, 18)
-                                .addComponent(valueNgayLHD))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelTongTien)
-                                .addGap(18, 18, 18)
-                                .addComponent(valueTongTien)))))
-                .addContainerGap(231, Short.MAX_VALUE))
+                                .addComponent(valueTenNV))
+                            .addComponent(labelDSSP))
+                        .addGap(157, 157, 157))))
+            .addGroup(panelChiTietHDLayout.createSequentialGroup()
+                .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelChiTietHDLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 848, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelChiTietHDLayout.createSequentialGroup()
+                        .addGap(305, 305, 305)
+                        .addComponent(labelCTHD)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+        panelChiTietHDLayout.setVerticalGroup(
+            panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelChiTietHDLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
                 .addComponent(labelCTHD)
-                .addGap(48, 48, 48)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelMaHD)
-                    .addComponent(valueMaHD))
+                .addGap(37, 37, 37)
+                .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelChiTietHDLayout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelMaHD)
+                            .addComponent(valueMaHD))
+                        .addGap(26, 26, 26)
+                        .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelTenKH)
+                            .addComponent(valueTenKH)))
+                    .addGroup(panelChiTietHDLayout.createSequentialGroup()
+                        .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(valueNgayLHD)
+                            .addComponent(labelNgayLHD))
+                        .addGap(35, 35, 35)
+                        .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelTongTien)
+                            .addComponent(valueTongTien))))
                 .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelTenKH)
-                    .addComponent(valueTenKH))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelTenNV)
                     .addComponent(valueTenNV))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelDSSP)
-                    .addComponent(valueDSSP))
-                .addGap(62, 62, 62)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNgayLHD)
-                    .addComponent(valueNgayLHD))
-                .addGap(35, 35, 35)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelTongTien)
-                    .addComponent(valueTongTien))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(labelDSSP)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -161,15 +186,15 @@ public class DetailBill extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelChiTietHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelChiTietHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -211,7 +236,7 @@ public class DetailBill extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelCTHD;
     private javax.swing.JLabel labelDSSP;
     private javax.swing.JLabel labelMaHD;
@@ -219,7 +244,8 @@ public class DetailBill extends javax.swing.JFrame {
     private javax.swing.JLabel labelTenKH;
     private javax.swing.JLabel labelTenNV;
     private javax.swing.JLabel labelTongTien;
-    private javax.swing.JLabel valueDSSP;
+    private javax.swing.JPanel panelChiTietHD;
+    private javax.swing.JTable tableDanhSachSP;
     private javax.swing.JLabel valueMaHD;
     private javax.swing.JLabel valueNgayLHD;
     private javax.swing.JLabel valueTenKH;

@@ -32,6 +32,9 @@ public class Nhanvien {
 		super();
 		this.maNV = maNV;
 	}
+	public Nhanvien() {
+		
+	}
 	public String getMaNV() {
 		return maNV;
 	}
