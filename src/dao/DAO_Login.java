@@ -7,21 +7,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import connect.ConnectDatabase;
-import entity.Taikhoan;
+import entity.Nhanvien;
 
 public class DAO_Login {
-	ArrayList<Taikhoan> dstk;
+	ArrayList<Nhanvien> dstk;
     public DAO_Login() {
 		// TODO Auto-generated constructor stub
-    	dstk=new ArrayList<Taikhoan>();
+    	dstk=new ArrayList<Nhanvien>();
 	}
-    public boolean checkLogin(String taikhoan,String matkhau){
+    public boolean checkLogin(String manv,String matkhau){
     	Connection conn=ConnectDatabase.getConnection();
     	int n=0;
     	try {
-			String sql="select * from taikhoan where TaiKhoan=? and MatKhau=?";
+			String sql="select * from nhanvien where ma_nv=? and matkhau=?";
 			PreparedStatement ps=conn.prepareStatement(sql);
-				ps.setString(1, taikhoan);
+			ps.setString(1, manv);
 			ps.setString(2, matkhau);
 			ResultSet rs=ps.executeQuery();
 			if(rs.next()) {

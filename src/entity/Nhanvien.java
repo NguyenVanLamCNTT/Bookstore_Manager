@@ -9,8 +9,11 @@ public class Nhanvien {
 	private String email;
 	private String matkhau;
 	private double luongcoban;
-	public Nhanvien() {
+
+	public Nhanvien(String maNV, String matkhau) {
 		super();
+		this.maNV = maNV;
+		this.matkhau = matkhau;
 	}
 	public Nhanvien(String maNV, String tenNV, String sodienthoai, String chucvu, String diachi, String email, String matkhau, double luongcoban) {
 		super();

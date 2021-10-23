@@ -6,12 +6,20 @@
 
 package gui;
 
+import javax.swing.JOptionPane;
+
+import dao.DAO_ChangePassWord;
+import dao.DAO_Login;
+import entity.Nhanvien;
+
 /**
  *
  * @author Lenovo
  */
 public class ChangePasswordFrame extends javax.swing.JFrame {
-
+                        
+	DAO_ChangePassWord daoDoiMK= new DAO_ChangePassWord();
+	Nhanvien nv;
     /** Creates new form ChangePasswordFrame */
     public ChangePasswordFrame() {
         initComponents();
@@ -199,6 +207,23 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
 
     private void btnKetThucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKetThucActionPerformed
         // TODO add your handling code here:
+    	@SuppressWarnings("deprecation")
+		String matkhau=txtNhapLaiMKMoi.getText();
+    	String tk=txtTenTK.getText();
+    	nv=new Nhanvien(tk,matkhau);
+    	if(checkMK()) {
+    		if( daoDoiMK.changePass(nv)) {
+    		JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công");
+    		txtMKCu.setText("");
+    		txtMKMoi.setText("");
+    		txtNhapLaiMKMoi.setText("");
+    	}else {
+    		JOptionPane.showMessageDialog(this, "Đổi mật khẩu  thất bại! Hãy kiểm tra lại");
+    	}
+    	}
+    		
+    	
+    	
     }//GEN-LAST:event_btnKetThucActionPerformed
 
     private void txtTenTKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenTKActionPerformed
@@ -216,7 +241,33 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
     private void txtNhapLaiMKMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNhapLaiMKMoiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNhapLaiMKMoiActionPerformed
-
+    private boolean checkMK() {
+    	String mkmoi=txtMKMoi.getText();
+    	String mklai=txtNhapLaiMKMoi.getText();
+    	String mkcu=txtMKCu.getText();
+    	String manv=txtTenTK.getText();
+    	if(!daoDoiMK.checkLogin(manv, mkcu)) {
+    		JOptionPane.showMessageDialog(this, "Sai tài khoản hoặc mật khẩu cũ");
+    		return false;
+    	}
+    	else if(mkmoi.equals("")|| mklai.equals("") ) {
+    		JOptionPane.showMessageDialog(this,"Mật khẩu trống!");
+    		return false;
+    	}
+    	else if(!mkmoi.matches("^[a-zA-Z0-9]{4,}$")) {
+    		JOptionPane.showMessageDialog(this, "Mật khẩu dài ít nhất 4 kí tự (gồm chữ cái ,sô)!");
+    		return false;
+    	}
+    	else if( !mklai.matches(mkmoi)) {
+    		JOptionPane.showMessageDialog(this, "Không trùng với mật khẩu mới");
+    		return false;
+    	}
+    	
+    	return true;
+    }
+    private void revertFromText() {
+    	
+    }
     /**
      * @param args the command line arguments
      */
@@ -270,3 +321,4 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 }
+                        

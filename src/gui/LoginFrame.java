@@ -181,9 +181,9 @@ class LoginFrame extends javax.swing.JFrame {
     		txtMK.setText("");
     	}else try {
     		if(dao_login.checkLogin(txtTenTK.getText(),txtMK.getText())) {
-    			HomeFrame home=new HomeFrame();   			
-    			home.setVisible(true);
-    			home.setLocationRelativeTo(null);
+    			dispose();
+    			new HomeFrame().setVisible(true);
+    		    
     		}else {
     			JOptionPane.showMessageDialog(this,"Sai thông tin tài khoản!!");
     			txtMK.setText("");
@@ -204,7 +204,7 @@ class LoginFrame extends javax.swing.JFrame {
     private void btnDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMKActionPerformed
         // TODO add your handling code here:
     	ChangePasswordFrame changepass=new ChangePasswordFrame();
-    	
+    	dispose();
     	changepass.setVisible(true);
     	changepass.setLocationRelativeTo(null);
     	
