@@ -71,6 +71,7 @@ public class HomeFrame extends javax.swing.JFrame {
         panelDongHo = new javax.swing.JPanel();
         labelDongHo = new javax.swing.JLabel();
         btnChamCong = new javax.swing.JButton();
+        labelvalueTenNV = new javax.swing.JLabel();
         menuBarHome = new javax.swing.JMenuBar();
         mnuDanhMuc = new javax.swing.JMenu();
         mnuItemSP = new javax.swing.JMenuItem();
@@ -257,6 +258,9 @@ public class HomeFrame extends javax.swing.JFrame {
         btnChamCong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/attendance.png"))); // NOI18N
         btnChamCong.setText("Chấm công");
 
+        labelvalueTenNV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelvalueTenNV.setText("value tên nhân viên");
+
         javax.swing.GroupLayout panelManHinhChinhLayout = new javax.swing.GroupLayout(panelManHinhChinh);
         panelManHinhChinh.setLayout(panelManHinhChinhLayout);
         panelManHinhChinhLayout.setHorizontalGroup(
@@ -292,15 +296,16 @@ public class HomeFrame extends javax.swing.JFrame {
                         .addGroup(panelManHinhChinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator1)
                             .addGroup(panelManHinhChinhLayout.createSequentialGroup()
-                                .addGroup(panelManHinhChinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(panelManHinhChinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btnChamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(panelManHinhChinhLayout.createSequentialGroup()
-                                            .addComponent(labelHoTenNV)
-                                            .addGap(656, 656, 656)))
+                                .addComponent(labelHoTenNV)
+                                .addGap(28, 28, 28)
+                                .addComponent(labelvalueTenNV)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(panelManHinhChinhLayout.createSequentialGroup()
+                                .addGroup(panelManHinhChinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnChamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(panelDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(0, 19, Short.MAX_VALUE))
+                                .addGap(0, 22, Short.MAX_VALUE)))))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
         panelManHinhChinhLayout.setVerticalGroup(
             panelManHinhChinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,7 +314,9 @@ public class HomeFrame extends javax.swing.JFrame {
                 .addGroup(panelManHinhChinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelManHinhChinh)
                     .addGroup(panelManHinhChinhLayout.createSequentialGroup()
-                        .addComponent(labelHoTenNV)
+                        .addGroup(panelManHinhChinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelHoTenNV)
+                            .addComponent(labelvalueTenNV))
                         .addGap(18, 18, 18)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -455,8 +462,8 @@ public class HomeFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelManHinhChinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelManHinhChinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -625,6 +632,7 @@ public class HomeFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelDongHo;
     private javax.swing.JLabel labelHoTenNV;
     private javax.swing.JLabel labelManHinhChinh;
+    private javax.swing.JLabel labelvalueTenNV;
     private javax.swing.JMenuBar menuBarHome;
     private javax.swing.JMenu mnuDanhMuc;
     private javax.swing.JMenuItem mnuItemBanHang;

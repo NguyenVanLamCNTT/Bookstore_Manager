@@ -328,7 +328,6 @@ public class OrderFrame extends javax.swing.JFrame {
         btnQuayLai.setText("Quay Lại");
 
         txtMaDH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtMaDH.setText("jTextField1");
 
         btnTim.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnTim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/search.png"))); // NOI18N
