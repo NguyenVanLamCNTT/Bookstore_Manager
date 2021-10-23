@@ -8,5 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="libary/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="libary/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="libary/jasperreports-5.5.0-javadoc.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

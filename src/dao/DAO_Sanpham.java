@@ -136,7 +136,7 @@ public class DAO_Sanpham {
 	}
 
 	public boolean updateSanpham(Sanpham sanpham, String path)  {
-		String sql = "UPDATE sanpham SET TenSP = ?, DonGia = ?, SoLuongTon = ?,TrangThai = ?,HinhAnh = ?,TenTacGia=?,SoTrang = ?,NXB=?,MaLoaiSP = ?, ManCC=?  WHERE MaSP = ?";
+		String sql = "UPDATE sanpham SET ten_sp = ?, dongia = ?, soluongton = ?,trangthai = ?,hinhanh = ?,ten_tacgia=? ,sotrang = ?,nhaxuatban=?, ma_loaisp = ?, ma_ncc=?  WHERE ma_sanpham = ?";
 		Connection con = ConnectDatabase.getConnection();
 		try {
 			FileInputStream in = new FileInputStream(path);
@@ -180,5 +180,49 @@ public class DAO_Sanpham {
 			e.printStackTrace();
 			return 0;
 		}
+	}
+	public boolean updateSoluongton(String tensp, int soluong) {
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "update sanpham\r\n"
+				+ "set soluongton = "+soluong
+				+ " where ten_sp = N'"+tensp+"'";
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			int n = stmt.executeUpdate();
+			return n>0;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public Sanpham getSanphamByName(String ten) {
+		Sanpham sanpham = new Sanpham();
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "Select * from sanpham sp inner join loaisanpham lsp On sp.ma_loaisp = lsp.ma_loaisp inner join nhacungcap ncc On ncc.ma_ncc = sp.ma_ncc where sp.ten_sp = N'"+ten+"'";
+		
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				sanpham.setMaSanpham(rs.getInt("ma_sanpham"));
+				sanpham.setTenSanpham(rs.getString("ten_sp"));
+				sanpham.setDongia(rs.getDouble("dongia"));
+				sanpham.setSoluongton(rs.getInt("soluongton"));
+				sanpham.setTrangthai(rs.getString("trangthai"));
+				sanpham.setLoaiSp(new LoaiSanpham(rs.getString("ma_loaisp"),rs.getString("tenloaisp")));
+				sanpham.setNhaCC(new NhaCungcap(rs.getString("ma_ncc"),rs.getString("ten_ncc"), rs.getString("diachi")));
+				sanpham.setHinhanh(rs.getBytes("hinhanh"));
+				sanpham.setNhaXB(rs.getString("nhaxuatban"));
+				sanpham.setSotrang(rs.getInt("sotrang"));
+				sanpham.setTenTacgia(rs.getString("ten_tacgia"));
+			}
+			return sanpham;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 }

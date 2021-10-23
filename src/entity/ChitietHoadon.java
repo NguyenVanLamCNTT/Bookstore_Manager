@@ -55,5 +55,7 @@ public class ChitietHoadon {
 		return "ChitietHoadon [hoadon=" + hoadon + ", sanpham=" + sanpham + ", dongia=" + dongia + ", soluong="
 				+ soluong + "]";
 	}
+
+	
 	
 }

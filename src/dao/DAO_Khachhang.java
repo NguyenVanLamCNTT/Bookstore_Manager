@@ -48,21 +48,25 @@ public class DAO_Khachhang {
 			return null;
 		}
 	}
-	public int getMaKhachhang(String sodienthoai) {
-		int makh = 0 ;
+	public Khachhang getKhachhang(String sodienthoai) {
+		Khachhang khachhang = new Khachhang();
 		Connection con = ConnectDatabase.getConnection();
-		String sql = "Select ma_kh from khachhang where sodienthoai = '"+sodienthoai+"'";
+		String sql = "Select * from khachhang where sodienthoai = '"+sodienthoai+"'";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
-				makh = rs.getInt("ma_kh");
+				khachhang.setTenKH(rs.getString("tenkh"));
+				khachhang.setSodienthoai(rs.getString("sodienthoai"));
+				khachhang.setDiachi(rs.getString("diachi"));
+				khachhang.setEmail(rs.getString("email"));
+				khachhang.setMaKH(rs.getInt("ma_kh"));
 			}
-			return makh;
+			return khachhang;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return 0;
+			return null;
 		}
 	}
 }

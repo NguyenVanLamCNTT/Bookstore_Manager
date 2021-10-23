@@ -31,7 +31,17 @@ public class Hoadon {
 		chitietHoadon.add(cthd);
 		this.tongtien += (cthd.getDongia()*cthd.getSoluong());
 	}
-	
+	public void removeChitietHoadon(int i) {
+		double tientru = (chitietHoadon.get(i).getDongia() * chitietHoadon.get(i).getSoluong()) ;
+		chitietHoadon.remove(i);
+		this.tongtien -= tientru;
+	}
+	public void updateChitietHoadon(int i, int soluong) {
+		double tientru = (chitietHoadon.get(i).getDongia() * chitietHoadon.get(i).getSoluong()) ;
+		this.tongtien -= tientru;
+		chitietHoadon.get(i).setSoluong(soluong);
+		this.tongtien += (chitietHoadon.get(i).getDongia() * chitietHoadon.get(i).getSoluong()) ;
+	}
 	public Hoadon(int mahoadon) {
 		super();
 		this.mahoadon = mahoadon;
@@ -76,6 +86,11 @@ public class Hoadon {
 	public void setNgaylapHd(Date ngaylapHd) {
 		this.ngaylapHd = ngaylapHd;
 	}
+
+	public List<ChitietHoadon> getChitietHoadon() {
+		return chitietHoadon;
+	}
+
 
 	@Override
 	public String toString() {
