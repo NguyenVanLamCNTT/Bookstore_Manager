@@ -5,6 +5,8 @@
  */
 package gui;
 
+import java.awt.event.ActionEvent;
+
 /**
  *
  * @author Lenovo
@@ -162,10 +164,22 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
                 .addContainerGap())
         );
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
 
+        });
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+			private void btnThoatActionPerformed(ActionEvent evt) {
+				// TODO Auto-generated method stub
+				dispose();
+				new HomeFrame().setVisible(true);
+			}
+
+			
     /**
      * @param args the command line arguments
      */

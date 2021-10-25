@@ -493,7 +493,7 @@ public class ProductFrame extends javax.swing.JFrame{
     }
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
-        this.setVisible(false);
+       dispose();
         new HomeFrame().setVisible(true);
     }//GEN-LAST:event_btnThoatActionPerformed
 

@@ -5,6 +5,8 @@
  */
 package gui;
 
+import java.awt.event.ActionEvent;
+
 /**
  *
  * @author Lenovo
@@ -190,9 +192,19 @@ public class SearchBillFrame extends javax.swing.JFrame {
                 .addComponent(panelTKHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+			
+        });
         pack();
     }// </editor-fold>//GEN-END:initComponents
+	private void btnThoatActionPerformed(ActionEvent evt) {
+				// TODO Auto-generated method stub
+				dispose();
+				new HomeFrame().setVisible(true);
+			}
 
     private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimDDHActionPerformed
         // TODO add your handling code here:

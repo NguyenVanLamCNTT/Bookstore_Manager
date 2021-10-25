@@ -5,22 +5,32 @@
  */
 package gui;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JFrame;
+
+import dao.DAO_HomeFrame;
+import entity.Nhanvien;
+
 /**
  *
  * @author Lenovo
  */
-public class HomeFrame extends javax.swing.JFrame {
+public class HomeFrame extends JFrame{
 
     /**
      * Creates new form HomeFrame
      */
+	DAO_HomeFrame daohome=new DAO_HomeFrame();
+	LoginFrame login=new LoginFrame();
     public HomeFrame() {
+    	
         initComponents();
         new Thread(){
             public void run(){
@@ -123,7 +133,12 @@ public class HomeFrame extends javax.swing.JFrame {
         btnQuanLySP.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnQuanLySP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuanLySPActionPerformed(evt);
+                try {
+					btnQuanLySPActionPerformed(evt);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -200,7 +215,12 @@ public class HomeFrame extends javax.swing.JFrame {
         btnCapNhatLSP.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnCapNhatLSP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCapNhatLSPActionPerformed(evt);
+                try {
+					btnCapNhatLSPActionPerformed(evt);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -257,9 +277,17 @@ public class HomeFrame extends javax.swing.JFrame {
         btnChamCong.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnChamCong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/attendance.png"))); // NOI18N
         btnChamCong.setText("Chấm công");
+        btnChamCong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChamcongActionListener(evt);
+            }
+        });
 
-        labelvalueTenNV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelvalueTenNV.setText("value tên nhân viên");
+     //   labelvalueTenNV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        String manv=login.getMaNVText();
+        String tennv=daohome.getTenNV(manv);
+        labelvalueTenNV.setText(tennv);
+        labelvalueTenNV.setFont(new Font("Times New Roman",Font.BOLD,25));
 
         javax.swing.GroupLayout panelManHinhChinhLayout = new javax.swing.GroupLayout(panelManHinhChinh);
         panelManHinhChinh.setLayout(panelManHinhChinhLayout);
@@ -474,24 +502,158 @@ public class HomeFrame extends javax.swing.JFrame {
         );
 
         getAccessibleContext().setAccessibleDescription("");
+         String chucvu=daohome.getChucVu(manv);
+         if(chucvu.equals("NVBH")) {
+        	 btnCapNhatLSP.setEnabled(false);
+        	 btnCapNhatNCC.setEnabled(false);
+        	 btnQuanLyNV.setEnabled(false);
+        	 btnQuanLySP.setEnabled(false);
+        	 btnThongKeDT.setEnabled(false);
+        	 btnThongKeSP.setEnabled(false);
+        	 mnuItemNCC.setEnabled(false);
+        	 mnuItemLSP.setEnabled(false);
+        	 mnuItemNV.setEnabled(false);
+        	 mnuItemThongKeDT.setEnabled(false);
+        	 mnuItemThongKeSP.setEnabled(false);
+        	 mnuItemDatHang.setEnabled(false);
+         }
+         else if(chucvu.equals("NVNK")) {
+        	 btnBanHang.setEnabled(false);
+        	 btnQuanLyDH.setEnabled(false);
+        	 btnQuanLyNV.setEnabled(false);
+        	 btnThongKeDT.setEnabled(false);
+        	 btnThongKeSP.setEnabled(false);
+        	 mnuItemBanHang.setEnabled(false);
+        	 mnuItemDH.setEnabled(false);
+        	 mnuItemNV.setEnabled(false);
+        	 mnuItemThongKeDT.setEnabled(false);
+        	 mnuItemThongKeSP.setEnabled(false);
+        	 mnuItemDatHang.setEnabled(false);
+         }
+         else if(chucvu.equals("ADMIN")) {
+        	 labelHoTenNV.setText("Quản lý :");
+         }
+         mnuItemDatHang.addActionListener(new java.awt.event.ActionListener() {
+             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                 mnuitemDatHangSPActionPerformed(evt);
+             }
+         });
+         mnuItemTKHD.addActionListener(new java.awt.event.ActionListener() {
+             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                 mnuitemTimHDSPActionPerformed(evt);
+             }
+         });
+         mnuItemTKNCC.addActionListener(new java.awt.event.ActionListener() {
+             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                 mnuitemTKNCCSPActionPerformed(evt);
+             }
 
+         });
+         mnuItemTKDH.addActionListener(new java.awt.event.ActionListener() {
+             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                 mnuitemTKDHActionPerformed(evt);
+             }
+
+         });
+         mnuitemTKLSP.addActionListener(new java.awt.event.ActionListener() {
+             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                 mnuitemTKLSPActionPerformed(evt);
+             }
+
+         });
+         mnuItemChamCong.addActionListener(new java.awt.event.ActionListener() {
+             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                 mnuitemChamCongActionPerformed(evt);
+             }
+
+         });
+         mnuItemBanHang.addActionListener(new java.awt.event.ActionListener() {
+             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                 mnuitemBanHangActionPerformed(evt);
+             }
+
+         });
+         mnuItemDoiMatKhau.addActionListener(new java.awt.event.ActionListener() {
+             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                 mnuitemDoiMKActionPerformed(evt);
+             }
+
+         });
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+			private void mnuitemDoiMKActionPerformed(ActionEvent evt) {
+				// TODO Auto-generated method stub
+				dispose();
+				new ChangePasswordFrame().setVisible(true);
+			}
 
-    private void btnQuanLySPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanLySPActionPerformed
+			private void mnuitemBanHangActionPerformed(ActionEvent evt) {
+				// TODO Auto-generated method stub
+				dispose();
+				new SaleFrame().setVisible(true);
+			}
+
+			private void mnuitemChamCongActionPerformed(ActionEvent evt) {
+				// TODO Auto-generated method stub
+				dispose();
+				new  AttendanceFrame().setVisible(true);
+			}
+
+			private void mnuitemTKLSPActionPerformed(ActionEvent evt) {
+				// TODO Auto-generated method stub
+				dispose();
+				try {
+					new SearchTypeProductFrame().setVisible(true);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			private void mnuitemTKDHActionPerformed(ActionEvent evt) {
+				// TODO Auto-generated method stub
+				dispose();
+				new SearchOrderFrame().setVisible(true);
+			}
+			private void mnuitemTKNCCSPActionPerformed(ActionEvent evt) {
+				// TODO Auto-generated method stub
+				dispose();
+				new SearchProducerFrame().setVisible(true);
+			}
+    
+    private void mnuitemTimHDSPActionPerformed(ActionEvent evt) {
+				// TODO Auto-generated method stub
+				dispose();
+				new SearchBillFrame().setVisible(true);
+			}
+	private void mnuitemDatHangSPActionPerformed(ActionEvent evt) {
+				// TODO Auto-generated method stub
+			dispose();
+			new customerOrderFrame().setVisible(true);
+			}
+    private void btnQuanLySPActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnQuanLySPActionPerformed
         // TODO add your handling code here:
+    	dispose();
+    	new ProductFrame().setVisible(true);
     }//GEN-LAST:event_btnQuanLySPActionPerformed
 
     private void btnQuanLyDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanLyDHActionPerformed
         // TODO add your handling code here:
+    	dispose();
+    	new OrderFrame().setVisible(true);
     }//GEN-LAST:event_btnQuanLyDHActionPerformed
 
     private void btnDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code her
+    	dispose();
+    	new LoginFrame().setVisible(true);
     }//GEN-LAST:event_btnDangXuatActionPerformed
 
     private void btnQuanLyNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanLyNVActionPerformed
         // TODO add your handling code here:
+    	dispose();
+    	new EmployeeFrame().setVisible(true);
     }//GEN-LAST:event_btnQuanLyNVActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -500,43 +662,57 @@ public class HomeFrame extends javax.swing.JFrame {
 
     private void btnBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanHangActionPerformed
         // TODO add your handling code here:
+    	dispose();
+    	new SaleFrame().setVisible(true);
     }//GEN-LAST:event_btnBanHangActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         // TODO add your handling code here:
+    	System.exit(1);
     }//GEN-LAST:event_btnThoatActionPerformed
 
     private void btnCapNhatNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatNCCActionPerformed
         // TODO add your handling code here:
+    	dispose();
+    new ProducerFrame().setVisible(true);
     }//GEN-LAST:event_btnCapNhatNCCActionPerformed
 
-    private void btnCapNhatLSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatLSPActionPerformed
+    private void btnCapNhatLSPActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnCapNhatLSPActionPerformed
         // TODO add your handling code here:
+    	dispose();
+    	new TypeProductFrame().setVisible(true);
     }//GEN-LAST:event_btnCapNhatLSPActionPerformed
 
     private void btnThongKeSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeSPActionPerformed
         // TODO add your handling code here:
+    	dispose();
+    	new ProductStatisticsFrame().setVisible(true);
     }//GEN-LAST:event_btnThongKeSPActionPerformed
 
     private void btnThongKeDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeDTActionPerformed
         // TODO add your handling code here:
+    	dispose();
+    	new StatisticalFrame().setVisible(true);
     }//GEN-LAST:event_btnThongKeDTActionPerformed
 
     private void mnuItemThongKeSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemThongKeSPActionPerformed
         // TODO add your handling code here:
         ProductStatisticsFrame productStatisticsFrame = new ProductStatisticsFrame();
+        dispose();
         productStatisticsFrame.setVisible(true);
     }//GEN-LAST:event_mnuItemThongKeSPActionPerformed
 
     private void mnuItemNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemNVActionPerformed
         // TODO add your handling code here:
         EmployeeFrame employeeFrame = new EmployeeFrame();
+        dispose();
         employeeFrame.setVisible(true);
     }//GEN-LAST:event_mnuItemNVActionPerformed
 
     private void mnuItemThongKeDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemThongKeDTActionPerformed
         // TODO add your handling code here:
         StatisticalFrame statisticalFrame = new StatisticalFrame();
+        dispose();
         statisticalFrame.setVisible(true);
     }//GEN-LAST:event_mnuItemThongKeDTActionPerformed
 
@@ -544,6 +720,7 @@ public class HomeFrame extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             ProductFrame productFrame = new ProductFrame();
+            dispose();
             productFrame.setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -554,6 +731,7 @@ public class HomeFrame extends javax.swing.JFrame {
     private void mnuItemDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemDHActionPerformed
         // TODO add your handling code here:
         OrderFrame orderFrame = new OrderFrame();
+        dispose();
         orderFrame.setVisible(true);
     }//GEN-LAST:event_mnuItemDHActionPerformed
 
@@ -562,23 +740,31 @@ public class HomeFrame extends javax.swing.JFrame {
         TypeProductFrame typeProductFrame;
         try {
             typeProductFrame = new TypeProductFrame();
+            dispose();
             typeProductFrame.setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_mnuItemLSPActionPerformed
-
+    private void btnChamcongActionListener(ActionEvent evt) {
+		// TODO Auto-generated method stu
+    	dispose();
+		new AttendanceFrame().setVisible(true);
+		
+	}
     private void mnuItemNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemNCCActionPerformed
         // TODO add your handling code here:
         ProducerFrame producerFrame = new ProducerFrame();
+        dispose();
         producerFrame.setVisible(true);
     }//GEN-LAST:event_mnuItemNCCActionPerformed
 
     private void mnuItemTKSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemTKSPActionPerformed
         // TODO add your handling code here:
+    	dispose();
+    	new SearchProductFrame().setVisible(true);
     }//GEN-LAST:event_mnuItemTKSPActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -610,7 +796,6 @@ public class HomeFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new HomeFrame().setVisible(true);
-                System.out.print("jhbfdshf");
             }
         });
     }

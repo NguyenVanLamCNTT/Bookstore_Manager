@@ -6,6 +6,8 @@
 package gui;
 
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
@@ -19,6 +21,7 @@ class LoginFrame extends javax.swing.JFrame {
 
 	ConnectDatabase con;
         DAO_Login dao_login = new DAO_Login();
+        public static String manv;
     public LoginFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -80,7 +83,14 @@ class LoginFrame extends javax.swing.JFrame {
 
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/multiply.png"))); // NOI18N
         btnThoat.setText("Thoát");
-
+        btnThoat.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				btnThoatActionPerformed(e);
+			}
+		});
         labelDangNhap.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         labelDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bookstore.png"))); // NOI18N
         labelDangNhap.setText("ĐĂNG NHẬP HỆ THỐNG");
@@ -163,6 +173,8 @@ class LoginFrame extends javax.swing.JFrame {
     	}else try {
     		if(dao_login.checkLogin(txtTenTK.getText(),txtMK.getText())) {
     			dispose();
+    			manv=getMaNVText();
+    			manv=txtTenTK.getText();
     			new HomeFrame().setVisible(true);
     		    
     		}else {
@@ -177,7 +189,9 @@ class LoginFrame extends javax.swing.JFrame {
     private void txtMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMKActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMKActionPerformed
-
+    public String getMaNVText() {
+    	return manv;
+    }
     private void txtTenTKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenTKActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTenTKActionPerformed

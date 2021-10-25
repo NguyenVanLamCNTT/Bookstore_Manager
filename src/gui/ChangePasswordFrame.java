@@ -6,6 +6,8 @@
 
 package gui;
 
+import java.awt.event.ActionEvent;
+
 import javax.swing.JOptionPane;
 
 import dao.DAO_ChangePassWord;
@@ -197,9 +199,20 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
                 .addComponent(panelDoiMK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(35, Short.MAX_VALUE))
         );
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuitemThoatActionPerformed(evt);
+            }
 
+        });
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+			private void mnuitemThoatActionPerformed(ActionEvent evt) {
+				// TODO Auto-generated method stub
+				dispose();
+				new HomeFrame().setVisible(true);
+			}
 
     private void txtMKCuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMKCuActionPerformed
         // TODO add your handling code here:

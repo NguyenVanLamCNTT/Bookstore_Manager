@@ -5,6 +5,8 @@
  */
 package gui;
 
+import java.awt.event.ActionEvent;
+
 /**
  *
  * @author Lenovo
@@ -282,10 +284,21 @@ public class EmployeeFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+
+        });
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+			private void btnThoatActionPerformed(ActionEvent evt) {
+				// TODO Auto-generated method stub
+				dispose();
+				new HomeFrame().setVisible(true);
+			}
     private void txtTenNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenNVActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTenNVActionPerformed

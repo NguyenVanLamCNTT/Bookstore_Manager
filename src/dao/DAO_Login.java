@@ -23,7 +23,7 @@ public class DAO_Login {
 			PreparedStatement ps=conn.prepareStatement(sql);
 			ps.setString(1, manv);
 			ps.setString(2, matkhau);
-			ResultSet rs=ps.executeQuery();
+			ResultSet rs=ps.executeQuery();              
 			if(rs.next()) {
 				return true;
 			}

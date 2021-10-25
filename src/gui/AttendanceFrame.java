@@ -5,6 +5,7 @@
  */
 package gui;
 
+import java.awt.event.ActionEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -187,10 +188,23 @@ public class AttendanceFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatSPActionPerformed(evt);
+            }
 
+			
+        });
+        
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void btnThoatSPActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		
+        	dispose();
+        	new HomeFrame().setVisible(true);
+        
+	}
     /**
      * @param args the command line arguments
      */

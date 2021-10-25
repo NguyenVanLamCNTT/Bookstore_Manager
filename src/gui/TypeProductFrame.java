@@ -357,9 +357,8 @@ public class TypeProductFrame extends javax.swing.JFrame {
 		txtTenLoaiSP.setEnabled(false);
 	}
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
-    	HomeFrame home = new HomeFrame();
-    	home.setVisible(true);
-    	this.setVisible(false);
+    	dispose();
+    	new HomeFrame().setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnThoatActionPerformed
 
@@ -427,6 +426,13 @@ public class TypeProductFrame extends javax.swing.JFrame {
         		showLoaiSP();
         	}
 		}
+    	btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+
+			
+        });
     }//GEN-LAST:event_btnLuuActionPerformed
     private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:

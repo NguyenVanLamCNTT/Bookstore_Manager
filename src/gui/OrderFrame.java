@@ -5,6 +5,8 @@
  */
 package gui;
 
+import java.awt.event.ActionEvent;
+
 /**
  *
  * @author Lenovo
@@ -497,10 +499,20 @@ public class OrderFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
 
+			
+        });
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+	private void btnThoatActionPerformed(ActionEvent evt) {
+					// TODO Auto-generated method stub
+					dispose();
+					new HomeFrame().setVisible(true);
+				}
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         
     }//GEN-LAST:event_btnLuuActionPerformed
