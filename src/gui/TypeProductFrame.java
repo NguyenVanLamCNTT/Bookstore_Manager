@@ -33,6 +33,7 @@ public class TypeProductFrame extends javax.swing.JFrame {
      */
     public TypeProductFrame() throws SQLException {
         initComponents();
+        setLocationRelativeTo(null);
         tableMode = (DefaultTableModel) tableCapNhatLoaiSP.getModel();
         showLoaiSP();
     }
@@ -117,7 +118,6 @@ public class TypeProductFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-    	setLocationRelativeTo(null);
         panelCapNhatLSP = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         labelCapNhatLSP = new javax.swing.JLabel();
