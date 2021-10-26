@@ -18,6 +18,7 @@ public class customerOrderFrame extends javax.swing.JFrame {
      */
     public customerOrderFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

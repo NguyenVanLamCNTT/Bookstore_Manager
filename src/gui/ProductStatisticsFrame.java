@@ -18,6 +18,7 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
      */
     public ProductStatisticsFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

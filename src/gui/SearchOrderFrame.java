@@ -18,6 +18,7 @@ public class SearchOrderFrame extends javax.swing.JFrame {
      */
     public SearchOrderFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

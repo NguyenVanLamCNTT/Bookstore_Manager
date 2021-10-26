@@ -18,6 +18,7 @@ public class SearchProductFrame extends javax.swing.JFrame {
      */
     public SearchProductFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

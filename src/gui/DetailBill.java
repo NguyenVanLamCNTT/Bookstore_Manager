@@ -16,6 +16,7 @@ public class DetailBill extends javax.swing.JFrame {
      */
     public DetailBill() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

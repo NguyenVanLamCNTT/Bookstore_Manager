@@ -18,6 +18,7 @@ public class EmployeeFrame extends javax.swing.JFrame {
      */
     public EmployeeFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

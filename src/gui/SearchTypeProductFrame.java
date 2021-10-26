@@ -19,6 +19,7 @@ import entity.LoaiSanpham;
  * @author Lenovo
  */
 public class SearchTypeProductFrame extends javax.swing.JFrame {
+	
 
 	DefaultTableModel tableModel;
 	List<LoaiSanpham> listLSP;
@@ -49,7 +50,7 @@ public class SearchTypeProductFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+    	setLocationRelativeTo(null);
         panelTKLSP = new javax.swing.JPanel();
         btnTimDDH = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();

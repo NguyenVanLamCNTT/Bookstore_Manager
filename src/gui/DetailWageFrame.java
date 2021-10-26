@@ -16,6 +16,7 @@ public class DetailWageFrame extends javax.swing.JFrame {
      */
     public DetailWageFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

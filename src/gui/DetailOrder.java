@@ -16,6 +16,7 @@ public class DetailOrder extends javax.swing.JFrame {
      */
     public DetailOrder() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

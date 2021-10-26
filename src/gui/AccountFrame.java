@@ -16,6 +16,7 @@ public class AccountFrame extends javax.swing.JFrame {
      */
     public AccountFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

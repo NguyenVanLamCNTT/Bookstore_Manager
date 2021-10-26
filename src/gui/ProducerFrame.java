@@ -16,6 +16,7 @@ public class ProducerFrame extends javax.swing.JFrame {
      */
     public ProducerFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

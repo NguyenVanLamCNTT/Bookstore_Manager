@@ -18,6 +18,7 @@ public class StatisticalFrame extends javax.swing.JFrame {
      */
     public StatisticalFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

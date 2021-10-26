@@ -32,6 +32,7 @@ public class HomeFrame extends JFrame{
     public HomeFrame() {
     	
         initComponents();
+        setLocationRelativeTo(null);
         new Thread(){
             public void run(){
                 while(true){

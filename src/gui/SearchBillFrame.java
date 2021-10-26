@@ -18,6 +18,7 @@ public class SearchBillFrame extends javax.swing.JFrame {
      */
     public SearchBillFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

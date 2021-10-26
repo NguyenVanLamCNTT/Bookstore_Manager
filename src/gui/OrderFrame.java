@@ -18,6 +18,7 @@ public class OrderFrame extends javax.swing.JFrame {
      */
     public OrderFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
