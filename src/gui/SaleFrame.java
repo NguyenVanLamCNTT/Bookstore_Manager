@@ -16,6 +16,7 @@ import javax.swing.table.TableModel;
 
 import dao.DAO_ChitietHoadon;
 import dao.DAO_Hoadon;
+import dao.DAO_HomeFrame;
 import dao.DAO_Khachhang;
 import dao.DAO_Loaisanpham;
 import dao.DAO_Sanpham;
@@ -44,6 +45,9 @@ public class SaleFrame extends javax.swing.JFrame {
 	private Khachhang khachhang;
 	private List<ChitietHoadon> dsChitieHD;
 	private ChitietHoadon cthd;
+	DAO_HomeFrame daoHome=new DAO_HomeFrame();
+	String manv=new LoginFrame().getMaNVText();
+	String ten=daoHome.getTenNV(manv);
     public SaleFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -117,7 +121,7 @@ public class SaleFrame extends javax.swing.JFrame {
         labelBanHang.setText("BÁN HÀNG");
 
         labelTenNV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelTenNV.setText("Họ tên nhân viên: ");
+        labelTenNV.setText("Họ tên nhân viên: "+ten);
 
         panelNhapKH.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -831,7 +835,7 @@ public class SaleFrame extends javax.swing.JFrame {
     private Hoadon taoHoadon(Khachhang khachhang) {
     	Hoadon hoadon = new Hoadon();
     	Nhanvien nhanvien = new Nhanvien();
-    	nhanvien.setMaNV("NVLam");
+    	nhanvien.setMaNV(manv);
     	hoadon.setKhachhang(khachhang);
     	hoadon.setNhanvien(nhanvien);
     	return hoadon;

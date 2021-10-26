@@ -25,6 +25,7 @@ public class ChangePasswordFrame extends javax.swing.JFrame {
     /** Creates new form ChangePasswordFrame */
     public ChangePasswordFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /** This method is called from within the constructor to
