@@ -10,6 +10,8 @@ public class Hoadon {
 	private Nhanvien nhanvien;
 	private double tongtien;
 	private Date ngaylapHd;
+	private double sotiennhan;
+	private double sotientralai;
 	private List<ChitietHoadon> chitietHoadon;
 	
 	public Hoadon() {
@@ -17,13 +19,15 @@ public class Hoadon {
 		this.chitietHoadon = new ArrayList<ChitietHoadon>();
 	}
 
-	public Hoadon(int mahoadon, Khachhang khachhang, Nhanvien nhanvien, Date ngaylapHd) {
+	public Hoadon(int mahoadon, Khachhang khachhang, Nhanvien nhanvien, Date ngaylapHd, double sotiennhan, double sotientralai) {
 		super();
 		this.mahoadon = mahoadon;
 		this.khachhang = khachhang;
 		this.nhanvien = nhanvien;
 		this.chitietHoadon = new ArrayList<ChitietHoadon>();
 		this.ngaylapHd = ngaylapHd;
+		this.sotiennhan = sotiennhan;
+		this.sotientralai = sotientralai;
 	}
 	
 	public void addChitietHoadon(Hoadon hoadon, Sanpham sanpham, double dongia, int soluong) {
@@ -91,6 +95,22 @@ public class Hoadon {
 		return chitietHoadon;
 	}
 
+	
+	public double getSotiennhan() {
+		return sotiennhan;
+	}
+
+	public void setSotiennhan(double sotiennhan) {
+		this.sotiennhan = sotiennhan;
+	}
+
+	public double getSotientralai() {
+		return sotientralai;
+	}
+
+	public void setSotientralai(double sotientralai) {
+		this.sotientralai = sotientralai;
+	}
 
 	@Override
 	public String toString() {

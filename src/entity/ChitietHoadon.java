@@ -5,7 +5,7 @@ public class ChitietHoadon {
 	private Sanpham sanpham;
 	private double dongia;
 	private int soluong;
-	
+	private double thanhtien;
 	public ChitietHoadon() {
 		// TODO Auto-generated constructor stub
 	}
@@ -16,6 +16,7 @@ public class ChitietHoadon {
 		this.sanpham = sanpham;
 		this.dongia = dongia;
 		this.soluong = soluong;
+		this.thanhtien = this.soluong * this.dongia;
 	}
 
 	public Hoadon getHoadon() {
@@ -48,6 +49,11 @@ public class ChitietHoadon {
 
 	public void setSoluong(int soluong) {
 		this.soluong = soluong;
+	}
+	
+	
+	public double getThanhtien() {
+		return thanhtien;
 	}
 
 	@Override

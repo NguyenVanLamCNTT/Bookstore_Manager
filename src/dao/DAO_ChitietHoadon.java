@@ -17,13 +17,14 @@ public class DAO_ChitietHoadon {
 	public boolean	themSanphamvaoCTHD(ChitietHoadon cthoadon) {
 		Connection con = ConnectDatabase.getConnection();
 		
-		String sql = "Insert into chitiethoadon (mahd, masp, dongia, soluong) values (?,?,?,?) ";
+		String sql = "Insert into chitiethoadon (mahd, masp, dongia, soluong, thanhtien) values (?,?,?,?,?) ";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, cthoadon.getHoadon().getMahoadon());
 			stmt.setInt(2, cthoadon.getSanpham().getMaSanpham());
 			stmt.setDouble(3, cthoadon.getDongia());
 			stmt.setInt(4, cthoadon.getSoluong());
+			stmt.setDouble(5, cthoadon.getThanhtien());
 			int n = stmt.executeUpdate();
 			return n>0;
 		} catch (SQLException e) {

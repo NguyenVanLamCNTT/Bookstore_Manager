@@ -16,13 +16,15 @@ public class DAO_Hoadon {
 		Connection con = ConnectDatabase.getConnection();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
  	   	LocalDateTime now = LocalDateTime.now();  
-		String sql = "Insert into hoadon (makh,manv, ngaylap_hd) values(?,?,?) ";
+		String sql = "Insert into hoadon (makh,manv, ngaylap_hd, sotiennhan, sotientralai) values(?,?,?,?,?) ";
 		
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			stmt.setInt(1, hoadon.getKhachhang().getMaKH());
 			stmt.setString(2, hoadon.getNhanvien().getMaNV());
 			stmt.setString(3, dtf.format(now));
+			stmt.setDouble(4, hoadon.getSotiennhan());
+			stmt.setDouble(5, hoadon.getSotientralai());
 			int n = stmt.executeUpdate();
 			return n>0;
 		} catch (SQLException e) {

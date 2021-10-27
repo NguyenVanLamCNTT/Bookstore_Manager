@@ -5,15 +5,18 @@
  */
 package gui;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import connect.ConnectDatabase;
 import dao.DAO_ChitietHoadon;
 import dao.DAO_Hoadon;
 import dao.DAO_HomeFrame;
@@ -26,6 +29,14 @@ import entity.Khachhang;
 import entity.LoaiSanpham;
 import entity.Nhanvien;
 import entity.Sanpham;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -601,6 +612,8 @@ public class SaleFrame extends javax.swing.JFrame {
     			txtTienNhanTuKH.setEnabled(false);
     			btnInHoaDon.setEnabled(true);
     			if(kiemtratontaiKhachhang(khachhang)) {
+    				hoadon.setSotiennhan(convertedToNumbers(txtTienNhanTuKH.getText()));
+    				hoadon.setSotientralai(convertedToNumbers(valueTienDu.getText()));
     				insertHoadon(hoadon);
     				hoadon.setMahoadon(new DAO_Hoadon().getMahoadon());
     				themChitietHD(dsChitieHD, hoadon);
@@ -608,12 +621,15 @@ public class SaleFrame extends javax.swing.JFrame {
     				insertKhachhang(khachhang);
     				khachhang = getKhachhang(txtSDT.getText());
     	    		hoadon.setKhachhang(khachhang);
+    				hoadon.setSotiennhan(convertedToNumbers(txtTienNhanTuKH.getText()));
+    				hoadon.setSotientralai(convertedToNumbers(valueTienDu.getText()));
     				insertHoadon(hoadon);
     				hoadon.setMahoadon(new DAO_Hoadon().getMahoadon());
     				themChitietHD(dsChitieHD, hoadon);
     			}
     			capnhatTongtien(hoadon.getTongtien());
     			capnhatSoluongton();
+    			JOptionPane.showMessageDialog(this, "Thanh toán thành công!");
     		}
     	}
     }//GEN-LAST:event_btnThanhToanActionPerformed
@@ -643,6 +659,18 @@ public class SaleFrame extends javax.swing.JFrame {
 
     private void btnInHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHoaDonActionPerformed
         // TODO add your handling code here:
+    	Connection con = ConnectDatabase.getConnection();
+    	
+    	try {
+			JasperDesign jd =  JRXmlLoader.load("E:\\PhattrienUD\\Bookstore_Manager\\src\\hoadon\\hoadon.jrxml");
+	    	JasperReport report = JasperCompileManager.compileReport("E:\\PhattrienUD\\Bookstore_Manager\\src\\hoadon\\hoadon.jrxml");
+	    	JasperPrint jp = JasperFillManager.fillReport(report, new HashMap(), con);
+	    	JasperViewer.viewReport(jp);
+		} catch (JRException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
     }//GEN-LAST:event_btnInHoaDonActionPerformed
 
     private void txtTienNhanTuKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienNhanTuKHActionPerformed
@@ -702,12 +730,13 @@ public class SaleFrame extends javax.swing.JFrame {
 
     private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuayLaiActionPerformed
         // TODO add your handling code here:
-        clearTable();
+    	clearTable();
         clearText();
         disabled();
         clearTextSanpham();
         chucnang = 0;
         hoadonmoi = 0;
+
     }//GEN-LAST:event_btnQuayLaiActionPerformed
 
     private void txtTienNhanTuKHKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTienNhanTuKHKeyReleased
@@ -811,11 +840,11 @@ public class SaleFrame extends javax.swing.JFrame {
     	
     }
     private ChitietHoadon taoChitietHoadon(Sanpham sanpham, Hoadon hoadon) {
-    	ChitietHoadon cthd = new ChitietHoadon();
-    	cthd.setDongia(convertedToNumbers(valueDonGia.getText()));
-    	cthd.setSoluong(Integer.parseInt(txtSoLuong.getText()));
-    	cthd.setSanpham(sanpham);
-    	cthd.setHoadon(hoadon);
+    	ChitietHoadon cthd = new ChitietHoadon(hoadon, sanpham, convertedToNumbers(valueDonGia.getText()), Integer.parseInt(txtSoLuong.getText()));
+//    	cthd.setDongia(convertedToNumbers(valueDonGia.getText()));
+//    	cthd.setSoluong(Integer.parseInt(txtSoLuong.getText()));
+//    	cthd.setSanpham(sanpham);
+//    	cthd.setHoadon(hoadon);
     	return cthd;
     }
     private void loadSanphamByName(String name) {
@@ -835,7 +864,7 @@ public class SaleFrame extends javax.swing.JFrame {
     private Hoadon taoHoadon(Khachhang khachhang) {
     	Hoadon hoadon = new Hoadon();
     	Nhanvien nhanvien = new Nhanvien();
-    	nhanvien.setMaNV(manv);
+    	nhanvien.setMaNV("NVLam");
     	hoadon.setKhachhang(khachhang);
     	hoadon.setNhanvien(nhanvien);
     	return hoadon;
@@ -959,12 +988,17 @@ public class SaleFrame extends javax.swing.JFrame {
     
     private void capnhatSoluongton() {
     	DAO_Sanpham dao_sanpham = new DAO_Sanpham();
-    	TableModel tableModel = tableBanHang.getModel();
-    	int click = tableBanHang.getSelectedRow();
-    	int soluongton = dao_sanpham.getSoluongton(cbTenSP.getSelectedItem().toString());
-    	int soluongmua = Integer.parseInt(tableModel.getValueAt(click, 2).toString());
-    	int soluongtonmoi = soluongton - soluongmua; 
-    	if(dao_sanpham.updateSoluongton(cbTenSP.getSelectedItem().toString(), soluongtonmoi));
+    	int row = 0;
+    	int colSoluong = 2;
+    	int colTensp = 1;
+    	for(int i=row;i<tableBanHang.getRowCount();i++) {
+    		String tensp = tableBanHang.getValueAt(i, colTensp).toString();
+    		int soluongton = dao_sanpham.getSoluongton(tensp);
+    		int soluongmua = Integer.parseInt(tableBanHang.getValueAt(row, colSoluong).toString());
+    		int soluongtonmoi = soluongton-soluongmua;
+    		if(dao_sanpham.updateSoluongton(tensp, soluongtonmoi));
+    		row++;
+    	}
     }
     private Khachhang taoKhachhang() {
 
@@ -975,7 +1009,6 @@ public class SaleFrame extends javax.swing.JFrame {
     	khachhang.setSodienthoai(txtSDT.getText());
     	return khachhang;
     }
-    
     private boolean kiemtraTrong() {
     	if(txtDiaChi.getText().equals("")|| txtEmail.getText().equals("")||txtSDT.getText().equals("")|| txtTenKH.getText().equals("")|| txtSoLuong.getText().equals("")) {
     		JOptionPane.showMessageDialog(this, "Bạn chưa nhập đủ dữ liệu!");
