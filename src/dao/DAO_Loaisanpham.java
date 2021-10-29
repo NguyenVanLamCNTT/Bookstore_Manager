@@ -57,6 +57,21 @@ public class DAO_Loaisanpham {
 			 return false;
 		}
 	 }
+	 public static  boolean updateLoaiSanPham(String maLSP, String tenLoaiSP) {
+		 String sql = "update loaisanpham set tenloaisp = ? where ma_loaisp = ?";
+		 Connection con = ConnectDatabase.getConnection();
+		 try {
+			 PreparedStatement stmt = con.prepareStatement(sql);
+			 stmt.setString(1, tenLoaiSP);
+			 stmt.setString(2, maLSP);
+			 stmt.executeUpdate();
+			 return true;
+		 }catch (Exception e) {
+			// TODO: handle exception
+			 System.out.println(e);
+			 return false;
+		}
+	 }
 	 public List<Sanpham> getSanpham(String name){
 		 List<Sanpham> dsSanpham = new ArrayList<Sanpham>();
 		 Connection con = ConnectDatabase.getConnection();
