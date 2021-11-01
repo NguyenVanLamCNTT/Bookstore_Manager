@@ -46,7 +46,7 @@ public class OrderFrame extends javax.swing.JFrame {
         btnThemDH = new javax.swing.JButton();
         btnSuaDH = new javax.swing.JButton();
         btnInDH = new javax.swing.JButton();
-        btnLuu = new javax.swing.JButton();
+        btnDatHang = new javax.swing.JButton();
         btnQuayLai = new javax.swing.JButton();
         btnXoaSP1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -60,7 +60,7 @@ public class OrderFrame extends javax.swing.JFrame {
         txtSoLuong = new javax.swing.JTextField();
         btnThemSP = new javax.swing.JButton();
         labelHinhAnh = new javax.swing.JLabel();
-        labelQuanLyDH = new javax.swing.JLabel();
+        labelDatHang = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         btnThoat = new javax.swing.JButton();
 
@@ -181,12 +181,12 @@ public class OrderFrame extends javax.swing.JFrame {
         btnInDH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/printer.png"))); // NOI18N
         btnInDH.setText("In đơn hàng");
 
-        btnLuu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnLuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/save.png"))); // NOI18N
-        btnLuu.setText("Đặt hàng");
-        btnLuu.addActionListener(new java.awt.event.ActionListener() {
+        btnDatHang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnDatHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/save.png"))); // NOI18N
+        btnDatHang.setText("Đặt hàng");
+        btnDatHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLuuActionPerformed(evt);
+                btnDatHangActionPerformed(evt);
             }
         });
 
@@ -214,7 +214,7 @@ public class OrderFrame extends javax.swing.JFrame {
                 .addGap(94, 94, 94)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSuaDH, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                    .addComponent(btnLuu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnDatHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnXoaSP1)
@@ -229,7 +229,7 @@ public class OrderFrame extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInDH)
-                    .addComponent(btnLuu)
+                    .addComponent(btnDatHang)
                     .addComponent(btnQuayLai))
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -339,8 +339,8 @@ public class OrderFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        labelQuanLyDH.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        labelQuanLyDH.setText("Đặt hàng");
+        labelDatHang.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        labelDatHang.setText("Đặt hàng");
 
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");
@@ -362,7 +362,7 @@ public class OrderFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnThoat)
                         .addGap(489, 489, 489)
-                        .addComponent(labelQuanLyDH)))
+                        .addComponent(labelDatHang)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -370,7 +370,7 @@ public class OrderFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelQuanLyDH)
+                    .addComponent(labelDatHang)
                     .addComponent(btnThoat))
                 .addGap(17, 17, 17)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -391,9 +391,9 @@ public class OrderFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSuaDHActionPerformed
 
-    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
+    private void btnDatHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatHangActionPerformed
 
-    }//GEN-LAST:event_btnLuuActionPerformed
+    }//GEN-LAST:event_btnDatHangActionPerformed
 
     /**
      * @param args the command line arguments
@@ -432,8 +432,8 @@ public class OrderFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDatHang;
     private javax.swing.JButton btnInDH;
-    private javax.swing.JButton btnLuu;
     private javax.swing.JButton btnQuayLai;
     private javax.swing.JButton btnSuaDH;
     private javax.swing.JButton btnThemDH;
@@ -449,13 +449,13 @@ public class OrderFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel labelDatHang;
     private javax.swing.JLabel labelDiaChi;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel labelHinhAnh;
     private javax.swing.JLabel labelLoaiSP;
     private javax.swing.JLabel labelNgayDat;
     private javax.swing.JLabel labelNgayGui;
-    private javax.swing.JLabel labelQuanLyDH;
     private javax.swing.JLabel labelSDT;
     private javax.swing.JLabel labelSoLuong;
     private javax.swing.JLabel labelTenKH;
