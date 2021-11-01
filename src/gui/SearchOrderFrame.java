@@ -310,7 +310,7 @@ private void btnThoatActionPerformed(ActionEvent evt) {
     private void tableHDMouseClicked(java.awt.event.MouseEvent evt) throws SQLException {//GEN-FIRST:event_tableHDMouseClicked
         // TODO add your handling code here:
     	int index = tableDDH.getSelectedRow();
-//    	new DetailBill(listDDH.get(index).get(0)).setVisible(true);
+    	new DetailOrder(listDDH.get(index).get(0)).setVisible(true);
     }//GEN-LAST:event_tableHDMouseClicked
     /**
      * @param args the command line arguments
