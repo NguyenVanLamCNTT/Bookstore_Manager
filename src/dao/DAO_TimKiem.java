@@ -83,4 +83,44 @@ public class DAO_TimKiem {
 		}
 		return ds;
 	}
+	public List<List<String>> searchDonDatHang(String thuoctinh, String tukhoa) throws SQLException{
+		String sql = "select madon,tenkh,ngaydat,ngaygiao,tongtien,ten_trangthai  from khachhang as kh join dondathang as d on d.makh = kh.ma_kh join trangthaidondathang as tt on tt.ma_trangthai = d.ma_trangthai where " + thuoctinh;
+		if(thuoctinh.equals("madon") || thuoctinh.equals("tongtien")) {
+			sql = sql + " = ?";
+		}else {
+			sql = sql + " like ?";
+		}
+		List<List<String>> ds = new ArrayList<List<String>>();
+		Connection con = ConnectDatabase.getConnection();
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, tukhoa);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			List<String> item  = new ArrayList<String>();
+			item.add(rs.getString("madon"));
+			item.add(rs.getString("tenkh"));
+			item.add(rs.getString("ngaydat"));
+			item.add(rs.getString("ngaygiao"));
+			item.add(rs.getString("tongtien"));
+			item.add(rs.getString("ten_trangthai"));
+			ds.add(item);
+		}
+		return ds;
+	}
+	public List<List<String>> getDanhSachSPDDH(String mahd) throws SQLException{
+		String sql = "select ten_sp,soluong,sp.dongia from sanpham as sp join chitietdondathang as ctdd on ctdd.masp = sp.ma_sanpham where madon = ?";
+		List<List<String>> ds = new ArrayList<List<String>>();
+		Connection con = ConnectDatabase.getConnection();
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, mahd);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			List<String> item  = new ArrayList<String>();
+			item.add(rs.getString("ten_sp"));
+			item.add(rs.getString("dongia"));
+			item.add(rs.getString("soluong"));
+			ds.add(item);
+		}
+		return ds;
+	}
 }

@@ -78,7 +78,6 @@ public class SearchBillFrame extends javax.swing.JFrame {
     	if(thuoctinh.equals("Ngày lập hóa đơn")) {
     		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     		String date = df.format(dateNgayLHD.getDate());
-    		System.out.print(date);
     		searchHoaDon("ngaylap_hd", date);
     	}
     }
