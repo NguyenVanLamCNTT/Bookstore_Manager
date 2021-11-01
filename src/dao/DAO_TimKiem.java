@@ -11,6 +11,7 @@ import connect.ConnectDatabase;
 import entity.Dondathang;
 import entity.LoaiSanpham;
 import entity.NhaCungcap;
+import entity.Sanpham;
 
 public class DAO_TimKiem {
 	
@@ -122,5 +123,31 @@ public class DAO_TimKiem {
 			ds.add(item);
 		}
 		return ds;
+	}
+	public List<List<String>> searchSanPham(String thuoctinh, String tukhoa) throws SQLException{
+		String sql = "select ma_sanpham,ten_sp,dongia,soluongton,ten_tacgia,sotrang,nhaxuatban,trangthai from sanpham where ";
+		if(thuoctinh.equals("ma_sanpham") || thuoctinh.equals("sotrang") || thuoctinh.equals("soluongton") || thuoctinh.equals("dongia")) {
+			sql = sql + thuoctinh + " = ?";
+		}else {
+			sql = sql + thuoctinh + " like ?";
+		}
+		List<List<String>> dssp = new ArrayList<List<String>>();
+		Connection con = ConnectDatabase.getConnection();
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, tukhoa);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			List<String> item = new ArrayList<String>();
+			item.add(rs.getString("ma_sanpham"));
+			item.add(rs.getString("ten_sp"));
+			item.add(rs.getString("dongia"));
+			item.add(rs.getString("soluongton"));
+			item.add(rs.getString("ten_tacgia"));
+			item.add(rs.getString("sotrang"));
+			item.add(rs.getString("nhaxuatban"));
+			item.add(rs.getString("trangthai"));
+			dssp.add(item);
+		}
+		return dssp;
 	}
 }

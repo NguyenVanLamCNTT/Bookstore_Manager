@@ -5,7 +5,17 @@
  */
 package gui;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+
+import dao.DAO_Sanpham;
+import dao.DAO_TimKiem;
 
 /**
  *
@@ -13,14 +23,57 @@ import java.awt.event.ActionEvent;
  */
 public class SearchProductFrame extends javax.swing.JFrame {
 
+	DAO_TimKiem dao_timkiem = new DAO_TimKiem();
+	DefaultTableModel tableModel;
+	List<List<String>> listSP;
     /**
      * Creates new form SearchProductFrame
      */
     public SearchProductFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        tableModel = (DefaultTableModel) tableSP.getModel();
     }
 
+    private void searchSanPham(String thuoctinh,String tukhoa) throws SQLException {
+    	if(thuoctinh.equals("ma_sanpham") || thuoctinh.equals("sotrang") || thuoctinh.equals("soluongton") || thuoctinh.equals("dongia")) {
+    		listSP = dao_timkiem.searchSanPham(thuoctinh, tukhoa);
+    	}else {
+			listSP = dao_timkiem.searchSanPham(thuoctinh,"%" +tukhoa+ "%");
+		}
+    	tableModel.setRowCount(0);
+    	for(List<String> l: listSP) {
+    		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),l.get(3),l.get(4),l.get(5),l.get(6),l.get(7)});
+    	}
+    }
+    private void submitTimKiem() throws SQLException {
+    	String tukhoa = txtSearch.getText();
+    	String thuoctinh = cbThuocTinhTK.getSelectedItem().toString();
+    	if(thuoctinh.equals("Mã sản phẩm")) {
+    		searchSanPham("ma_sanpham", tukhoa);
+    	}
+    	if(thuoctinh.equals("Tên sản phẩm")) {
+    		searchSanPham("ten_sp", tukhoa);
+    	}
+    	if(thuoctinh.equals("Đơn giá")) {
+    		searchSanPham("dongia", tukhoa);
+    	}
+    	if(thuoctinh.equals("Số lượng")) {
+    		searchSanPham("soluongton", tukhoa);
+    	}
+    	if(thuoctinh.equals("Tên tác giả")) {
+    		searchSanPham("ten_tacgia", tukhoa);
+    	}
+    	if(thuoctinh.equals("Số trang")) {
+    		searchSanPham("sotrang", tukhoa);
+    	}
+    	if(thuoctinh.equals("Nhà xuất bản")) { 
+    		searchSanPham("nhaxuatban", tukhoa);
+    	}
+    	if(thuoctinh.equals("Trạng thái")) {
+    		searchSanPham("trangthai", tukhoa);
+    	}
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,7 +105,12 @@ public class SearchProductFrame extends javax.swing.JFrame {
         btnTimDDH.setText("Tìm");
         btnTimDDH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTimDDHActionPerformed(evt);
+                try {
+					btnTimDDHActionPerformed(evt);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -85,6 +143,16 @@ public class SearchProductFrame extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tableSP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                try {
+					tableSPMouseClicked(evt);
+				} catch (SQLException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
         jScrollPane1.setViewportView(tableSP);
@@ -180,9 +248,22 @@ private void btnThoatActionPerformed(ActionEvent evt) {
 				dispose();
 				new HomeFrame().setVisible(true);
 			}	
-    private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimDDHActionPerformed
+    private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTimDDHActionPerformed
         // TODO add your handling code here:
+    	submitTimKiem();
     }//GEN-LAST:event_btnTimDDHActionPerformed
+
+    private void tableSPMouseClicked(java.awt.event.MouseEvent evt) throws SQLException, IOException {//GEN-FIRST:event_tableSPMouseClicked
+        // TODO add your handling code here:
+    	int index = tableSP.getSelectedRow();
+    	DAO_Sanpham dao_sp = new DAO_Sanpham();
+    	String path = dao_sp.getImg(listSP.get(index).get(0));
+    	ImageIcon icon = new ImageIcon(path);
+    	Image img = icon.getImage();
+    	Image newImg = img.getScaledInstance(labelHinhAnh.getWidth(), labelHinhAnh.getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon imgIcon = new ImageIcon(newImg);
+		labelHinhAnh.setIcon(imgIcon);
+    }//GEN-LAST:event_tableSPMouseClicked
 
     /**
      * @param args the command line arguments
