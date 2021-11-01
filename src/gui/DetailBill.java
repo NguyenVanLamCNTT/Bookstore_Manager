@@ -5,18 +5,47 @@
  */
 package gui;
 
+import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
+
+import dao.DAO_TimKiem;
+
 /**
  *
  * @author Lenovo
  */
 public class DetailBill extends javax.swing.JFrame {
 
+	DAO_TimKiem dao_timkiem = new DAO_TimKiem();
+	DefaultTableModel tableModel;
+	List<List<String>> listSP;
+	List<List<String>> thongtinhoadon;
     /**
      * Creates new form DetailBill
+     * @throws SQLException 
      */
-    public DetailBill() {
+    public DetailBill(String mahd) throws SQLException {
         initComponents();
         setLocationRelativeTo(null);
+        tableModel = (DefaultTableModel) tableDanhSachSP.getModel();
+        showData(mahd);
+        
+    }
+    private void showData(String ma) throws SQLException {
+    	thongtinhoadon = dao_timkiem.searchHoaDon("mahd", ma);
+    	listSP = dao_timkiem.getDanhSachSP(ma);
+    	valueMaHD.setText(ma);
+    	valueTenNV.setText(thongtinhoadon.get(0).get(1));
+    	valueTenKH.setText(thongtinhoadon.get(0).get(2));
+    	valueTongTien.setText(thongtinhoadon.get(0).get(3));
+    	valueNgayLHD.setText(thongtinhoadon.get(0).get(4));
+    	tableModel.setRowCount(0);
+    	for(List<String> l: listSP) {
+    		tableModel.addRow(new Object[] {l.get(1),l.get(2),l.get(3),Double.parseDouble(l.get(3))*Double.parseDouble(l.get(2))});
+    	}
     }
 
     /**
@@ -43,9 +72,21 @@ public class DetailBill extends javax.swing.JFrame {
         valueTongTien = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableDanhSachSP = new javax.swing.JTable();
+        btnThoat = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
+//        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+            public void windowIconified(java.awt.event.WindowEvent evt) {
+                formWindowIconified(evt);
+            }
+        });
+ 
         panelChiTietHD.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         labelCTHD.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -102,6 +143,14 @@ public class DetailBill extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tableDanhSachSP);
 
+        btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
+        btnThoat.setText("Thoát");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelChiTietHDLayout = new javax.swing.GroupLayout(panelChiTietHD);
         panelChiTietHD.setLayout(panelChiTietHDLayout);
         panelChiTietHDLayout.setHorizontalGroup(
@@ -142,16 +191,23 @@ public class DetailBill extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 848, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelChiTietHDLayout.createSequentialGroup()
-                        .addGap(305, 305, 305)
+                        .addGap(23, 23, 23)
+                        .addComponent(btnThoat)
+                        .addGap(167, 167, 167)
                         .addComponent(labelCTHD)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelChiTietHDLayout.setVerticalGroup(
             panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelChiTietHDLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(labelCTHD)
-                .addGap(37, 37, 37)
+                .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelChiTietHDLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(labelCTHD))
+                    .addGroup(panelChiTietHDLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(btnThoat)))
+                .addGap(26, 26, 26)
                 .addGroup(panelChiTietHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelChiTietHDLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
@@ -201,6 +257,24 @@ public class DetailBill extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowIconified(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowIconified
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowIconified
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {         
+    	
+        // TODO add your handling code here:
+    	
+    }  
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                     
+        // TODO add your handling code here:
+    	dispose(); 
+    	
+    }  
     /**
      * @param args the command line arguments
      */
@@ -231,19 +305,20 @@ public class DetailBill extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DetailBill().setVisible(true);
+//                new DetailBill().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnThoat;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelCTHD;
     private javax.swing.JLabel labelDSSP;
     private javax.swing.JLabel labelMaHD;
     private javax.swing.JLabel labelNgayLHD;
     private javax.swing.JLabel labelTenKH;
-    private javax.swing.JLabel labelTenNV;
+    private javax.swing.JLabel labelTenNV; 
     private javax.swing.JLabel labelTongTien;
     private javax.swing.JPanel panelChiTietHD;
     private javax.swing.JTable tableDanhSachSP;

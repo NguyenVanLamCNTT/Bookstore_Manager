@@ -64,7 +64,7 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
         btnThoat.setText("Thoát");
 
         btnThongKe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/product-statistics-1.png"))); // NOI18N
-        btnThongKe.setText("Thống kê sản phẩm hết ");
+        btnThongKe.setText("Biểu đồ thống kê");
 
         btnTim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/search.png"))); // NOI18N
         btnTim.setText("Tìm");
@@ -165,12 +165,7 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        btnThoat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThoatActionPerformed(evt);
-            }
 
-        });
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

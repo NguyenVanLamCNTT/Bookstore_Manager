@@ -90,9 +90,6 @@ public class HomeFrame extends JFrame{
         mnuItemNV = new javax.swing.JMenuItem();
         mnuItemLSP = new javax.swing.JMenuItem();
         mnuItemNCC = new javax.swing.JMenuItem();
-        mnuThongKe = new javax.swing.JMenu();
-        mnuItemThongKeSP = new javax.swing.JMenuItem();
-        mnuItemThongKeDT = new javax.swing.JMenuItem();
         mnuTmKiem = new javax.swing.JMenu();
         mnuItemTKSP = new javax.swing.JMenuItem();
         mnuItemTKHD = new javax.swing.JMenuItem();
@@ -104,6 +101,9 @@ public class HomeFrame extends JFrame{
         mnuItemBanHang = new javax.swing.JMenuItem();
         mnuItemDoiMatKhau = new javax.swing.JMenuItem();
         mnuItemDatHang = new javax.swing.JMenuItem();
+        mnuThongKe = new javax.swing.JMenu();
+        mnuItemThongKeSP = new javax.swing.JMenuItem();
+        mnuItemThongKeDT = new javax.swing.JMenuItem();
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/money.png"))); // NOI18N
         jButton5.setText("Bán Hàng");
@@ -278,17 +278,9 @@ public class HomeFrame extends JFrame{
         btnChamCong.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnChamCong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/attendance.png"))); // NOI18N
         btnChamCong.setText("Chấm công");
-        btnChamCong.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChamcongActionListener(evt);
-            }
-        });
 
-     //   labelvalueTenNV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        String manv=login.getMaNVText();
-        String tennv=daohome.getTenNV(manv);
-        labelvalueTenNV.setText(tennv);
-        labelvalueTenNV.setFont(new Font("Times New Roman",Font.BOLD,25));
+        labelvalueTenNV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelvalueTenNV.setText("value tên nhân viên");
 
         javax.swing.GroupLayout panelManHinhChinhLayout = new javax.swing.GroupLayout(panelManHinhChinh);
         panelManHinhChinh.setLayout(panelManHinhChinhLayout);
@@ -327,8 +319,7 @@ public class HomeFrame extends JFrame{
                             .addGroup(panelManHinhChinhLayout.createSequentialGroup()
                                 .addComponent(labelHoTenNV)
                                 .addGap(28, 28, 28)
-                                .addComponent(labelvalueTenNV)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(labelvalueTenNV))
                             .addGroup(panelManHinhChinhLayout.createSequentialGroup()
                                 .addGroup(panelManHinhChinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(btnChamCong, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -423,26 +414,6 @@ public class HomeFrame extends JFrame{
 
         menuBarHome.add(mnuDanhMuc);
 
-        mnuThongKe.setText("Thống kê");
-
-        mnuItemThongKeSP.setText("Thống kê sản phẩm");
-        mnuItemThongKeSP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuItemThongKeSPActionPerformed(evt);
-            }
-        });
-        mnuThongKe.add(mnuItemThongKeSP);
-
-        mnuItemThongKeDT.setText("Thống kê doanh thu");
-        mnuItemThongKeDT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuItemThongKeDTActionPerformed(evt);
-            }
-        });
-        mnuThongKe.add(mnuItemThongKeDT);
-
-        menuBarHome.add(mnuThongKe);
-
         mnuTmKiem.setText("Tìm kiếm");
 
         mnuItemTKSP.setText("Tìm kiếm sản phẩm");
@@ -483,6 +454,26 @@ public class HomeFrame extends JFrame{
 
         menuBarHome.add(mnuXuLy);
 
+        mnuThongKe.setText("Thống kê");
+
+        mnuItemThongKeSP.setText("Thống kê sản phẩm");
+        mnuItemThongKeSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuItemThongKeSPActionPerformed(evt);
+            }
+        });
+        mnuThongKe.add(mnuItemThongKeSP);
+
+        mnuItemThongKeDT.setText("Thống kê doanh thu");
+        mnuItemThongKeDT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuItemThongKeDTActionPerformed(evt);
+            }
+        });
+        mnuThongKe.add(mnuItemThongKeDT);
+
+        menuBarHome.add(mnuThongKe);
+
         setJMenuBar(menuBarHome);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -503,83 +494,7 @@ public class HomeFrame extends JFrame{
         );
 
         getAccessibleContext().setAccessibleDescription("");
-         String chucvu=daohome.getChucVu(manv);
-         if(chucvu.equals("NVBH")) {
-        	 btnCapNhatLSP.setEnabled(false);
-        	 btnCapNhatNCC.setEnabled(false);
-        	 btnQuanLyNV.setEnabled(false);
-        	 btnQuanLySP.setEnabled(false);
-        	 btnThongKeDT.setEnabled(false);
-        	 btnThongKeSP.setEnabled(false);
-        	 mnuItemNCC.setEnabled(false);
-        	 mnuItemLSP.setEnabled(false);
-        	 mnuItemNV.setEnabled(false);
-        	 mnuItemThongKeDT.setEnabled(false);
-        	 mnuItemThongKeSP.setEnabled(false);
-        	 mnuItemDatHang.setEnabled(false);
-         }
-         else if(chucvu.equals("NVNK")) {
-        	 btnBanHang.setEnabled(false);
-        	 btnQuanLyDH.setEnabled(false);
-        	 btnQuanLyNV.setEnabled(false);
-        	 btnThongKeDT.setEnabled(false);
-        	 btnThongKeSP.setEnabled(false);
-        	 mnuItemBanHang.setEnabled(false);
-        	 mnuItemDH.setEnabled(false);
-        	 mnuItemNV.setEnabled(false);
-        	 mnuItemThongKeDT.setEnabled(false);
-        	 mnuItemThongKeSP.setEnabled(false);
-        	 mnuItemDatHang.setEnabled(false);
-         }
-         else if(chucvu.equals("ADMIN")) {
-        	 labelHoTenNV.setText("Quản lý :");
-         }
-         mnuItemDatHang.addActionListener(new java.awt.event.ActionListener() {
-             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                 mnuitemDatHangSPActionPerformed(evt);
-             }
-         });
-         mnuItemTKHD.addActionListener(new java.awt.event.ActionListener() {
-             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                 mnuitemTimHDSPActionPerformed(evt);
-             }
-         });
-         mnuItemTKNCC.addActionListener(new java.awt.event.ActionListener() {
-             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                 mnuitemTKNCCSPActionPerformed(evt);
-             }
 
-         });
-         mnuItemTKDH.addActionListener(new java.awt.event.ActionListener() {
-             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                 mnuitemTKDHActionPerformed(evt);
-             }
-
-         });
-         mnuitemTKLSP.addActionListener(new java.awt.event.ActionListener() {
-             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                 mnuitemTKLSPActionPerformed(evt);
-             }
-
-         });
-         mnuItemChamCong.addActionListener(new java.awt.event.ActionListener() {
-             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                 mnuitemChamCongActionPerformed(evt);
-             }
-
-         });
-         mnuItemBanHang.addActionListener(new java.awt.event.ActionListener() {
-             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                 mnuitemBanHangActionPerformed(evt);
-             }
-
-         });
-         mnuItemDoiMatKhau.addActionListener(new java.awt.event.ActionListener() {
-             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                 mnuitemDoiMKActionPerformed(evt);
-             }
-
-         });
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
@@ -631,7 +546,7 @@ public class HomeFrame extends JFrame{
 	private void mnuitemDatHangSPActionPerformed(ActionEvent evt) {
 				// TODO Auto-generated method stub
 			dispose();
-			new customerOrderFrame().setVisible(true);
+//			new ().setVisible(true);
 			}
     private void btnQuanLySPActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnQuanLySPActionPerformed
         // TODO add your handling code here:

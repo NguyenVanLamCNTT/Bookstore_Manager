@@ -5,20 +5,48 @@
  */
 package gui;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
+
+import dao.DAO_TimKiem;
+
 /**
  *
  * @author Lenovo
  */
 public class DetailOrder extends javax.swing.JFrame {
 
+	
+	DAO_TimKiem dao_timkiem = new DAO_TimKiem();
+	DefaultTableModel tableModel;
+	List<List<String>> listSP;
+	List<List<String>> thongtindonhang;
     /**
      * Creates new form DetailOrder
+     * @throws SQLException 
      */
-    public DetailOrder() {
+    public DetailOrder(String madonhang) throws SQLException {
         initComponents();
         setLocationRelativeTo(null);
+        tableModel = (DefaultTableModel) tableDanhSachSP.getModel();
+        showData(madonhang);
     }
-
+    private void showData(String ma) throws SQLException {
+    	thongtindonhang = dao_timkiem.searchDonDatHang("madon", ma);
+    	listSP = dao_timkiem.getDanhSachSPDDH(ma);
+    	valueMaDH.setText(ma);
+    	valueTenKH.setText(thongtindonhang.get(0).get(1));
+    	valueNgayDat.setText(thongtindonhang.get(0).get(2));
+    	valueNgayGiao.setText(thongtindonhang.get(0).get(3));
+    	valueTongTien.setText(thongtindonhang.get(0).get(4));
+    	valueTrangThai.setText(thongtindonhang.get(0).get(5));
+    	tableModel.setRowCount(0);
+    	for(List<String> l: listSP) {
+    		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),Double.parseDouble(l.get(1))*Double.parseDouble(l.get(2))});
+    	}
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,13 +59,13 @@ public class DetailOrder extends javax.swing.JFrame {
         panelChiTietDH = new javax.swing.JPanel();
         labelCTDH = new javax.swing.JLabel();
         labelMaDH = new javax.swing.JLabel();
-        labelTenNV = new javax.swing.JLabel();
+        labelTrangThai = new javax.swing.JLabel();
         labelTenKH = new javax.swing.JLabel();
         labelDSSP = new javax.swing.JLabel();
         labelNgayGiao = new javax.swing.JLabel();
         labelTongTien = new javax.swing.JLabel();
         valueMaDH = new javax.swing.JLabel();
-        valueTenNV = new javax.swing.JLabel();
+        valueTrangThai = new javax.swing.JLabel();
         valueTenKH = new javax.swing.JLabel();
         valueNgayDat = new javax.swing.JLabel();
         valueTongTien = new javax.swing.JLabel();
@@ -46,7 +74,15 @@ public class DetailOrder extends javax.swing.JFrame {
         labelNgayDat = new javax.swing.JLabel();
         valueNgayGiao = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         panelChiTietDH.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -56,8 +92,8 @@ public class DetailOrder extends javax.swing.JFrame {
         labelMaDH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelMaDH.setText("Mã đơn hàng: ");
 
-        labelTenNV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelTenNV.setText("Tên nhân viên:");
+        labelTrangThai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelTrangThai.setText("Trạng thái");
 
         labelTenKH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelTenKH.setText("Tên khách hàng: ");
@@ -74,8 +110,8 @@ public class DetailOrder extends javax.swing.JFrame {
         valueMaDH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         valueMaDH.setText("value_MDH");
 
-        valueTenNV.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        valueTenNV.setText("value_TNV");
+        valueTrangThai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        valueTrangThai.setText("value_trangthai");
 
         valueTenKH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         valueTenKH.setText("value_TKH");
@@ -123,9 +159,9 @@ public class DetailOrder extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelChiTietDHLayout.createSequentialGroup()
                         .addGroup(panelChiTietDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelChiTietDHLayout.createSequentialGroup()
-                                .addComponent(labelTenNV)
+                                .addComponent(labelTrangThai)
                                 .addGap(18, 18, 18)
-                                .addComponent(valueTenNV)
+                                .addComponent(valueTrangThai)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(labelTongTien)
                                 .addGap(64, 64, 64)
@@ -182,8 +218,8 @@ public class DetailOrder extends javax.swing.JFrame {
                         .addComponent(labelNgayDat)))
                 .addGap(26, 26, 26)
                 .addGroup(panelChiTietDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelTenNV)
-                    .addComponent(valueTenNV)
+                    .addComponent(labelTrangThai)
+                    .addComponent(valueTrangThai)
                     .addComponent(labelTongTien)
                     .addComponent(valueTongTien))
                 .addGap(29, 29, 29)
@@ -212,6 +248,15 @@ public class DetailOrder extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+    	dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -243,7 +288,7 @@ public class DetailOrder extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DetailOrder().setVisible(true);
+//                new DetailOrder().setVisible(true);
             }
         });
     }
@@ -256,15 +301,15 @@ public class DetailOrder extends javax.swing.JFrame {
     private javax.swing.JLabel labelNgayDat;
     private javax.swing.JLabel labelNgayGiao;
     private javax.swing.JLabel labelTenKH;
-    private javax.swing.JLabel labelTenNV;
     private javax.swing.JLabel labelTongTien;
+    private javax.swing.JLabel labelTrangThai;
     private javax.swing.JPanel panelChiTietDH;
     private javax.swing.JTable tableDanhSachSP;
     private javax.swing.JLabel valueMaDH;
     private javax.swing.JLabel valueNgayDat;
     private javax.swing.JLabel valueNgayGiao;
     private javax.swing.JLabel valueTenKH;
-    private javax.swing.JLabel valueTenNV;
     private javax.swing.JLabel valueTongTien;
+    private javax.swing.JLabel valueTrangThai;
     // End of variables declaration//GEN-END:variables
 }

@@ -36,6 +36,7 @@ public class TypeProductFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         tableMode = (DefaultTableModel) tableCapNhatLoaiSP.getModel();
         showLoaiSP();
+        reset();
     }
     private void showLoaiSP() throws SQLException{
     	listLoaiSP = DAO_Loaisanpham.getLoaiSanPham();
@@ -53,8 +54,12 @@ public class TypeProductFrame extends javax.swing.JFrame {
     private void reset() {
     	txtMaLoaiSP.setText("");
     	txtTenLoaiSP.setText("");
+    	txtMaLoaiSP.setEnabled(false);
+    	txtTenLoaiSP.setEnabled(false);
     	btnSua.setEnabled(false);
     	btnXoa.setEnabled(false);
+    	btnLuu.setEnabled(false);
+    	btnQuayLai.setEnabled(false);
     	txtMaLoaiSP.setBorder(new LineBorder(Color.black));
     	txtTenLoaiSP.setBorder(new LineBorder(Color.black));
     }
@@ -118,6 +123,7 @@ public class TypeProductFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
         panelCapNhatLSP = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         labelCapNhatLSP = new javax.swing.JLabel();
@@ -190,7 +196,7 @@ public class TypeProductFrame extends javax.swing.JFrame {
 				}
             }
         });
-        
+
         btnSua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fix.png"))); // NOI18N
         btnSua.setText("Sửa");
@@ -202,7 +208,7 @@ public class TypeProductFrame extends javax.swing.JFrame {
 
         btnLuu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnLuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/save.png"))); // NOI18N
-        btnLuu.setText("Lưu");
+        btnLuu.setText("Lưiu");
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
@@ -219,15 +225,9 @@ public class TypeProductFrame extends javax.swing.JFrame {
         btnQuayLai.setText("Quay Lại");
         btnQuayLai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	btnQuayLaiActionPerformed(evt);
+                btnQuayLaiActionPerformed(evt);
             }
         });
-        txtMaLoaiSP.setEnabled(false);
-        txtTenLoaiSP.setEnabled(false);
-        btnLuu.setEnabled(false);
-        btnQuayLai.setEnabled(false);
-        btnSua.setEnabled(false);
-        btnXoa.setEnabled(false);
 
         javax.swing.GroupLayout panelCapNhatLSPLayout = new javax.swing.GroupLayout(panelCapNhatLSP);
         panelCapNhatLSP.setLayout(panelCapNhatLSPLayout);
@@ -315,12 +315,12 @@ public class TypeProductFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tableCapNhatLoaiSP);
         tableCapNhatLoaiSP.addMouseListener(new java.awt.event.MouseAdapter() {
-       	 public void mouseClicked(java.awt.event.MouseEvent evt) {
-       		tableCapNhatLoaiSPMouseClicked(evt);
-         }
-    });
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableCapNhatLoaiSPMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableCapNhatLoaiSP);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -346,17 +346,6 @@ public class TypeProductFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void tableCapNhatLoaiSPMouseClicked(MouseEvent evt) {
-		// TODO Auto-generated method stub
-		int index = tableCapNhatLoaiSP.getSelectedRow();
-		reset();
-		btnSua.setEnabled(true);
-		btnXoa.setEnabled(true);
-		txtMaLoaiSP.setText(listLoaiSP.get(index).getMaLoaiSp());
-		txtTenLoaiSP.setText(listLoaiSP.get(index).getTenLoaiSp());
-		txtMaLoaiSP.setEnabled(false);
-		txtTenLoaiSP.setEnabled(false);
-	}
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
     	dispose();
     	new HomeFrame().setVisible(true);
@@ -370,8 +359,39 @@ public class TypeProductFrame extends javax.swing.JFrame {
     private void txtTenLoaiSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenLoaiSPActionPerformed
     }//GEN-LAST:event_txtTenLoaiSPActionPerformed
     
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
-    	String maLoaiSP = txtMaLoaiSP.getText();
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+       reset();
+       clickBtnThem(true);
+       btnSua.setEnabled(false);
+	   btnXoa.setEnabled(false);
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+    	clickBtnThem(true);
+    	txtMaLoaiSP.setEnabled(false);
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuayLaiActionPerformed
+        // TODO add your handling code here:
+        reset();
+    }//GEN-LAST:event_btnQuayLaiActionPerformed
+
+    private void tableCapNhatLoaiSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCapNhatLoaiSPMouseClicked
+        // TODO add your handling code here:
+        int index = tableCapNhatLoaiSP.getSelectedRow();
+		reset();
+		btnSua.setEnabled(true);
+		btnXoa.setEnabled(true);
+		txtMaLoaiSP.setText(listLoaiSP.get(index).getMaLoaiSp());
+		txtTenLoaiSP.setText(listLoaiSP.get(index).getTenLoaiSp());
+		txtMaLoaiSP.setEnabled(false);
+		txtTenLoaiSP.setEnabled(false);
+    }//GEN-LAST:event_tableCapNhatLoaiSPMouseClicked
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        String maLoaiSP = txtMaLoaiSP.getText();
     	if(notify("", "Bạn có chắc muốn xóa loại sản phẩm có mã "+maLoaiSP) == 0) {
     		boolean success =  DAO_Loaisanpham.delete(maLoaiSP);
     		if(success == true) {
@@ -382,29 +402,17 @@ public class TypeProductFrame extends javax.swing.JFrame {
     			showLoaiSP();
 			}
     	}
-    }
-    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-       clickBtnThem(true);
-       btnSua.setEnabled(false);
-	   btnXoa.setEnabled(false);
-       reset();
-    }//GEN-LAST:event_btnThemActionPerformed
+    	reset();
+    }//GEN-LAST:event_btnXoaActionPerformed
 
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
-    	clickBtnThem(true);
-    	txtMaLoaiSP.setEnabled(false);
-    }//GEN-LAST:event_btnSuaActionPerformed
-
-    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnLuuActionPerformed
+    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {                                       
     	String maLoaiSP = txtMaLoaiSP.getText();
     	String tenLoaiSP = txtTenLoaiSP.getText();
     	if(search(maLoaiSP) == true) {
-    		DAO_Loaisanpham.delete(maLoaiSP);
     		regex();
             // TODO add your handling code here:
         	if(checkInput() == true && notify("", "Bạn có chắc muốn lưu thay đổi không ?") == 0)  {
-        		DAO_Loaisanpham.insert(maLoaiSP, tenLoaiSP);
+        		DAO_Loaisanpham.updateLoaiSanPham(maLoaiSP, tenLoaiSP);
         		showLoaiSP();
         		clickBtnThem(false);
         		reset();
@@ -434,11 +442,7 @@ public class TypeProductFrame extends javax.swing.JFrame {
 
 			
         });
-    }//GEN-LAST:event_btnLuuActionPerformed
-    private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        // TODO add your handling code here:
-    	reset();
-    }//GEN-LAST:event_btnLuuActionPerformed
+    }                                      
     /**
      * @param args the command line arguments
      */
@@ -476,7 +480,7 @@ public class TypeProductFrame extends javax.swing.JFrame {
 					e.printStackTrace();
 				}
             }
-        });
+        }); 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
