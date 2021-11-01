@@ -37,13 +37,11 @@ public class SearchProductFrame extends javax.swing.JFrame {
         txtSearch = new javax.swing.JTextField();
         labelSearch = new javax.swing.JLabel();
         btnThoat = new javax.swing.JButton();
-        cbTenSP = new javax.swing.JComboBox<>();
-        labelTenSP = new javax.swing.JLabel();
-        cbLSP = new javax.swing.JComboBox<>();
-        labelLSP = new javax.swing.JLabel();
         labelHinhAnh = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableSP = new javax.swing.JTable();
+        labelThuocTinhTK = new javax.swing.JLabel();
+        cbThuocTinhTK = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,16 +67,6 @@ public class SearchProductFrame extends javax.swing.JFrame {
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");
 
-        cbTenSP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        labelTenSP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelTenSP.setText("Tên sản phẩm");
-
-        cbLSP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        labelLSP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelLSP.setText("Loại sản phẩm");
-
         labelHinhAnh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelHinhAnh.setText("Ảnh");
         labelHinhAnh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -101,45 +89,49 @@ public class SearchProductFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tableSP);
 
+        labelThuocTinhTK.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        labelThuocTinhTK.setText("Thuộc tính tìm kiếm:");
+
+        cbThuocTinhTK.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbThuocTinhTK.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã sản phẩm", "Tên sản phẩm", "Đơn giá", "Số lượng", "Tên tác giả", "Số trang", "Nhà xuất bản", "Trạng thái" }));
+
         javax.swing.GroupLayout panelTKSPLayout = new javax.swing.GroupLayout(panelTKSP);
         panelTKSP.setLayout(panelTKSPLayout);
         panelTKSPLayout.setHorizontalGroup(
             panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTKSPLayout.createSequentialGroup()
-                .addContainerGap(212, Short.MAX_VALUE)
-                .addComponent(labelSearch)
-                .addGap(18, 18, 18)
-                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(btnTimDDH, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(309, 309, 309))
             .addGroup(panelTKSPLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator4)
                     .addGroup(panelTKSPLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(btnThoat)
-                        .addGap(339, 339, 339)
-                        .addComponent(labelTkSP)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(panelTKSPLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(labelHinhAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
-                .addComponent(labelLSP)
-                .addGap(29, 29, 29)
-                .addComponent(cbLSP, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(142, 142, 142)
-                .addComponent(labelTenSP)
-                .addGap(18, 18, 18)
-                .addComponent(cbTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panelTKSPLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                        .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator4)
+                            .addGroup(panelTKSPLayout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(btnThoat)
+                                .addGap(339, 339, 339)
+                                .addComponent(labelTkSP)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(panelTKSPLayout.createSequentialGroup()
+                        .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelTKSPLayout.createSequentialGroup()
+                                .addComponent(labelThuocTinhTK)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbThuocTinhTK, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(labelHinhAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelTKSPLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1)
+                                .addContainerGap())
+                            .addGroup(panelTKSPLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                                .addComponent(labelSearch)
+                                .addGap(26, 26, 26)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(btnTimDDH, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30))))))
         );
         panelTKSPLayout.setVerticalGroup(
             panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,17 +146,14 @@ public class SearchProductFrame extends javax.swing.JFrame {
                 .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTimDDH)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelSearch))
-                .addGap(52, 52, 52)
-                .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelHinhAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelLSP)
-                    .addComponent(cbLSP, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTenSP)
-                    .addComponent(cbTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addComponent(labelSearch)
+                    .addComponent(labelThuocTinhTK)
+                    .addComponent(cbThuocTinhTK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(95, 95, 95)
+                .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                    .addComponent(labelHinhAnh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -178,18 +167,12 @@ public class SearchProductFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelTKSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(panelTKSP, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        btnThoat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThoatActionPerformed(evt);
-            }
 
-					
-        });
         pack();
     }// </editor-fold>//GEN-END:initComponents
 private void btnThoatActionPerformed(ActionEvent evt) {
@@ -239,14 +222,12 @@ private void btnThoatActionPerformed(ActionEvent evt) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnThoat;
     private javax.swing.JButton btnTimDDH;
-    private javax.swing.JComboBox<String> cbLSP;
-    private javax.swing.JComboBox<String> cbTenSP;
+    private javax.swing.JComboBox<String> cbThuocTinhTK;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel labelHinhAnh;
-    private javax.swing.JLabel labelLSP;
     private javax.swing.JLabel labelSearch;
-    private javax.swing.JLabel labelTenSP;
+    private javax.swing.JLabel labelThuocTinhTK;
     private javax.swing.JLabel labelTkSP;
     private javax.swing.JPanel panelTKSP;
     private javax.swing.JTable tableSP;

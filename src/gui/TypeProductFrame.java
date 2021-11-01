@@ -480,7 +480,7 @@ public class TypeProductFrame extends javax.swing.JFrame {
 					e.printStackTrace();
 				}
             }
-        });
+        }); 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

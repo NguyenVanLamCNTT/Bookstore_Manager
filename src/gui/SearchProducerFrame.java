@@ -6,6 +6,14 @@
 package gui;
 
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import dao.DAO_TimKiem;
+import entity.NhaCungcap;
 
 /**
  *
@@ -13,12 +21,39 @@ import java.awt.event.ActionEvent;
  */
 public class SearchProducerFrame extends javax.swing.JFrame {
 
+	DAO_TimKiem dao_timkiem = new DAO_TimKiem();
+	DefaultTableModel tableModel;
+	List<NhaCungcap> listNCC;
     /**
      * Creates new form SearchProducerFrame
      */
     public SearchProducerFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        tableModel = (DefaultTableModel) tableNCC.getModel();
+    }
+    private void searchNCC(String thuoctinh, String tukhoa) throws SQLException {
+    	listNCC = dao_timkiem.searchNhaCC(thuoctinh, tukhoa);
+    	if(listNCC.size() == 0) {
+    		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
+    	}
+    	tableModel.setRowCount(0);
+    	for(NhaCungcap ncc: listNCC) {
+    		tableModel.addRow(new Object[] {ncc.getMaNCC(),ncc.getTenNCC(),ncc.getDiachi()});
+    	}
+    }
+    private void submitTimKiem() throws SQLException {
+    	String tukhoa = txtSearch.getText();
+    	String thuoctinh = cbThuocTinhTK.getSelectedItem().toString();
+    	if(thuoctinh.equals("Mã nhà cung cấp")) {
+    		searchNCC("ma_ncc", tukhoa);
+    	}
+    	if(thuoctinh.equals("Tên nhà cung cấp")) {
+    		searchNCC("ten_ncc", tukhoa);
+    	}
+    	if(thuoctinh.equals("Địa chỉ")) {
+    		searchNCC("diachi", tukhoa);
+    	}
     }
 
     /**
@@ -39,10 +74,8 @@ public class SearchProducerFrame extends javax.swing.JFrame {
         btnThoat = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tableNCC = new javax.swing.JTable();
-        labelMaNCC = new javax.swing.JLabel();
-        cbMaNCC = new javax.swing.JComboBox<>();
-        labelTenNCC = new javax.swing.JLabel();
-        cbTenNCC = new javax.swing.JComboBox<>();
+        labelThuocTinhTK = new javax.swing.JLabel();
+        cbThuocTinhTK = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,7 +86,12 @@ public class SearchProducerFrame extends javax.swing.JFrame {
         btnTimDDH.setText("Tìm");
         btnTimDDH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTimDDHActionPerformed(evt);
+                try {
+					btnTimDDHActionPerformed(evt);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -73,11 +111,11 @@ public class SearchProducerFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã nhà cung cấp", "Tên nhà cung cấp", "Địa chỉ", "Quốc gia"
+                "Mã nhà cung cấp", "Tên nhà cung cấp", "Địa chỉ"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -86,28 +124,28 @@ public class SearchProducerFrame extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(tableNCC);
 
-        labelMaNCC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelMaNCC.setText("Mã nhà cung cấp");
+        labelThuocTinhTK.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        labelThuocTinhTK.setText("Thuộc tính tìm kiếm:");
 
-        cbMaNCC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        labelTenNCC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelTenNCC.setText("Tên nhà cung cấp");
-
-        cbTenNCC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbThuocTinhTK.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbThuocTinhTK.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã nhà cung cấp", "Tên nhà cung cấp", "Địa chỉ" }));
 
         javax.swing.GroupLayout panelTKNCCLayout = new javax.swing.GroupLayout(panelTKNCC);
         panelTKNCC.setLayout(panelTKNCCLayout);
         panelTKNCCLayout.setHorizontalGroup(
             panelTKNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTKNCCLayout.createSequentialGroup()
-                .addContainerGap(187, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
+                .addComponent(labelThuocTinhTK)
+                .addGap(18, 18, 18)
+                .addComponent(cbThuocTinhTK, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labelSearch)
                 .addGap(18, 18, 18)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(btnTimDDH, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(309, 309, 309))
+                .addGap(33, 33, 33))
             .addGroup(panelTKNCCLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelTKNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,19 +155,9 @@ public class SearchProducerFrame extends javax.swing.JFrame {
                         .addComponent(btnThoat)
                         .addGap(339, 339, 339)
                         .addComponent(labelTkNCC)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 479, Short.MAX_VALUE))
                     .addComponent(jScrollPane4))
                 .addContainerGap())
-            .addGroup(panelTKNCCLayout.createSequentialGroup()
-                .addGap(227, 227, 227)
-                .addComponent(labelMaNCC)
-                .addGap(18, 18, 18)
-                .addComponent(cbMaNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelTenNCC)
-                .addGap(18, 18, 18)
-                .addComponent(cbTenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(365, 365, 365))
         );
         panelTKNCCLayout.setVerticalGroup(
             panelTKNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,18 +169,16 @@ public class SearchProducerFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
-                .addGroup(panelTKNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTimDDH)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelSearch))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addGroup(panelTKNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelMaNCC)
-                    .addComponent(cbMaNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTenNCC)
-                    .addComponent(cbTenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelTKNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTKNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelThuocTinhTK)
+                        .addComponent(cbThuocTinhTK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelTKNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnTimDDH)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelSearch)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
 
@@ -172,13 +198,7 @@ public class SearchProducerFrame extends javax.swing.JFrame {
                 .addComponent(panelTKNCC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        btnThoat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThoatActionPerformed(evt);
-            }
 
-			
-        });
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -187,8 +207,9 @@ public class SearchProducerFrame extends javax.swing.JFrame {
 				dispose();
 				new HomeFrame().setVisible(true);
 			}
-    private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimDDHActionPerformed
+    private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTimDDHActionPerformed
         // TODO add your handling code here:
+    	submitTimKiem();
     }//GEN-LAST:event_btnTimDDHActionPerformed
 
     /**
@@ -223,19 +244,17 @@ public class SearchProducerFrame extends javax.swing.JFrame {
             public void run() {
                 new SearchProducerFrame().setVisible(true);
             }
-        });
+        }); 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnThoat;
     private javax.swing.JButton btnTimDDH;
-    private javax.swing.JComboBox<String> cbMaNCC;
-    private javax.swing.JComboBox<String> cbTenNCC;
+    private javax.swing.JComboBox<String> cbThuocTinhTK;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JLabel labelMaNCC;
     private javax.swing.JLabel labelSearch;
-    private javax.swing.JLabel labelTenNCC;
+    private javax.swing.JLabel labelThuocTinhTK;
     private javax.swing.JLabel labelTkNCC;
     private javax.swing.JPanel panelTKNCC;
     private javax.swing.JTable tableNCC;
