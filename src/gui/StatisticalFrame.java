@@ -6,6 +6,15 @@
 package gui;
 
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import dao.DAO_ThongKe;
 
 /**
  *
@@ -13,12 +22,36 @@ import java.awt.event.ActionEvent;
  */
 public class StatisticalFrame extends javax.swing.JFrame {
 
+	DAO_ThongKe dao_thongke = new DAO_ThongKe();
+	DefaultTableModel tableModel;
+	List<List<String>> listHD;
+	
     /**
      * Creates new form StatisticalFrame
      */
     public StatisticalFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        tableModel = (DefaultTableModel) tableThongKe.getModel();
+    }
+    private void searchHDTheoNgay() throws SQLException {
+    	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    	if(dateNgayBatDau.getDate() == null || dateNgayKetThuc.getDate() == null) {
+    		JOptionPane.showMessageDialog(this, "Bạn chưa nhập đầy đủ các ngày","Error!",JOptionPane.ERROR_MESSAGE);
+    	}else if (dateNgayBatDau.getDate().before(dateNgayKetThuc.getDate()) == false) {
+    		JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải nhỏ hơn ngày kết thúc","Error!",JOptionPane.ERROR_MESSAGE);
+		}else {
+			String ngaybatdau = df.format(dateNgayBatDau.getDate());
+	    	String ngayketthuc = df.format(dateNgayKetThuc.getDate());
+			listHD = dao_thongke.searchHDTheoNgay(ngaybatdau, ngayketthuc);
+	    	if(listHD.size() == 0) {
+	    		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại","Error!",JOptionPane.ERROR_MESSAGE);
+	    	}
+	    	tableModel.setRowCount(0);
+	    	for(List<String> l: listHD) {
+	    		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),l.get(3),l.get(4),l.get(5),l.get(6),l.get(7)});
+	    	}
+		}
     }
 
     /**
@@ -62,8 +95,12 @@ public class StatisticalFrame extends javax.swing.JFrame {
         labelNgayBatDau.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelNgayBatDau.setText("Thống kê từ ngày");
 
+        dateNgayBatDau.setDateFormatString("yyyy-MM-dd");
+
         labelNgayKetThuc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelNgayKetThuc.setText("Đến ngày");
+
+        dateNgayKetThuc.setDateFormatString("yyyy-MM-dd");
 
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");
@@ -73,6 +110,16 @@ public class StatisticalFrame extends javax.swing.JFrame {
 
         btnTim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/search.png"))); // NOI18N
         btnTim.setText("Tìm");
+        btnTim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+					btnTimActionPerformed(evt);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        });
 
         javax.swing.GroupLayout panelThongKeLayout = new javax.swing.GroupLayout(panelThongKe);
         panelThongKe.setLayout(panelThongKeLayout);
@@ -170,14 +217,14 @@ public class StatisticalFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        btnThoat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThoatActionPerformed(evt);
-            }
 
-        });
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTimActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTimActionPerformed
+        // TODO add your handling code here:
+    	searchHDTheoNgay();
+    }//GEN-LAST:event_btnTimActionPerformed
 
 			private void btnThoatActionPerformed(ActionEvent evt) {
 				// TODO Auto-generated method stub

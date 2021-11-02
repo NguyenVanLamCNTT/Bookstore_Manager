@@ -75,14 +75,22 @@ public class SearchOrderFrame extends javax.swing.JFrame {
     		searchDonDatHang("tenkh", tukhoa);
     	}
     	if(thuoctinh.equals("Ngày đặt")) {
-    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-    		String date = df.format(dateNgayDat.getDate());
-    		searchDonDatHang("ngaydat", date);
+    		if(dateNgayDat.getDate() == null) {
+    			JOptionPane.showMessageDialog(this, "Bạn chưa nhập ngày","Error!",JOptionPane.ERROR_MESSAGE);
+    		}else {
+    			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        		String date = df.format(dateNgayDat.getDate());
+        		searchDonDatHang("ngaydat", date);
+			}
     	}
     	if(thuoctinh.equals("Ngày giao")) {
-    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-    		String date = df.format(dateNgayGiao.getDate());
-    		searchDonDatHang("ngaygiao", date);
+    		if(dateNgayGiao.getDate() == null) {
+    			JOptionPane.showMessageDialog(this, "Bạn chưa nhập ngày","Error!",JOptionPane.ERROR_MESSAGE);
+    		}else {
+    			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        		String date = df.format(dateNgayGiao.getDate());
+        		searchDonDatHang("ngaygiao", date);
+			}
     	}
     	if(thuoctinh.equals("Tổng tiền")) {
     		searchDonDatHang("tongtien", tukhoa);

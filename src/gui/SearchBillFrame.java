@@ -76,9 +76,13 @@ public class SearchBillFrame extends javax.swing.JFrame {
     		searchHoaDon("tongtien", tukhoa);
     	}
     	if(thuoctinh.equals("Ngày lập hóa đơn")) {
-    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-    		String date = df.format(dateNgayLHD.getDate());
-    		searchHoaDon("ngaylap_hd", date);
+    		if(dateNgayLHD.getDate() == null) {
+    			JOptionPane.showMessageDialog(this, "Bạn chưa nhập đầy đủ các ngày","Error!",JOptionPane.ERROR_MESSAGE);
+    		}else {
+    			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        		String date = df.format(dateNgayLHD.getDate());
+        		searchHoaDon("ngaylap_hd", date);
+    		}
     	}
     }
     /**
