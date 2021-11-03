@@ -19,5 +19,6 @@
 	<classpathentry kind="lib" path="libary/jasperreports-javaflow-6.4.1.jar"/>
 	<classpathentry kind="lib" path="libary/groovy-all-2.4.7.jar"/>
 	<classpathentry kind="lib" path="libary/commons-javaflow-1209105.jar"/>
+	<classpathentry kind="lib" path="libary/jfreechart-1.5.3.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

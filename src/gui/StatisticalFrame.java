@@ -5,14 +5,22 @@
  */
 package gui;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 import dao.DAO_ThongKe;
 
@@ -53,6 +61,22 @@ public class StatisticalFrame extends javax.swing.JFrame {
 	    	}
 		}
     }
+    private DefaultCategoryDataset createDataset() {
+    	DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+    	for(List<String> item: listHD) {
+    		dataset.addValue(Double.parseDouble(item.get(7)), "Tổng tiền", item.get(6));
+    	}
+    	return dataset;
+    }
+    private JFreeChart createLineChart() {
+    	JFreeChart lineChart = ChartFactory.createLineChart(
+    			"Biều đồ thống kê doanh thu".toUpperCase(),
+    			"Ngày","Tổng tiền",createDataset(),
+    			PlotOrientation.VERTICAL,false,false,false
+    			);
+    	return lineChart;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,6 +131,11 @@ public class StatisticalFrame extends javax.swing.JFrame {
 
         btnThongKe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/analytics-1.png"))); // NOI18N
         btnThongKe.setText("Thống kê");
+        btnThongKe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThongKeActionPerformed(evt);
+            }
+        });
 
         btnTim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/search.png"))); // NOI18N
         btnTim.setText("Tìm");
@@ -225,6 +254,23 @@ public class StatisticalFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     	searchHDTheoNgay();
     }//GEN-LAST:event_btnTimActionPerformed
+
+    private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
+        // TODO add your handling code here:
+    	if(listHD == null) {
+    		JOptionPane.showMessageDialog(this, "Bạn cần tìm kiếm khoảng thời gian bạn muốn thống kê","Error!",JOptionPane.ERROR_MESSAGE);
+    	}else {
+    		ChartPanel chartPanel = new ChartPanel(createLineChart());
+        	chartPanel.setPreferredSize(new Dimension(1000,600));
+        	JFrame frame = new JFrame();
+        	frame = new JFrame();
+        	frame.add(chartPanel);
+        	frame.setSize(1000,600);
+        	frame.setLocationRelativeTo(null);
+            frame.setResizable(false);
+            frame.setVisible(true);
+		}
+    }//GEN-LAST:event_btnThongKeActionPerformed
 
 			private void btnThoatActionPerformed(ActionEvent evt) {
 				// TODO Auto-generated method stub
