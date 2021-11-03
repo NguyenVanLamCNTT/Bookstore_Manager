@@ -154,6 +154,9 @@
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="dateNgayBatDau">
+          <Properties>
+            <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelNgayKetThuc">
           <Properties>
@@ -164,6 +167,9 @@
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="dateNgayKetThuc">
+          <Properties>
+            <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnThoat">
           <Properties>
@@ -180,6 +186,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Bi&#x1ec3;u &#x111;&#x1ed3; th&#x1ed1;ng k&#xea;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThongKeActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnTim">
           <Properties>
@@ -188,6 +197,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="T&#xec;m"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTimActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -201,26 +213,20 @@
         <Component class="javax.swing.JTable" name="tableQuanLySP">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="10" rowCount="0">
-                <Column editable="false" title="Lo&#x1ea1;i s&#x1ea3;n ph&#x1ea9;m" type="java.lang.Object"/>
+              <Table columnCount="9" rowCount="0">
                 <Column editable="false" title="M&#xe3; s&#x1ea3;n ph&#x1ea9;m" type="java.lang.Object"/>
                 <Column editable="false" title="T&#xea;n s&#x1ea3;n ph&#x1ea9;m" type="java.lang.Object"/>
                 <Column editable="false" title="&#x110;&#x1a1;n gi&#xe1;" type="java.lang.Object"/>
                 <Column editable="false" title="S&#x1ed1; l&#x1b0;&#x1ee3;ng t&#x1ed3;n" type="java.lang.Object"/>
                 <Column editable="false" title="Tr&#x1ea1;ng th&#xe1;i" type="java.lang.Object"/>
-                <Column editable="false" title="M&#xe3; nh&#xe0; s&#x1ea3;n xu&#x1ea5;t" type="java.lang.Object"/>
                 <Column editable="false" title="T&#xea;n t&#xe1;c gi&#x1ea3;" type="java.lang.Object"/>
                 <Column editable="false" title="S&#x1ed1; trang" type="java.lang.Object"/>
                 <Column editable="false" title="Nh&#xe0; xu&#x1ea5;t b&#x1ea3;n" type="java.lang.Object"/>
+                <Column editable="false" title="S&#x1ed1; l&#x1b0;&#x1ee3;ng b&#xe1;n &#x111;&#x1b0;&#x1ee3;c" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>

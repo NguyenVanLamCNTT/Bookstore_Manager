@@ -6,6 +6,27 @@
 package gui;
 
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.general.PieDataset;
+
+import dao.DAO_ThongKe;
+import entity.Sanpham;
 
 /**
  *
@@ -13,12 +34,88 @@ import java.awt.event.ActionEvent;
  */
 public class ProductStatisticsFrame extends javax.swing.JFrame {
 
+	DAO_ThongKe dao_thongke = new DAO_ThongKe();
+	DefaultTableModel tableModel;
+	List<List<String>> listSP;
     /**
      * Creates new form ProductStatisticsFrame
+     * @throws SQLException 
      */
     public ProductStatisticsFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        tableModel = (DefaultTableModel) tableQuanLySP.getModel();
+    }
+    private void getSanPham() throws SQLException {
+    	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    	if(dateNgayBatDau.getDate() == null || dateNgayKetThuc.getDate() == null) {
+    		JOptionPane.showMessageDialog(this, "Bạn chưa nhập đầy đủ các ngày","Error!",JOptionPane.ERROR_MESSAGE);
+    	}else if (dateNgayBatDau.getDate().before(dateNgayKetThuc.getDate()) == false) {
+    		JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải nhỏ hơn ngày kết thúc","Error!",JOptionPane.ERROR_MESSAGE);
+		}else {
+			List<Sanpham> lsp = dao_thongke.getSanpham();
+	    	List<String> listMaSP = new ArrayList<String>();
+	    	for(Sanpham sp: lsp) {
+	    		listMaSP.add(String.valueOf(sp.getMaSanpham()));
+	    	}
+	    	String ngaybatdau = df.format(dateNgayBatDau.getDate());
+	    	String ngayketthuc = df.format(dateNgayKetThuc.getDate());
+	    	Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+	    	map = dao_thongke.getCountSP(listMaSP, ngaybatdau, ngayketthuc);
+	    	Set<Integer> set = map.keySet();
+	    	listSP = new ArrayList<List<String>>();
+	    	for(Sanpham sp: lsp) {
+	    		for (Integer key : set) {
+	               if(key == sp.getMaSanpham()) {
+	            	   List<String> item = new ArrayList<String>();
+	            	   item.add(String.valueOf(sp.getMaSanpham()));
+	            	   item.add(sp.getTenSanpham());
+	            	   item.add(String.valueOf(sp.getDongia()));
+	            	   item.add(String.valueOf(sp.getSoluongton()));
+	            	   item.add(sp.getTrangthai());
+	            	   item.add(sp.getTenTacgia());
+	            	   item.add(String.valueOf(sp.getSotrang()));
+	            	   item.add(sp.getNhaXB());
+	            	   item.add(String.valueOf(map.get(key)));
+	            	   listSP.add(item);
+	               }
+	            }
+	    	}
+	    	for(List<String> l: listSP) {
+	    		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),l.get(3),l.get(4),l.get(5),l.get(6),l.get(7),l.get(8)});
+	    	}
+		}
+    }
+    private PieDataset createDataset() {
+    	Double tongsp = 0.0;
+    	for(List<String> item: listSP) {
+    		tongsp = tongsp + Double.parseDouble(item.get(8));
+    	}
+    	DefaultPieDataset dataset = new DefaultPieDataset();
+    	for(List<String> item: listSP) {
+    		dataset.setValue(item.get(1),Double.parseDouble(item.get(8))/tongsp);
+    	}
+    	return dataset;
+    }
+    private JFreeChart createChart() {
+    	JFreeChart chart = ChartFactory.createPieChart(
+                "CƠ CẤU SẢN PHẨM TRONG THỜI GIAN ĐÃ CHỌN", createDataset(), true, true, true);
+    	return chart;
+    }
+    private void xuatBieuDoThongKe() {
+    	if(listSP == null) {
+    		JOptionPane.showMessageDialog(this, "Bạn cần tìm kiếm khoảng thời gian bạn muốn thống kê","Error!",JOptionPane.ERROR_MESSAGE);
+    	}else {
+    		JFreeChart pieChart = createChart();
+            ChartPanel chartPanel = new ChartPanel(pieChart);
+            JFrame frame = new JFrame();
+            frame.add(chartPanel);
+            frame.setTitle("Biểu đồ JFreeChart trong Java Swing");
+            frame.setSize(1000, 500);
+            frame.setLocationRelativeTo(null);
+            frame.setResizable(false);
+            frame.setVisible(true);
+    	}
     }
 
     /**
@@ -57,17 +154,36 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
         labelNgayBatDau.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelNgayBatDau.setText("Thống kê từ ngày");
 
+        dateNgayBatDau.setDateFormatString("yyyy-MM-dd");
+
         labelNgayKetThuc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelNgayKetThuc.setText("Đến ngày");
+
+        dateNgayKetThuc.setDateFormatString("yyyy-MM-dd");
 
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");
 
         btnThongKe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/product-statistics-1.png"))); // NOI18N
         btnThongKe.setText("Biểu đồ thống kê");
+        btnThongKe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThongKeActionPerformed(evt);
+            }
+        });
 
         btnTim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/search.png"))); // NOI18N
         btnTim.setText("Tìm");
+        btnTim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+					btnTimActionPerformed(evt);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        });
 
         javax.swing.GroupLayout panelThongKeLayout = new javax.swing.GroupLayout(panelThongKe);
         panelThongKe.setLayout(panelThongKeLayout);
@@ -130,11 +246,11 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Loại sản phẩm", "Mã sản phẩm", "Tên sản phẩm", "Đơn giá", "Số lượng tồn", "Trạng thái", "Mã nhà sản xuất", "Tên tác giả", "Số trang", "Nhà xuất bản"
+                "Mã sản phẩm", "Tên sản phẩm", "Đơn giá", "Số lượng tồn", "Trạng thái", "Tên tác giả", "Số trang", "Nhà xuất bản", "Số lượng bán được"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -168,6 +284,16 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTimActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTimActionPerformed
+        // TODO add your handling code here:
+    	getSanPham();
+    }//GEN-LAST:event_btnTimActionPerformed
+
+    private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
+        // TODO add your handling code here:
+    	xuatBieuDoThongKe();
+    }//GEN-LAST:event_btnThongKeActionPerformed
 
 			private void btnThoatActionPerformed(ActionEvent evt) {
 				// TODO Auto-generated method stub
@@ -206,9 +332,10 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProductStatisticsFrame().setVisible(true);
-            }
-        });
+              
+					new ProductStatisticsFrame().setVisible(true);
+            
+            }});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

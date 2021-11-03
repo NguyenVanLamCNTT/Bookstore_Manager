@@ -50,6 +50,19 @@ public class Sanpham {
 		this.maSanpham = maSanpham;
 		this.tenSanpham = tenSanpham;
 	}
+	
+	public Sanpham(int maSanpham, String tenSanpham, double dongia, int soluongton, String trangthai, String tenTacgia,
+			int sotrang, String nhaXB) {
+		super();
+		this.maSanpham = maSanpham;
+		this.tenSanpham = tenSanpham;
+		this.dongia = dongia;
+		this.soluongton = soluongton;
+		this.trangthai = trangthai;
+		this.tenTacgia = tenTacgia;
+		this.sotrang = sotrang;
+		this.nhaXB = nhaXB;
+	}
 
 
 	public int getMaSanpham() {
