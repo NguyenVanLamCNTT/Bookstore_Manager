@@ -213,6 +213,14 @@ where dh.madon = (SELECT IDENT_CURRENT('dondathang'))]]>
 				</textElement>
 				<text><![CDATA[Thành tiền]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="117" height="20" uuid="0c4c8b03-6010-4621-ab9e-d35e5966f452"/>
+				<text><![CDATA[Mã đơn hàng:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="117" y="60" width="148" height="20" uuid="59ea7431-a6b5-459d-ac4c-46770477e2c4"/>
+				<textFieldExpression><![CDATA[$F{madon}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>

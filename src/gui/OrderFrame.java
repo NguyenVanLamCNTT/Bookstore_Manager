@@ -593,8 +593,7 @@ public class OrderFrame extends javax.swing.JFrame {
 
 	private void btnInDHActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnInDHActionPerformed
 		// TODO add your handling code here:
-                Connection con = ConnectDatabase.getConnection();
-    	
+        Connection con = ConnectDatabase.getConnection();
     	try {
 		JasperDesign jd =  JRXmlLoader.load("E:\\PhattrienUD\\Bookstore_Manager\\src\\hoadon\\donhang.jrxml");
 	    	JasperReport report = JasperCompileManager.compileReport("E:\\PhattrienUD\\Bookstore_Manager\\src\\hoadon\\donhang.jrxml");
