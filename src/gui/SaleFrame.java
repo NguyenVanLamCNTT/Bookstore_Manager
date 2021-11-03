@@ -745,7 +745,6 @@ public class SaleFrame extends javax.swing.JFrame {
     	if(txtTienNhanTuKH.getText().equals("")) {
     		valueTienDu.setText("0");
     	}else {
-    		
     		txtTienNhanTuKH.setText(formatter.format(convertedToNumbers(txtTienNhanTuKH.getText())));
             double tiendu = convertedToNumbers(txtTienNhanTuKH.getText())- convertedToNumbers(valueTongTien.getText());
             valueTienDu.setText(formatMoney(tiendu));
