@@ -55,7 +55,7 @@ public class OrderFrame extends javax.swing.JFrame {
 	ChitietDondathang chitietDondathang;
 	int chucnang = 0;
 	List<ChitietDondathang> dsChitietdonhang;
-
+	String manv=new LoginFrame().getMaNVText();
 	public OrderFrame() {
 		initComponents();
 		loadLoaisanpham();
@@ -901,7 +901,7 @@ public class OrderFrame extends javax.swing.JFrame {
 		dondathang.setKhachHang(khachhang);
 		dondathang.setNgaydat(new java.sql.Date(dateNgayDat.getDate().getTime()));
 		dondathang.setNgaygiao(new java.sql.Date(dateNgayGui.getDate().getTime()));
-		dondathang.setNhanvien(new Nhanvien("NVLam"));
+		dondathang.setNhanvien(new Nhanvien(manv));
 		dondathang.setTrangthai(trangthai);
 		dondathang.setThanhtoan(cbThanhtoan.getSelectedItem().toString());
 		return dondathang;
