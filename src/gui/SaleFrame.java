@@ -662,8 +662,8 @@ public class SaleFrame extends javax.swing.JFrame {
     	Connection con = ConnectDatabase.getConnection();
     	
     	try {
-			JasperDesign jd =  JRXmlLoader.load("E:\\PhattrienUD\\Bookstore_Manager\\src\\hoadon\\hoadon.jrxml");
-	    	JasperReport report = JasperCompileManager.compileReport("E:\\PhattrienUD\\Bookstore_Manager\\src\\hoadon\\hoadon.jrxml");
+			JasperDesign jd =  JRXmlLoader.load("src\\hoadon\\hoadon.jrxml");
+	    	JasperReport report = JasperCompileManager.compileReport("src\\hoadon\\hoadon.jrxml");
 	    	JasperPrint jp = JasperFillManager.fillReport(report, new HashMap(), con);
 	    	JasperViewer.viewReport(jp);
 		} catch (JRException e) {
@@ -745,7 +745,6 @@ public class SaleFrame extends javax.swing.JFrame {
     	if(txtTienNhanTuKH.getText().equals("")) {
     		valueTienDu.setText("0");
     	}else {
-    		
     		txtTienNhanTuKH.setText(formatter.format(convertedToNumbers(txtTienNhanTuKH.getText())));
             double tiendu = convertedToNumbers(txtTienNhanTuKH.getText())- convertedToNumbers(valueTongTien.getText());
             valueTienDu.setText(formatMoney(tiendu));
