@@ -71,4 +71,18 @@ public class DAO_ThongKe {
 		}
 		return map;
 	}
+	public Map<String, String> getThongkeHDTheoNgay(String dateBatDau,String dateKetThuc) throws SQLException{
+		String sql = "select sum(tongtien) as tong,ngaylap_hd from hoadon where ngaylap_hd between ? and ? "
+				+ "group by ngaylap_hd";
+		Map<String,String> map = new HashMap<String, String>();
+		Connection con = ConnectDatabase.getConnection();
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setString(1, dateBatDau);
+		stmt.setString(2, dateKetThuc);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			map.put(rs.getString("ngaylap_hd"), rs.getString("tong"));
+		}
+		return map;
+	}
 }

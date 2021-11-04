@@ -124,6 +124,11 @@ public class SearchProductFrame extends javax.swing.JFrame {
 
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
 
         labelHinhAnh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelHinhAnh.setText("Ảnh");
@@ -149,7 +154,10 @@ public class SearchProductFrame extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 try {
 					tableSPMouseClicked(evt);
-				} catch (SQLException | IOException e) {
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -243,11 +251,6 @@ public class SearchProductFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-private void btnThoatActionPerformed(ActionEvent evt) {
-				// TODO Auto-generated method stub
-				dispose();
-				new HomeFrame().setVisible(true);
-			}	
     private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTimDDHActionPerformed
         // TODO add your handling code here:
     	submitTimKiem();
@@ -264,6 +267,12 @@ private void btnThoatActionPerformed(ActionEvent evt) {
 		ImageIcon imgIcon = new ImageIcon(newImg);
 		labelHinhAnh.setIcon(imgIcon);
     }//GEN-LAST:event_tableSPMouseClicked
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        // TODO add your handling code here:
+    	dispose();
+		new HomeFrame().setVisible(true);
+    }//GEN-LAST:event_btnThoatActionPerformed
 
     /**
      * @param args the command line arguments

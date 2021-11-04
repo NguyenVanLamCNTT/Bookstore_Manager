@@ -163,6 +163,11 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
 
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
 
         btnThongKe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/product-statistics-1.png"))); // NOI18N
         btnThongKe.setText("Biểu đồ thống kê");
@@ -295,12 +300,13 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
     	xuatBieuDoThongKe();
     }//GEN-LAST:event_btnThongKeActionPerformed
 
-			private void btnThoatActionPerformed(ActionEvent evt) {
-				// TODO Auto-generated method stub
-				dispose();
-				new HomeFrame().setVisible(true);
-			}
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        // TODO add your handling code here:
+    	dispose();
+		new HomeFrame().setVisible(true);
+    }//GEN-LAST:event_btnThoatActionPerformed
 
+			
 			
     /**
      * @param args the command line arguments

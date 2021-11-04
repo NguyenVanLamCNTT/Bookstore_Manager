@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -61,14 +63,22 @@ public class StatisticalFrame extends javax.swing.JFrame {
 	    	}
 		}
     }
-    private DefaultCategoryDataset createDataset() {
+    private DefaultCategoryDataset createDataset() throws SQLException {
     	DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-    	for(List<String> item: listHD) {
-    		dataset.addValue(Double.parseDouble(item.get(7)), "Tổng tiền", item.get(6));
+    	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    	String ngaybatdau = df.format(dateNgayBatDau.getDate());
+    	String ngayketthuc = df.format(dateNgayKetThuc.getDate());
+    	Map<String, String> map = dao_thongke.getThongkeHDTheoNgay(ngaybatdau, ngayketthuc);
+//    	for(List<String> item: listHD) {
+//    		dataset.addValue(Double.parseDouble(item.get(7)), "Tổng tiền", item.get(6));
+//    	}
+    	Set<String> set = map.keySet();
+    	for(String key: set) {
+    		dataset.addValue(Double.parseDouble(map.get(key)), "Tổng tiền", key);
     	}
     	return dataset;
     }
-    private JFreeChart createLineChart() {
+    private JFreeChart createLineChart() throws SQLException {
     	JFreeChart lineChart = ChartFactory.createLineChart(
     			"Biều đồ thống kê doanh thu".toUpperCase(),
     			"Ngày","Tổng tiền",createDataset(),
@@ -128,12 +138,22 @@ public class StatisticalFrame extends javax.swing.JFrame {
 
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
 
         btnThongKe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/analytics-1.png"))); // NOI18N
         btnThongKe.setText("Thống kê");
         btnThongKe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThongKeActionPerformed(evt);
+                try {
+					btnThongKeActionPerformed(evt);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -255,7 +275,7 @@ public class StatisticalFrame extends javax.swing.JFrame {
     	searchHDTheoNgay();
     }//GEN-LAST:event_btnTimActionPerformed
 
-    private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
+    private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnThongKeActionPerformed
         // TODO add your handling code here:
     	if(listHD == null) {
     		JOptionPane.showMessageDialog(this, "Bạn cần tìm kiếm khoảng thời gian bạn muốn thống kê","Error!",JOptionPane.ERROR_MESSAGE);
@@ -272,11 +292,11 @@ public class StatisticalFrame extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_btnThongKeActionPerformed
 
-			private void btnThoatActionPerformed(ActionEvent evt) {
-				// TODO Auto-generated method stub
-				dispose();
-				new HomeFrame().setVisible(true);
-			}
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        // TODO add your handling code here:
+    	dispose();
+		new HomeFrame().setVisible(true);
+    }//GEN-LAST:event_btnThoatActionPerformed
     /**
      * @param args the command line arguments
      */

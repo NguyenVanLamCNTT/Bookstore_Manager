@@ -101,6 +101,11 @@ public class EmployeeFrame extends javax.swing.JFrame {
 
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
 
         btnThem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add.png"))); // NOI18N
@@ -289,11 +294,6 @@ public class EmployeeFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-			private void btnThoatActionPerformed(ActionEvent evt) {
-				// TODO Auto-generated method stub
-				dispose();
-				new HomeFrame().setVisible(true);
-			}
     private void txtTenNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenNVActionPerformed
         // TODO add your handling code here:
     	
@@ -316,6 +316,12 @@ public class EmployeeFrame extends javax.swing.JFrame {
     private void btnTinhLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTinhLuongActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTinhLuongActionPerformed
+
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        // TODO add your handling code here:
+    	dispose();
+        new HomeFrame().setVisible(true);
+    }//GEN-LAST:event_btnThoatActionPerformed
 
     /**
      * @param args the command line arguments
