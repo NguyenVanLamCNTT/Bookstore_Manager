@@ -595,8 +595,8 @@ public class OrderFrame extends javax.swing.JFrame {
 		// TODO add your handling code here:
         Connection con = ConnectDatabase.getConnection();
     	try {
-		JasperDesign jd =  JRXmlLoader.load("E:\\PhattrienUD\\Bookstore_Manager\\src\\hoadon\\donhang.jrxml");
-	    	JasperReport report = JasperCompileManager.compileReport("E:\\PhattrienUD\\Bookstore_Manager\\src\\hoadon\\donhang.jrxml");
+		JasperDesign jd =  JRXmlLoader.load("src\\hoadon\\donhang.jrxml");
+    	JasperReport report = JasperCompileManager.compileReport("src\\hoadon\\donhang.jrxml");
 	    	JasperPrint jp = JasperFillManager.fillReport(report, new HashMap(), con);
 	    	JasperViewer.viewReport(jp);
 		} catch (JRException e) {
