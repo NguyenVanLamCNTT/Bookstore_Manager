@@ -590,7 +590,7 @@ public class HomeFrame extends JFrame{
     private void btnCapNhatNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatNCCActionPerformed
         // TODO add your handling code here:
     	dispose();
-    new ProducerFrame().setVisible(true);
+//    new ProducerFrame().setVisible(true);
     }//GEN-LAST:event_btnCapNhatNCCActionPerformed
 
     private void btnCapNhatLSPActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnCapNhatLSPActionPerformed
@@ -671,9 +671,9 @@ public class HomeFrame extends JFrame{
 	}
     private void mnuItemNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemNCCActionPerformed
         // TODO add your handling code here:
-        ProducerFrame producerFrame = new ProducerFrame();
-        dispose();
-        producerFrame.setVisible(true);
+//        ProducerFrame producerFrame = new ProducerFrame();
+//        dispose();
+//        producerFrame.setVisible(true);
     }//GEN-LAST:event_mnuItemNCCActionPerformed
 
     private void mnuItemTKSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemTKSPActionPerformed

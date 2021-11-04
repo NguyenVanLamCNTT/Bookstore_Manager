@@ -5,20 +5,160 @@
  */
 package gui;
 
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+
+import dao.DAO_Loaisanpham;
+import dao.DAO_NhaCungCap;
+import entity.NhaCungcap;
+
 /**
  *
  * @author Lenovo
  */
 public class ProducerFrame extends javax.swing.JFrame {
 
+	DefaultTableModel tableModel;
+	List<NhaCungcap> listNcc;
+	DAO_NhaCungCap dao_nhacc = new DAO_NhaCungCap();
     /**
      * Creates new form ProducerFrame
+     * @throws SQLException 
      */
-    public ProducerFrame() {
+    public ProducerFrame() throws SQLException {
         initComponents();
         setLocationRelativeTo(null);
+        tableModel = (DefaultTableModel) tableCNNCC.getModel();
+        showData();
+        reset();
     }
 
+    private void showData() throws SQLException {
+    	listNcc = dao_nhacc.getNhaCungCap();
+    	tableModel.setRowCount(0);
+    	for(NhaCungcap ncc: listNcc) {
+    		tableModel.addRow(new Object[] {ncc.getMaNCC(),ncc.getTenNCC(),ncc.getDiachi()});
+    	}
+    }
+    private void regex() {
+    	String mancc = txtMaNCC.getText();
+    	String tenncc = txtTenNCC.getText();
+    	String diachi = txtDiaChi.getText();
+    	if(mancc.equals("")) {
+    		JOptionPane.showMessageDialog(this, "Mã nhà cung cấp không hợp lệ","Error!",JOptionPane.ERROR_MESSAGE);
+    		txtMaNCC.setBorder(new LineBorder(Color.red));
+    	}else {
+    		txtMaNCC.setBorder(new LineBorder(Color.green));
+    		
+		}
+    	if(tenncc.equals("")) {
+    		JOptionPane.showMessageDialog(this, "Tên nhà cung cấp không hợp lệ","Error!",JOptionPane.ERROR_MESSAGE);
+    		txtTenNCC.setBorder(new LineBorder(Color.red));
+    		
+    	}else {
+    		txtTenNCC.setBorder(new LineBorder(Color.green));
+    		
+		}
+    	if(diachi.equals("")) {
+    		JOptionPane.showMessageDialog(this, "Địa chỉ nhà cung cấp không hợp lệ","Error!",JOptionPane.ERROR_MESSAGE);
+    		txtMaNCC.setBorder(new LineBorder(Color.red));
+    		
+    	}else {
+    		txtDiaChi.setBorder(new LineBorder(Color.green));
+    		
+		}
+    }
+    private boolean checkInput() {
+    	String mancc = txtMaNCC.getText();
+    	String tenncc = txtTenNCC.getText();
+    	String diachi = txtDiaChi.getText();
+    	
+    	if(mancc.equals("") && tenncc.equals("") && diachi.equals("")) {
+    		return false;
+    	}else {
+			return true;
+			
+		}
+    }
+    private void reset() {
+    	txtDiaChi.setText("");
+    	txtMaNCC.setText("");
+    	txtTenNCC.setText("");
+    	txtDiaChi.setEnabled(false);
+    	txtMaNCC.setEnabled(false);
+    	txtTenNCC.setEnabled(false);
+    	btnLuu.setEnabled(false);
+    	btnSua.setEnabled(false);
+    	btnXoa.setEnabled(false);
+    	btnQuayLai.setEnabled(false);
+    	txtDiaChi.setBorder(new LineBorder(Color.black));
+    	txtMaNCC.setBorder(new LineBorder(Color.black));
+    	txtTenNCC.setBorder(new LineBorder(Color.black));
+    }
+    private void clickBtnThem() {
+    	reset();
+    	txtDiaChi.setEnabled(true);
+    	txtMaNCC.setEnabled(true);
+    	txtTenNCC.setEnabled(true);
+    	btnQuayLai.setEnabled(true);
+    	btnLuu.setEnabled(true);
+    }
+    private boolean checkStatusBtnLuu(String mancc) {
+    	int select = tableCNNCC.getSelectedRow();
+    	if(select == -1) {
+    		return false;
+    	}else {
+			if(mancc.equals(listNcc.get(select).getMaNCC())) {
+				return true;
+			}else {
+				return false;
+			}
+		}
+    }
+    private boolean checkMaNCC(String mancc) {
+    	for(NhaCungcap ncc : listNcc) {
+    		if(mancc.equals(ncc.getMaNCC())) {
+    			JOptionPane.showMessageDialog(this, "Mã nhà cung cấp tồn tại","Error!",JOptionPane.ERROR_MESSAGE);
+        		txtMaNCC.setBorder(new LineBorder(Color.red));
+    			return true;
+    		}
+    	}
+    	txtMaNCC.setBorder(new LineBorder(Color.green));
+    	return false;
+    }
+    private int notify(String title, String message) {
+    	int n = JOptionPane.showConfirmDialog(this, message,title,JOptionPane.YES_NO_OPTION);
+    	return n;
+    }
+    private void clickBtnLuu() throws SQLException {
+    	String mancc = txtMaNCC.getText();
+    	String tenncc= txtTenNCC.getText();
+    	String diachi = txtDiaChi.getText();
+    	if(checkStatusBtnLuu(mancc) == true) {
+    		regex();
+    		if(checkInput() == true && notify("", "Bạn có chắc muốn lưu thay đổi không?") == 0){
+    			dao_nhacc.update(mancc, tenncc, diachi);
+        		showData();
+        		reset();
+        		JOptionPane.showMessageDialog(this,"Bạn đã cập nhật thành công!");
+    		}
+    	}else {
+    		regex();
+    		if(checkInput() == true && checkMaNCC(mancc) == false && notify("", "Bạn có chắc muốn lưu thông tin vừa nhập không ?") == 0) {
+    			dao_nhacc.insert(mancc, tenncc, diachi);
+    			showData();
+    			reset();
+    			JOptionPane.showMessageDialog(this,"Bạn đã lưu thành công!");
+    		}
+			
+		}
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,8 +178,6 @@ public class ProducerFrame extends javax.swing.JFrame {
         txtMaNCC = new javax.swing.JTextField();
         labelTenNCC = new javax.swing.JLabel();
         txtTenNCC = new javax.swing.JTextField();
-        labelQuocGia = new javax.swing.JLabel();
-        txtQuocGia = new javax.swing.JTextField();
         labelDiaChi = new javax.swing.JLabel();
         txtDiaChi = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
@@ -75,9 +213,6 @@ public class ProducerFrame extends javax.swing.JFrame {
         labelTenNCC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelTenNCC.setText("Tên nhà cung cấp");
 
-        labelQuocGia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelQuocGia.setText("Quốc gia");
-
         labelDiaChi.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelDiaChi.setText("Địa chỉ");
 
@@ -93,6 +228,16 @@ public class ProducerFrame extends javax.swing.JFrame {
         btnXoa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/delete.png"))); // NOI18N
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+					btnXoaActionPerformed(evt);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        });
 
         btnSua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fix.png"))); // NOI18N
@@ -105,16 +250,26 @@ public class ProducerFrame extends javax.swing.JFrame {
 
         btnLuu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnLuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/save.png"))); // NOI18N
-        btnLuu.setText("Lưiu");
+        btnLuu.setText("Lưu");
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLuuActionPerformed(evt);
+                try {
+					btnLuuActionPerformed(evt);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
         btnQuayLai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnQuayLai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/reset.png"))); // NOI18N
         btnQuayLai.setText("Quay Lại");
+        btnQuayLai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuayLaiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelCapNhatNCCLayout = new javax.swing.GroupLayout(panelCapNhatNCC);
         panelCapNhatNCC.setLayout(panelCapNhatNCCLayout);
@@ -129,28 +284,22 @@ public class ProducerFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCapNhatNCCLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(panelCapNhatNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelCapNhatNCCLayout.createSequentialGroup()
-                        .addComponent(labelDiaChi)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelCapNhatNCCLayout.createSequentialGroup()
-                        .addComponent(labelMaNCC)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtMaNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(labelMaNCC)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtMaNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(140, 140, 140)
                 .addComponent(labelTenNCC)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtTenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
-                .addComponent(labelQuocGia)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelDiaChi)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtQuocGia, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45))
             .addGroup(panelCapNhatNCCLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(btnQuayLai, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(112, 112, 112)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -170,18 +319,16 @@ public class ProducerFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelCapNhatNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMaNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelMaNCC)
-                    .addComponent(txtTenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTenNCC)
-                    .addComponent(txtQuocGia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelQuocGia))
-                .addGap(41, 41, 41)
-                .addGroup(panelCapNhatNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelDiaChi))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addGroup(panelCapNhatNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCapNhatNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelDiaChi))
+                    .addGroup(panelCapNhatNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtMaNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelMaNCC)
+                        .addComponent(txtTenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelTenNCC)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
                 .addGroup(panelCapNhatNCCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem)
                     .addComponent(btnXoa)
@@ -196,15 +343,20 @@ public class ProducerFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã nhà cung cấp", "Tên nhà cung cấp", "Quốc gia", "Địa chỉ"
+                "Mã nhà cung cấp", "Tên nhà cung cấp", "Địa chỉ"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tableCNNCC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableCNNCCMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tableCNNCC);
@@ -241,15 +393,56 @@ public class ProducerFrame extends javax.swing.JFrame {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
+    	clickBtnThem();
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
+    	txtDiaChi.setEnabled(true);
+    	txtTenNCC.setEnabled(true);
+    	btnLuu.setEnabled(true);
     }//GEN-LAST:event_btnSuaActionPerformed
 
-    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
+    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
+    	clickBtnLuu();
+    	reset();
     }//GEN-LAST:event_btnLuuActionPerformed
+
+    private void tableCNNCCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCNNCCMouseClicked
+        // TODO add your handling code here:
+    	int index = tableCNNCC.getSelectedRow();
+    	txtMaNCC.setText(listNcc.get(index).getMaNCC());
+    	txtTenNCC.setText(listNcc.get(index).getTenNCC());
+    	txtDiaChi.setText(listNcc.get(index).getDiachi());
+    	txtDiaChi.setEnabled(false);
+    	txtMaNCC.setEnabled(false);
+    	txtTenNCC.setEnabled(false);
+    	btnSua.setEnabled(true);
+    	btnXoa.setEnabled(true);
+    	btnQuayLai.setEnabled(true);
+    }//GEN-LAST:event_tableCNNCCMouseClicked
+
+    private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuayLaiActionPerformed
+        // TODO add your handling code here:
+    	reset();
+    }//GEN-LAST:event_btnQuayLaiActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+    	String mancc = txtMaNCC.getText();
+    	if(notify("", "Bạn có chắc muốn xóa nhà cung cấp này không ?") == 0) {
+    		boolean success =  dao_nhacc.delete(mancc);
+    		if(success == true) {
+    			JOptionPane.showMessageDialog(this,"Bạn đã xóa thành công!");
+    			showData();
+    		}else {
+    			JOptionPane.showMessageDialog(this,"Lỗi không thể xóa!","", JOptionPane.ERROR_MESSAGE);
+    			showData();
+			}
+    	}
+    	reset();
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -281,7 +474,12 @@ public class ProducerFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProducerFrame().setVisible(true);
+                try {
+					new ProducerFrame().setVisible(true);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
     }
@@ -300,13 +498,11 @@ public class ProducerFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelCapNhatNCC;
     private javax.swing.JLabel labelDiaChi;
     private javax.swing.JLabel labelMaNCC;
-    private javax.swing.JLabel labelQuocGia;
     private javax.swing.JLabel labelTenNCC;
     private javax.swing.JPanel panelCapNhatNCC;
     private javax.swing.JTable tableCNNCC;
     private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtMaNCC;
-    private javax.swing.JTextField txtQuocGia;
     private javax.swing.JTextField txtTenNCC;
     // End of variables declaration//GEN-END:variables
 }
