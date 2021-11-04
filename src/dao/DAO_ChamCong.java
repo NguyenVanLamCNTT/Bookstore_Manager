@@ -32,7 +32,7 @@ public class DAO_ChamCong {
     	 return n>0;
      }
      public ArrayList<ChitietCalam> getValues(String manv) throws SQLException{
-    	 String sql="select ngaylam,trangthai from chitietcalam where manv='"+manv+"'";
+    	 String sql="select ngaylam,macalam,trangthai from chitietcalam where manv='"+manv+"'";
     	 Connection conn=ConnectDatabase.getConnection();
     	 PreparedStatement ps=conn.prepareStatement(sql);
     	 ArrayList<ChitietCalam> chitiet=new ArrayList<ChitietCalam>();
@@ -42,6 +42,7 @@ public class DAO_ChamCong {
 				ChitietCalam ctcl=new ChitietCalam();
 				ctcl.setNgaylam(rs.getDate("ngaylam"));
 				ctcl.setTrangthai(rs.getString("trangthai"));
+				ctcl.setCalam(new Calam(rs.getString("macalam")));
 				
 				chitiet.add(ctcl);
 			}
