@@ -302,6 +302,7 @@ public class EmployeeFrame extends javax.swing.JFrame {
 			}
     private void txtTenNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenNVActionPerformed
         // TODO add your handling code here:
+    	
     }//GEN-LAST:event_txtTenNVActionPerformed
 
     private void txtMaNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaNVActionPerformed
@@ -309,7 +310,9 @@ public class EmployeeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMaNVActionPerformed
 
     private void btnSuaTK1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaTK1ActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:\
+    	dispose();
+    	new AccountFrame().setVisible(true);
     }//GEN-LAST:event_btnSuaTK1ActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed

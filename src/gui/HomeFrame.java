@@ -470,6 +470,16 @@ public class HomeFrame extends JFrame{
                 mnuItemThongKeDTActionPerformed(evt);
             }
         });
+        btnChamCong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+               try {
+				btnChamcongActionListener(evt);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            }
+        });
         mnuThongKe.add(mnuItemThongKeDT);
 
         menuBarHome.add(mnuThongKe);
@@ -510,7 +520,7 @@ public class HomeFrame extends JFrame{
 				new SaleFrame().setVisible(true);
 			}
 
-			private void mnuitemChamCongActionPerformed(ActionEvent evt) {
+			private void mnuitemChamCongActionPerformed(ActionEvent evt) throws SQLException {
 				// TODO Auto-generated method stub
 				dispose();
 				new  AttendanceFrame().setVisible(true);
@@ -663,7 +673,7 @@ public class HomeFrame extends JFrame{
         }
         
     }//GEN-LAST:event_mnuItemLSPActionPerformed
-    private void btnChamcongActionListener(ActionEvent evt) {
+    private void btnChamcongActionListener(java.awt.event.ActionEvent evt) throws SQLException {
 		// TODO Auto-generated method stu
     	dispose();
 		new AttendanceFrame().setVisible(true);
