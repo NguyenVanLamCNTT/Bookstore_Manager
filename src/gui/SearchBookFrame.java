@@ -5,75 +5,19 @@
  */
 package gui;
 
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.swing.ImageIcon;
-import javax.swing.table.DefaultTableModel;
-
-import dao.DAO_Sanpham;
-import dao.DAO_TimKiem;
-
 /**
  *
  * @author Lenovo
  */
-public class SearchProductFrame extends javax.swing.JFrame {
+public class SearchBookFrame extends javax.swing.JFrame {
 
-	DAO_TimKiem dao_timkiem = new DAO_TimKiem();
-	DefaultTableModel tableModel;
-	List<List<String>> listSP;
     /**
-     * Creates new form SearchProductFrame
+     * Creates new form NewJFrame1
      */
-    public SearchProductFrame() {
+    public SearchBookFrame() {
         initComponents();
-        setLocationRelativeTo(null);
-        tableModel = (DefaultTableModel) tableSP.getModel();
     }
 
-//    private void searchSanPham(String thuoctinh,String tukhoa) throws SQLException {
-//    	if(thuoctinh.equals("ma_sanpham") || thuoctinh.equals("sotrang") || thuoctinh.equals("soluongton") || thuoctinh.equals("dongia")) {
-//    		listSP = dao_timkiem.searchSanPham(thuoctinh, tukhoa);
-//    	}else {
-//			listSP = dao_timkiem.searchSanPham(thuoctinh,"%" +tukhoa+ "%");
-//		}
-//    	tableModel.setRowCount(0);
-//    	for(List<String> l: listSP) {
-//    		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),l.get(3),l.get(4),l.get(5),l.get(6),l.get(7)});
-//    	}
-//    }
-//    private void submitTimKiem() throws SQLException {
-//    	String tukhoa = txtSearch.getText();
-//    	String thuoctinh = cbThuocTinhTK.getSelectedItem().toString();
-//    	if(thuoctinh.equals("Mã sản phẩm")) {
-//    		searchSanPham("ma_sanpham", tukhoa);
-//    	}
-//    	if(thuoctinh.equals("Tên sản phẩm")) {
-//    		searchSanPham("ten_sp", tukhoa);
-//    	}
-//    	if(thuoctinh.equals("Đơn giá")) {
-//    		searchSanPham("dongia", tukhoa);
-//    	}
-//    	if(thuoctinh.equals("Số lượng")) {
-//    		searchSanPham("soluongton", tukhoa);
-//    	}
-//    	if(thuoctinh.equals("Tên tác giả")) {
-//    		searchSanPham("ten_tacgia", tukhoa);
-//    	}
-//    	if(thuoctinh.equals("Số trang")) {
-//    		searchSanPham("sotrang", tukhoa);
-//    	}
-//    	if(thuoctinh.equals("Nhà xuất bản")) { 
-//    		searchSanPham("nhaxuatban", tukhoa);
-//    	}
-//    	if(thuoctinh.equals("Trạng thái")) {
-//    		searchSanPham("trangthai", tukhoa);
-//    	}
-//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -93,12 +37,8 @@ public class SearchProductFrame extends javax.swing.JFrame {
         tableSP = new javax.swing.JTable();
         txtMaSP = new javax.swing.JTextField();
         labelMaSP = new javax.swing.JLabel();
-        labelTenTG = new javax.swing.JLabel();
-        txtTenTG = new javax.swing.JTextField();
         labelTenSP = new javax.swing.JLabel();
         txtTenSP = new javax.swing.JTextField();
-        labelNXB = new javax.swing.JLabel();
-        txtNXB = new javax.swing.JTextField();
         labelDonGia = new javax.swing.JLabel();
         cbDonGia = new javax.swing.JComboBox<>();
         labelLoaiSP = new javax.swing.JLabel();
@@ -115,12 +55,7 @@ public class SearchProductFrame extends javax.swing.JFrame {
         btnTimDDH.setText("Tìm");
         btnTimDDH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-					btnTimDDHActionPerformed(evt);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                btnTimDDHActionPerformed(evt);
             }
         });
 
@@ -144,11 +79,11 @@ public class SearchProductFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã sản phẩm", "Tên sản phẩm", "Đơn giá", "Số lượng", "Tên tác giả", "Số trang", "Nhà xuất bản", "Trạng thái"
+                "Mã sản phẩm", "Tên sản phẩm", "Đơn giá", "Số lượng", "Trạng thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -157,26 +92,14 @@ public class SearchProductFrame extends javax.swing.JFrame {
         });
         tableSP.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                try {
-					tableSPMouseClicked(evt);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                tableSPMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tableSP);
 
         labelMaSP.setText("Mã sản phẩm");
 
-        labelTenTG.setText("Tên tác giả");
-
         labelTenSP.setText("Tên sản phẩm");
-
-        labelNXB.setText("Nhà xuất bản");
 
         labelDonGia.setText("Đơn giá");
 
@@ -201,24 +124,20 @@ public class SearchProductFrame extends javax.swing.JFrame {
                                 .addComponent(btnThoat)
                                 .addGap(339, 339, 339)
                                 .addComponent(labelTkSP)
-                                .addGap(0, 663, Short.MAX_VALUE)))
+                                .addGap(0, 631, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(panelTKSPLayout.createSequentialGroup()
                         .addGap(62, 62, 62)
                         .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelTKSPLayout.createSequentialGroup()
-                                .addComponent(labelNXB)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelTKSPLayout.createSequentialGroup()
-                                .addComponent(labelTenTG)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTenTG, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelTKSPLayout.createSequentialGroup()
                                 .addComponent(labelMaSP)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtMaSP, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(51, 51, 51)
+                                .addComponent(txtMaSP, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelTKSPLayout.createSequentialGroup()
+                                .addComponent(labelNCC)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(52, 52, 52)
                         .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelTKSPLayout.createSequentialGroup()
                                 .addComponent(labelDonGia)
@@ -227,15 +146,11 @@ public class SearchProductFrame extends javax.swing.JFrame {
                             .addGroup(panelTKSPLayout.createSequentialGroup()
                                 .addComponent(labelTenSP)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelTKSPLayout.createSequentialGroup()
-                                .addComponent(labelLoaiSP)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtLoaiSP, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(57, 57, 57)
-                        .addComponent(labelNCC)
+                                .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(54, 54, 54)
+                        .addComponent(labelLoaiSP)
                         .addGap(18, 18, 18)
-                        .addComponent(txtNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtLoaiSP, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnTimDDH, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30))
@@ -256,35 +171,31 @@ public class SearchProductFrame extends javax.swing.JFrame {
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelTKSPLayout.createSequentialGroup()
-                        .addComponent(btnTimDDH)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnTimDDH)
                     .addGroup(panelTKSPLayout.createSequentialGroup()
                         .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
                             .addComponent(labelMaSP)
                             .addComponent(txtMaSP)
                             .addComponent(labelTenSP)
                             .addComponent(txtTenSP)
-                            .addComponent(labelNCC)
-                            .addComponent(txtNCC))
+                            .addComponent(labelLoaiSP)
+                            .addComponent(txtLoaiSP))
                         .addGap(39, 39, 39)
-                        .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelNXB)
-                            .addComponent(txtNXB)
-                            .addComponent(labelDonGia)
-                            .addComponent(cbDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelTenTG)
-                            .addComponent(txtTenTG)
+                        .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                                .addComponent(labelLoaiSP)
-                                .addComponent(txtLoaiSP)))
-                        .addGap(64, 64, 64)))
+                                .addComponent(labelNCC)
+                                .addComponent(txtNCC))
+                            .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelDonGia)
+                                .addComponent(cbDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelTKSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelHinhAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addGroup(panelTKSPLayout.createSequentialGroup()
+                        .addComponent(labelHinhAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(127, 127, 127))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTKSPLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -306,28 +217,21 @@ public class SearchProductFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTimDDHActionPerformed
-        // TODO add your handling code here:
-//    	submitTimKiem();
-    }//GEN-LAST:event_btnTimDDHActionPerformed
 
-    private void tableSPMouseClicked(java.awt.event.MouseEvent evt) throws SQLException, IOException {//GEN-FIRST:event_tableSPMouseClicked
+    private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimDDHActionPerformed
         // TODO add your handling code here:
-    	int index = tableSP.getSelectedRow();
-    	DAO_Sanpham dao_sp = new DAO_Sanpham();
-    	String path = dao_sp.getImg(listSP.get(index).get(0));
-    	ImageIcon icon = new ImageIcon(path);
-    	Image img = icon.getImage();
-    	Image newImg = img.getScaledInstance(labelHinhAnh.getWidth(), labelHinhAnh.getHeight(), Image.SCALE_SMOOTH);
-		ImageIcon imgIcon = new ImageIcon(newImg);
-		labelHinhAnh.setIcon(imgIcon);
-    }//GEN-LAST:event_tableSPMouseClicked
+        //    	submitTimKiem();
+    }//GEN-LAST:event_btnTimDDHActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         // TODO add your handling code here:
-    	dispose();
-		new HomeFrame().setVisible(true);
+        dispose();
+        new HomeFrame().setVisible(true);
     }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void tableSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableSPMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableSPMouseClicked
 
     /**
      * @param args the command line arguments
@@ -346,20 +250,20 @@ public class SearchProductFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SearchProductFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SearchBookFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SearchProductFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SearchBookFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SearchProductFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SearchBookFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SearchProductFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SearchBookFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SearchProductFrame().setVisible(true);
+                new SearchBookFrame().setVisible(true);
             }
         });
     }
@@ -375,17 +279,13 @@ public class SearchProductFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelLoaiSP;
     private javax.swing.JLabel labelMaSP;
     private javax.swing.JLabel labelNCC;
-    private javax.swing.JLabel labelNXB;
     private javax.swing.JLabel labelTenSP;
-    private javax.swing.JLabel labelTenTG;
     private javax.swing.JLabel labelTkSP;
     private javax.swing.JPanel panelTKSP;
     private javax.swing.JTable tableSP;
     private javax.swing.JTextField txtLoaiSP;
     private javax.swing.JTextField txtMaSP;
     private javax.swing.JTextField txtNCC;
-    private javax.swing.JTextField txtNXB;
     private javax.swing.JTextField txtTenSP;
-    private javax.swing.JTextField txtTenTG;
     // End of variables declaration//GEN-END:variables
 }

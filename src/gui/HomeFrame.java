@@ -550,7 +550,7 @@ public class HomeFrame extends JFrame{
     private void btnQuanLySPActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnQuanLySPActionPerformed
         // TODO add your handling code here:
     	dispose();
-    	new ProductFrame().setVisible(true);
+    	new BookFrame().setVisible(true);
     }//GEN-LAST:event_btnQuanLySPActionPerformed
 
     private void btnQuanLyDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuanLyDHActionPerformed
@@ -634,7 +634,7 @@ public class HomeFrame extends JFrame{
     private void mnuItemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemSPActionPerformed
         try {
             // TODO add your handling code here:
-            ProductFrame productFrame = new ProductFrame();
+            BookFrame productFrame = new BookFrame();
             dispose();
             productFrame.setVisible(true);
         } catch (SQLException ex) {

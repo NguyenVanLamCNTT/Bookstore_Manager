@@ -34,26 +34,26 @@ public class SearchTypeProductFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         tableModel = (DefaultTableModel) tableLSP.getModel();
     }
-    private void searchLoaiSP(String thuoctinh,String tuKhoa) throws SQLException {
-    	listLSP =  dao_timkiem.searchLoaiSP(thuoctinh, tuKhoa);
-    	if(listLSP.size() == 0) {
-    		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
-    	}
-    	tableModel.setRowCount(0);
-    	for(LoaiSanpham loaisp: listLSP) {
-    		tableModel.addRow(new Object[] {loaisp.getMaLoaiSp(),loaisp.getTenLoaiSp()});
-    	}
-    }
-    private void submitTimKiem() throws SQLException {
-    	String tukhoa = txtSearch.getText();
-    	String thuoctinh = cbThuocTinhTK.getSelectedItem().toString();
-    	if(thuoctinh.equals("Mã loại sản phẩm")) {
-    		searchLoaiSP("ma_loaisp", tukhoa);
-    	}
-    	if(thuoctinh.equals("Tên loại sản phẩm")) {
-    		searchLoaiSP("tenloaisp", tukhoa);
-    	}
-    } 
+//    private void searchLoaiSP(String thuoctinh,String tuKhoa) throws SQLException {
+//    	listLSP =  dao_timkiem.searchLoaiSP(thuoctinh, tuKhoa);
+//    	if(listLSP.size() == 0) {
+//    		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
+//    	}
+//    	tableModel.setRowCount(0);
+//    	for(LoaiSanpham loaisp: listLSP) {
+//    		tableModel.addRow(new Object[] {loaisp.getMaLoaiSp(),loaisp.getTenLoaiSp()});
+//    	}
+//    }
+//    private void submitTimKiem() throws SQLException {
+//    	String tukhoa = txtSearch.getText();
+//    	String thuoctinh = cbThuocTinhTK.getSelectedItem().toString();
+//    	if(thuoctinh.equals("Mã loại sản phẩm")) {
+//    		searchLoaiSP("ma_loaisp", tukhoa);
+//    	}
+//    	if(thuoctinh.equals("Tên loại sản phẩm")) {
+//    		searchLoaiSP("tenloaisp", tukhoa);
+//    	}
+//    } 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,13 +67,13 @@ public class SearchTypeProductFrame extends javax.swing.JFrame {
         btnTimDDH = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         labelTkLSP = new javax.swing.JLabel();
-        txtSearch = new javax.swing.JTextField();
-        labelSearch = new javax.swing.JLabel();
         btnThoat = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tableLSP = new javax.swing.JTable();
-        labelThuocTinhTK = new javax.swing.JLabel();
-        cbThuocTinhTK = new javax.swing.JComboBox<>();
+        labelMaLoaiSP = new javax.swing.JLabel();
+        txtMaLoaiSP = new javax.swing.JTextField();
+        labelTenLoaiSP = new javax.swing.JLabel();
+        txtTenLoaiSP = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,11 +95,6 @@ public class SearchTypeProductFrame extends javax.swing.JFrame {
 
         labelTkLSP.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         labelTkLSP.setText("Tìm kiếm loại sản phẩm");
-
-        txtSearch.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        labelSearch.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        labelSearch.setText("Từ khóa tìm kiếm");
 
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");
@@ -127,26 +122,38 @@ public class SearchTypeProductFrame extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tableLSP);
 
-        labelThuocTinhTK.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        labelThuocTinhTK.setText("Thuộc tính tìm kiếm:");
+        labelMaLoaiSP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelMaLoaiSP.setText("Mã Loại sản phẩm");
 
-        cbThuocTinhTK.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbThuocTinhTK.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã loại sản phẩm", "Tên loại sản phẩm" }));
+        txtMaLoaiSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMaLoaiSPActionPerformed(evt);
+            }
+        });
+
+        labelTenLoaiSP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelTenLoaiSP.setText("Tên loại sản phẩm");
+
+        txtTenLoaiSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTenLoaiSPActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelTKLSPLayout = new javax.swing.GroupLayout(panelTKLSP);
         panelTKLSP.setLayout(panelTKLSPLayout);
         panelTKLSPLayout.setHorizontalGroup(
             panelTKLSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTKLSPLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(labelThuocTinhTK)
-                .addGap(18, 18, 18)
-                .addComponent(cbThuocTinhTK, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelSearch)
+                .addGap(87, 87, 87)
+                .addComponent(labelMaLoaiSP)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(txtMaLoaiSP, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(133, 133, 133)
+                .addComponent(labelTenLoaiSP)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtTenLoaiSP, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnTimDDH, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
             .addGroup(panelTKLSPLayout.createSequentialGroup()
@@ -171,17 +178,22 @@ public class SearchTypeProductFrame extends javax.swing.JFrame {
                     .addComponent(btnThoat))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
                 .addGroup(panelTKLSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelTKLSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelThuocTinhTK)
-                        .addComponent(cbThuocTinhTK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelTKLSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnTimDDH)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelSearch)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelTKLSPLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(btnTimDDH))
+                    .addGroup(panelTKLSPLayout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addGroup(panelTKLSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTenLoaiSP, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMaLoaiSP, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelTKLSPLayout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addGroup(panelTKLSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelMaLoaiSP)
+                                    .addComponent(labelTenLoaiSP))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -206,7 +218,7 @@ public class SearchTypeProductFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTimDDHActionPerformed
         // TODO add your handling code here:
-    		submitTimKiem();
+//    		submitTimKiem();
     }//GEN-LAST:event_btnTimDDHActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
@@ -214,6 +226,14 @@ public class SearchTypeProductFrame extends javax.swing.JFrame {
     	dispose();
 		new HomeFrame().setVisible(true);
     }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void txtMaLoaiSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaLoaiSPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMaLoaiSPActionPerformed
+
+    private void txtTenLoaiSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenLoaiSPActionPerformed
+
+    }//GEN-LAST:event_txtTenLoaiSPActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,14 +278,14 @@ public class SearchTypeProductFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnThoat;
     private javax.swing.JButton btnTimDDH;
-    private javax.swing.JComboBox<String> cbThuocTinhTK;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JLabel labelSearch;
-    private javax.swing.JLabel labelThuocTinhTK;
+    private javax.swing.JLabel labelMaLoaiSP;
+    private javax.swing.JLabel labelTenLoaiSP;
     private javax.swing.JLabel labelTkLSP;
     private javax.swing.JPanel panelTKLSP;
     private javax.swing.JTable tableLSP;
-    private javax.swing.JTextField txtSearch;
+    private javax.swing.JTextField txtMaLoaiSP;
+    private javax.swing.JTextField txtTenLoaiSP;
     // End of variables declaration//GEN-END:variables
 }

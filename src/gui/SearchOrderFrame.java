@@ -35,70 +35,70 @@ public class SearchOrderFrame extends javax.swing.JFrame {
         dateNgayGiao.setEnabled(false);
         tableModel = (DefaultTableModel) tableDDH.getModel();
     }
-    private void checkNgay() {
-    	if(cbThuocTinhTK.getSelectedItem().toString().equals("Ngày giao")) {
-    		dateNgayDat.setEnabled(false);
-    		dateNgayGiao.setEnabled(true);
-    		txtSearch.setEnabled(false);
-    	}else if (cbThuocTinhTK.getSelectedItem().toString().equals("Ngày đặt")) {
-    		dateNgayDat.setEnabled(true);
-    		dateNgayGiao.setEnabled(false);
-    		txtSearch.setEnabled(false);
-		}
-    	else {
-    		dateNgayDat.setEnabled(false);
-    		dateNgayGiao.setEnabled(false);
-    		txtSearch.setEnabled(true);
-		}
-    }
-    private void searchDonDatHang(String thuoctinh, String tukhoa) throws SQLException {
-    	if(thuoctinh.equals("madon") || thuoctinh.equals("tongtien")) {
-    		listDDH = dao_timkiem.searchDonDatHang(thuoctinh, tukhoa);
-    	}else {
-			listDDH = dao_timkiem.searchDonDatHang(thuoctinh,"%" +tukhoa+"%");
-		}
-    	if(listDDH.size() == 0) {
-    		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
-    	}
-    	tableModel.setRowCount(0);
-    	for(List<String> l: listDDH) {
-    		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),l.get(3),l.get(4),l.get(5)});
-    	}
-    }
-    private void submitTimKiem() throws SQLException {
-    	String tukhoa = txtSearch.getText();
-    	String thuoctinh = cbThuocTinhTK.getSelectedItem().toString();
-    	if(thuoctinh.equals("Mã đơn hàng")) {
-    		searchDonDatHang("madon", tukhoa);
-    	}
-    	if(thuoctinh.equals("Tên khách hàng")) {
-    		searchDonDatHang("tenkh", tukhoa);
-    	}
-    	if(thuoctinh.equals("Ngày đặt")) {
-    		if(dateNgayDat.getDate() == null) {
-    			JOptionPane.showMessageDialog(this, "Bạn chưa nhập ngày","Error!",JOptionPane.ERROR_MESSAGE);
-    		}else {
-    			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        		String date = df.format(dateNgayDat.getDate());
-        		searchDonDatHang("ngaydat", date);
-			}
-    	}
-    	if(thuoctinh.equals("Ngày giao")) {
-    		if(dateNgayGiao.getDate() == null) {
-    			JOptionPane.showMessageDialog(this, "Bạn chưa nhập ngày","Error!",JOptionPane.ERROR_MESSAGE);
-    		}else {
-    			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        		String date = df.format(dateNgayGiao.getDate());
-        		searchDonDatHang("ngaygiao", date);
-			}
-    	}
-    	if(thuoctinh.equals("Tổng tiền")) {
-    		searchDonDatHang("tongtien", tukhoa);
-    	}
-    	if(thuoctinh.equals("Trạng thái")) {
-    	    searchDonDatHang("ten_trangthai", tukhoa);
-    	}
-    }
+//    private void checkNgay() {
+//    	if(cbThuocTinhTK.getSelectedItem().toString().equals("Ngày giao")) {
+//    		dateNgayDat.setEnabled(false);
+//    		dateNgayGiao.setEnabled(true);
+//    		txtSearch.setEnabled(false);
+//    	}else if (cbThuocTinhTK.getSelectedItem().toString().equals("Ngày đặt")) {
+//    		dateNgayDat.setEnabled(true);
+//    		dateNgayGiao.setEnabled(false);
+//    		txtSearch.setEnabled(false);
+//		}
+//    	else {
+//    		dateNgayDat.setEnabled(false);
+//    		dateNgayGiao.setEnabled(false);
+//    		txtSearch.setEnabled(true);
+//		}
+//    }
+//    private void searchDonDatHang(String thuoctinh, String tukhoa) throws SQLException {
+//    	if(thuoctinh.equals("madon") || thuoctinh.equals("tongtien")) {
+//    		listDDH = dao_timkiem.searchDonDatHang(thuoctinh, tukhoa);
+//    	}else {
+//			listDDH = dao_timkiem.searchDonDatHang(thuoctinh,"%" +tukhoa+"%");
+//		}
+//    	if(listDDH.size() == 0) {
+//    		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
+//    	}
+//    	tableModel.setRowCount(0);
+//    	for(List<String> l: listDDH) {
+//    		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),l.get(3),l.get(4),l.get(5)});
+//    	}
+//    }
+//    private void submitTimKiem() throws SQLException {
+//    	String tukhoa = txtSearch.getText();
+//    	String thuoctinh = cbThuocTinhTK.getSelectedItem().toString();
+//    	if(thuoctinh.equals("Mã đơn hàng")) {
+//    		searchDonDatHang("madon", tukhoa);
+//    	}
+//    	if(thuoctinh.equals("Tên khách hàng")) {
+//    		searchDonDatHang("tenkh", tukhoa);
+//    	}
+//    	if(thuoctinh.equals("Ngày đặt")) {
+//    		if(dateNgayDat.getDate() == null) {
+//    			JOptionPane.showMessageDialog(this, "Bạn chưa nhập ngày","Error!",JOptionPane.ERROR_MESSAGE);
+//    		}else {
+//    			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//        		String date = df.format(dateNgayDat.getDate());
+//        		searchDonDatHang("ngaydat", date);
+//			}
+//    	}
+//    	if(thuoctinh.equals("Ngày giao")) {
+//    		if(dateNgayGiao.getDate() == null) {
+//    			JOptionPane.showMessageDialog(this, "Bạn chưa nhập ngày","Error!",JOptionPane.ERROR_MESSAGE);
+//    		}else {
+//    			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//        		String date = df.format(dateNgayGiao.getDate());
+//        		searchDonDatHang("ngaygiao", date);
+//			}
+//    	}
+//    	if(thuoctinh.equals("Tổng tiền")) {
+//    		searchDonDatHang("tongtien", tukhoa);
+//    	}
+//    	if(thuoctinh.equals("Trạng thái")) {
+//    	    searchDonDatHang("ten_trangthai", tukhoa);
+//    	}
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,15 +115,19 @@ public class SearchOrderFrame extends javax.swing.JFrame {
         tableDDH = new javax.swing.JTable();
         jSeparator4 = new javax.swing.JSeparator();
         labelTkDDH = new javax.swing.JLabel();
-        txtSearch = new javax.swing.JTextField();
-        labelSearch = new javax.swing.JLabel();
         btnThoat = new javax.swing.JButton();
-        labelThuocTinhTK = new javax.swing.JLabel();
-        cbThuocTinhTK = new javax.swing.JComboBox<>();
         labelNgayDat = new javax.swing.JLabel();
         labelNgayGiao = new javax.swing.JLabel();
         dateNgayDat = new com.toedter.calendar.JDateChooser();
         dateNgayGiao = new com.toedter.calendar.JDateChooser();
+        labelMaHD = new javax.swing.JLabel();
+        txtMaDH = new javax.swing.JTextField();
+        labelTenKH = new javax.swing.JLabel();
+        txtTenKH = new javax.swing.JTextField();
+        labelSDTKH = new javax.swing.JLabel();
+        txtSDTKH = new javax.swing.JTextField();
+        labelTrangthai = new javax.swing.JLabel();
+        txtTrangThai = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -161,13 +165,7 @@ public class SearchOrderFrame extends javax.swing.JFrame {
         });
         tableDDH.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-            	int index = tableDDH.getSelectedRow();
-            	try {
-					new DetailOrder(listDDH.get(index).get(0)).setVisible(true);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+//                tableDDHMouseClicked(evt);
             }
         });
         jScrollPane7.setViewportView(tableDDH);
@@ -175,27 +173,11 @@ public class SearchOrderFrame extends javax.swing.JFrame {
         labelTkDDH.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         labelTkDDH.setText("Tìm kiếm đơn hàng");
 
-        txtSearch.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        labelSearch.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        labelSearch.setText("Từ khóa tìm kiếm");
-
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");
         btnThoat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnThoatActionPerformed(evt);
-            }
-        });
-
-        labelThuocTinhTK.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        labelThuocTinhTK.setText("Thuộc tính tìm kiếm:");
-
-        cbThuocTinhTK.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbThuocTinhTK.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã đơn hàng", "Tên khách hàng", "Ngày đặt", "Ngày giao", "Tổng tiền", "Trạng thái" }));
-        cbThuocTinhTK.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbThuocTinhTKItemStateChanged(evt);
             }
         });
 
@@ -210,6 +192,26 @@ public class SearchOrderFrame extends javax.swing.JFrame {
 
         dateNgayGiao.setDateFormatString("yyyy-MM-dd");
         dateNgayGiao.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+
+        labelMaHD.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelMaHD.setText("Mã đơn hàng:");
+
+        txtMaDH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        labelTenKH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelTenKH.setText("Tên khách hàng:");
+
+        txtTenKH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        labelSDTKH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelSDTKH.setText("Số điện thoại khách hàng:");
+
+        txtSDTKH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        labelTrangthai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelTrangthai.setText("Trạng thái:");
+
+        txtTrangThai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout panelTkDDHLayout = new javax.swing.GroupLayout(panelTkDDH);
         panelTkDDH.setLayout(panelTkDDHLayout);
@@ -233,56 +235,71 @@ public class SearchOrderFrame extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelTkDDHLayout.createSequentialGroup()
-                        .addComponent(labelThuocTinhTK)
+                        .addComponent(labelTenKH)
                         .addGap(18, 18, 18)
-                        .addComponent(cbThuocTinhTK, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(labelSearch)
-                        .addGap(33, 33, 33)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(btnTimDDH, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))
+                        .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTkDDHLayout.createSequentialGroup()
+                        .addComponent(labelMaHD)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtMaDH, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelTkDDHLayout.createSequentialGroup()
-                        .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panelTkDDHLayout.createSequentialGroup()
-                                .addComponent(labelNgayGiao)
-                                .addGap(22, 22, 22)
-                                .addComponent(dateNgayGiao, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelTkDDHLayout.createSequentialGroup()
-                                .addComponent(labelNgayDat)
-                                .addGap(27, 27, 27)
-                                .addComponent(dateNgayDat, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(32, 32, 32)
+                        .addComponent(labelNgayGiao)
+                        .addGap(22, 22, 22)
+                        .addComponent(dateNgayGiao, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(117, 117, 117)
+                .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelTkDDHLayout.createSequentialGroup()
+                        .addComponent(labelSDTKH)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtSDTKH, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelTkDDHLayout.createSequentialGroup()
+                            .addComponent(labelNgayDat)
+                            .addGap(27, 27, 27)
+                            .addComponent(dateNgayDat, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelTkDDHLayout.createSequentialGroup()
+                            .addComponent(labelTrangthai)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnTimDDH, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
         );
         panelTkDDHLayout.setVerticalGroup(
             panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelTkDDHLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelTkDDHLayout.createSequentialGroup()
-                        .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelTkDDH)
-                            .addComponent(btnThoat))
-                        .addGap(18, 18, 18)
-                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(labelThuocTinhTK)
-                                .addComponent(cbThuocTinhTK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnTimDDH)
-                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(labelSearch)))
-                        .addGap(20, 20, 20)
-                        .addComponent(labelNgayDat))
-                    .addComponent(dateNgayDat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                    .addComponent(labelTkDDH)
+                    .addComponent(btnThoat))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelNgayGiao)
-                    .addComponent(dateNgayGiao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                    .addComponent(btnTimDDH)
+                    .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelMaHD)
+                        .addComponent(txtMaDH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelSDTKH)
+                        .addComponent(txtSDTKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(7, 7, 7)
+                .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelTenKH)
+                    .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelTrangthai)
+                    .addComponent(txtTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(labelNgayDat, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(dateNgayDat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelTkDDHLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(panelTkDDHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelNgayGiao)
+                            .addComponent(dateNgayGiao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -308,13 +325,8 @@ public class SearchOrderFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTimDDHActionPerformed
         // TODO add your handling code here:
-    	submitTimKiem();
+//    	submitTimKiem();
     }//GEN-LAST:event_btnTimDDHActionPerformed
-
-    private void cbThuocTinhTKItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbThuocTinhTKItemStateChanged
-        // TODO add your handling code here:
-    	checkNgay();
-    }//GEN-LAST:event_cbThuocTinhTKItemStateChanged
 
     private void tableHDMouseClicked(java.awt.event.MouseEvent evt) throws SQLException {//GEN-FIRST:event_tableHDMouseClicked
         // TODO add your handling code here:
@@ -366,18 +378,22 @@ public class SearchOrderFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnThoat;
     private javax.swing.JButton btnTimDDH;
-    private javax.swing.JComboBox<String> cbThuocTinhTK;
     private com.toedter.calendar.JDateChooser dateNgayDat;
     private com.toedter.calendar.JDateChooser dateNgayGiao;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JLabel labelMaHD;
     private javax.swing.JLabel labelNgayDat;
     private javax.swing.JLabel labelNgayGiao;
-    private javax.swing.JLabel labelSearch;
-    private javax.swing.JLabel labelThuocTinhTK;
+    private javax.swing.JLabel labelSDTKH;
+    private javax.swing.JLabel labelTenKH;
     private javax.swing.JLabel labelTkDDH;
+    private javax.swing.JLabel labelTrangthai;
     private javax.swing.JPanel panelTkDDH;
     private javax.swing.JTable tableDDH;
-    private javax.swing.JTextField txtSearch;
+    private javax.swing.JTextField txtMaDH;
+    private javax.swing.JTextField txtSDTKH;
+    private javax.swing.JTextField txtTenKH;
+    private javax.swing.JTextField txtTrangThai;
     // End of variables declaration//GEN-END:variables
 }

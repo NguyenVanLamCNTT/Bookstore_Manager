@@ -138,6 +138,8 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
         btnThoat = new javax.swing.JButton();
         btnThongKe = new javax.swing.JButton();
         btnTim = new javax.swing.JButton();
+        labelLoaiThongKe = new javax.swing.JLabel();
+        cbLoaiThongKe = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableQuanLySP = new javax.swing.JTable();
 
@@ -151,12 +153,12 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
         btnIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/printer.png"))); // NOI18N
         btnIn.setText("In thống kê");
 
-        labelNgayBatDau.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelNgayBatDau.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         labelNgayBatDau.setText("Thống kê từ ngày");
 
         dateNgayBatDau.setDateFormatString("yyyy-MM-dd");
 
-        labelNgayKetThuc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelNgayKetThuc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         labelNgayKetThuc.setText("Đến ngày");
 
         dateNgayKetThuc.setDateFormatString("yyyy-MM-dd");
@@ -190,33 +192,46 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
             }
         });
 
+        labelLoaiThongKe.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        labelLoaiThongKe.setText("Chọn loại thống kê:");
+
+        cbLoaiThongKe.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cbLoaiThongKe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thống kê trong ngày", "Thống kê trong tháng", "Thống kê trong năm", "Tùy chọn" }));
+
         javax.swing.GroupLayout panelThongKeLayout = new javax.swing.GroupLayout(panelThongKe);
         panelThongKe.setLayout(panelThongKeLayout);
         panelThongKeLayout.setHorizontalGroup(
             panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelThongKeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelNgayBatDau)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(dateNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(labelNgayKetThuc)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(dateNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(btnTim)
-                .addGap(18, 18, 18)
-                .addComponent(btnThongKe)
-                .addGap(29, 29, 29)
-                .addComponent(btnIn)
-                .addGap(257, 257, 257))
             .addGroup(panelThongKeLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(btnThoat)
                 .addGap(295, 295, 295)
                 .addComponent(labelThongKeSP)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(419, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelThongKeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelThongKeLayout.createSequentialGroup()
+                        .addComponent(labelNgayBatDau)
+                        .addGap(18, 18, 18)
+                        .addComponent(dateNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(74, 74, 74)
+                        .addComponent(labelNgayKetThuc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dateNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelThongKeLayout.createSequentialGroup()
+                        .addComponent(labelLoaiThongKe)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbLoaiThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(375, 375, 375)
+                        .addComponent(btnTim)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnThongKe)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnIn)))
+                .addContainerGap())
         );
         panelThongKeLayout.setVerticalGroup(
             panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,24 +241,22 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
                     .addComponent(labelThongKeSP)
                     .addComponent(btnThoat))
                 .addGap(20, 20, 20)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addGroup(panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnIn)
+                    .addComponent(btnThongKe)
+                    .addComponent(btnTim)
+                    .addGroup(panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbLoaiThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelLoaiThongKe)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelThongKeLayout.createSequentialGroup()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelThongKeLayout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addGroup(panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnIn)
-                                    .addComponent(btnThongKe)
-                                    .addComponent(btnTim)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelThongKeLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelNgayKetThuc, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(dateNgayKetThuc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(labelNgayKetThuc)
+                    .addComponent(dateNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dateNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelNgayBatDau))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
         tableQuanLySP.setModel(new javax.swing.table.DefaultTableModel(
@@ -272,7 +285,7 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 1271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panelThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
@@ -281,9 +294,9 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -349,10 +362,12 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnThoat;
     private javax.swing.JButton btnThongKe;
     private javax.swing.JButton btnTim;
+    private javax.swing.JComboBox<String> cbLoaiThongKe;
     private com.toedter.calendar.JDateChooser dateNgayBatDau;
     private com.toedter.calendar.JDateChooser dateNgayKetThuc;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel labelLoaiThongKe;
     private javax.swing.JLabel labelNgayBatDau;
     private javax.swing.JLabel labelNgayKetThuc;
     private javax.swing.JLabel labelThongKeSP;
