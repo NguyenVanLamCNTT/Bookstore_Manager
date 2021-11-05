@@ -102,4 +102,16 @@ public class DAO_Loaisanpham {
 	
 		 return dsSanpham;
 	 }
+	 public List<LoaiSanpham> getLoaiDungcu() throws SQLException{
+		 String sql = "Select * from loaisanpham where ma_loaisp != 'SA'";
+		 List<LoaiSanpham> dslsp = new ArrayList<LoaiSanpham>();
+		 Connection con = ConnectDatabase.getConnection();
+		 PreparedStatement stmt = con.prepareStatement(sql);
+		 ResultSet rs = stmt.executeQuery();
+		 while(rs.next()) {
+			 LoaiSanpham loaisp = new LoaiSanpham(rs.getString("ma_loaisp"), rs.getString("tenloaisp"));
+			 dslsp.add(loaisp); 
+		 }
+		 return dslsp;
+	 }
 }

@@ -20,26 +20,27 @@ import entity.LoaiSanpham;
 import entity.NhaCungcap;
 import entity.Sanpham;
 
-
 public class DAO_Sanpham {
 	public DAO_Sanpham() {
-		
+
 	}
-	public List<Sanpham> getSanpham(String name) throws SQLException{
-		String sql = "Select * from sanpham sp inner join loaisanpham lsp On sp.ma_loaisp = lsp.ma_loaisp inner join nhacungcap ncc On ncc.ma_ncc = sp.ma_ncc where sp.ten_sp like N'%"+name+"%'";
+
+	public List<Sanpham> getSanpham(String name) throws SQLException {
+		String sql = "Select * from sanpham sp inner join loaisanpham lsp On sp.ma_loaisp = lsp.ma_loaisp inner join nhacungcap ncc On ncc.ma_ncc = sp.ma_ncc where sp.ten_sp like N'%"
+				+ name + "%'";
 		List<Sanpham> dssp = new ArrayList<Sanpham>();
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = con.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
-		while(rs.next()) {
+		while (rs.next()) {
 			Sanpham sanpham = new Sanpham();
 			sanpham.setMaSanpham(rs.getInt("ma_sanpham"));
 			sanpham.setTenSanpham(rs.getString("ten_sp"));
 			sanpham.setDongia(rs.getDouble("dongia"));
 			sanpham.setSoluongton(rs.getInt("soluongton"));
 			sanpham.setTrangthai(rs.getString("trangthai"));
-			sanpham.setLoaiSp(new LoaiSanpham(rs.getString("ma_loaisp"),rs.getString("tenloaisp")));
-			sanpham.setNhaCC(new NhaCungcap(rs.getString("ma_ncc"),rs.getString("ten_ncc"), rs.getString("diachi")));
+			sanpham.setLoaiSp(new LoaiSanpham(rs.getString("ma_loaisp"), rs.getString("tenloaisp")));
+			sanpham.setNhaCC(new NhaCungcap(rs.getString("ma_ncc"), rs.getString("ten_ncc"), rs.getString("diachi")));
 //			sanpham.setHinhanh();
 			sanpham.setNhaXB(rs.getString("nhaxuatban"));
 			sanpham.setSotrang(rs.getInt("sotrang"));
@@ -48,34 +49,36 @@ public class DAO_Sanpham {
 		}
 		return dssp;
 	}
+
 	public String getImg(String id) throws SQLException, IOException {
-		 	InputStream in;
-	        FileOutputStream out;
-	        String path = "";
-	        Connection con  = ConnectDatabase.getConnection();
-	        String sql = "Select * from sanpham  where ma_sanpham = "+id;
-	        PreparedStatement stmt = con.prepareStatement(sql);
-	        ResultSet rs = stmt.executeQuery();
-	        File file = new File("brown_nhua.jpg");
-	        out = new FileOutputStream(file);
-	        if(rs.next()){
-	            in = rs.getBinaryStream("hinhanh");
-	            byte[] buffer = new byte[1024];
-	            while(in.read(buffer) >0){
-	                out.write(buffer);
-	            }
-	            path = file.getAbsolutePath();
-	        }
-	        out.close();
-	        return path;
+		InputStream in;
+		FileOutputStream out;
+		String path = "";
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "Select * from sanpham  where ma_sanpham = " + id;
+		PreparedStatement stmt = con.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		File file = new File("brown_nhua.jpg");
+		out = new FileOutputStream(file);
+		if (rs.next()) {
+			in = rs.getBinaryStream("hinhanh");
+			byte[] buffer = new byte[1024];
+			while (in.read(buffer) > 0) {
+				out.write(buffer);
+			}
+			path = file.getAbsolutePath();
+		}
+		out.close();
+		return path;
 	}
-	public List<LoaiSanpham> getLoaiSanpham() throws SQLException{
+
+	public List<LoaiSanpham> getLoaiSanpham() throws SQLException {
 		String sql = "Select * from loaisanpham";
 		List<LoaiSanpham> dsLoaiSp = new ArrayList<LoaiSanpham>();
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = con.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
-		while(rs.next()) {
+		while (rs.next()) {
 			LoaiSanpham loaisp = new LoaiSanpham();
 			loaisp.setMaLoaiSp(rs.getString("ma_loaisp"));
 			loaisp.setTenLoaiSp(rs.getString("tenloaisp"));
@@ -83,13 +86,14 @@ public class DAO_Sanpham {
 		}
 		return dsLoaiSp;
 	}
-	public List<NhaCungcap> getNhacungcap () throws SQLException{
+
+	public List<NhaCungcap> getNhacungcap() throws SQLException {
 		String sql = "Select * from nhacungcap";
 		List<NhaCungcap> dsNhacungcap = new ArrayList<NhaCungcap>();
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = con.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
-		while(rs.next()) {
+		while (rs.next()) {
 			NhaCungcap nhacungcap = new NhaCungcap();
 			nhacungcap.setMaNCC(rs.getString("ma_ncc"));
 			nhacungcap.setTenNCC(rs.getString("ten_ncc"));
@@ -98,13 +102,15 @@ public class DAO_Sanpham {
 		}
 		return dsNhacungcap;
 	}
+
 	public boolean deleteSanpham(String id) throws SQLException {
-		String sql = "Delete from sanpham where MaSP = "+id;
+		String sql = "Delete from sanpham where ma_sanpham = " + id;
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = con.prepareStatement(sql);
 		int n = stmt.executeUpdate();
-		return n>0;	
+		return n > 0;
 	}
+
 	public boolean insertSanpham(Sanpham sanpham, String path) {
 		String sql = "Insert into sanpham (ten_sp, dongia, soluongton, trangthai, hinhanh, ten_tacgia, sotrang, nhaxuatban, ma_loaisp, ma_ncc) values (?,?,?,?,?,?,?,?,?,?)";
 		Connection con = ConnectDatabase.getConnection();
@@ -115,15 +121,15 @@ public class DAO_Sanpham {
 			stmt.setString(1, sanpham.getTenSanpham());
 			stmt.setDouble(2, sanpham.getDongia());
 			stmt.setInt(3, sanpham.getSoluongton());
-			stmt.setString(4,sanpham.getTrangthai());
+			stmt.setString(4, sanpham.getTrangthai());
 			stmt.setBinaryStream(5, in);
 			stmt.setString(6, sanpham.getTenTacgia());
-			stmt.setInt(7,sanpham.getSotrang());
+			stmt.setInt(7, sanpham.getSotrang());
 			stmt.setString(8, sanpham.getNhaXB());
-			stmt.setString(9,sanpham.getLoaiSp().getMaLoaiSp());
+			stmt.setString(9, sanpham.getLoaiSp().getMaLoaiSp());
 			stmt.setString(10, sanpham.getNhaCC().getMaNCC());
 			int n = stmt.executeUpdate();
-			return n >0;
+			return n > 0;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,7 +141,7 @@ public class DAO_Sanpham {
 		}
 	}
 
-	public boolean updateSanpham(Sanpham sanpham, String path)  {
+	public boolean updateSanpham(Sanpham sanpham, String path) {
 		String sql = "UPDATE sanpham SET ten_sp = ?, dongia = ?, soluongton = ?,trangthai = ?,hinhanh = ?,ten_tacgia=? ,sotrang = ?,nhaxuatban=?, ma_loaisp = ?, ma_ncc=?  WHERE ma_sanpham = ?";
 		Connection con = ConnectDatabase.getConnection();
 		try {
@@ -150,10 +156,10 @@ public class DAO_Sanpham {
 			stmt.setInt(7, sanpham.getSotrang());
 			stmt.setString(8, sanpham.getNhaXB());
 			stmt.setString(9, sanpham.getLoaiSp().getMaLoaiSp());
-			stmt.setString(10,sanpham.getNhaCC().getMaNCC());
+			stmt.setString(10, sanpham.getNhaCC().getMaNCC());
 			stmt.setInt(11, sanpham.getMaSanpham());
 			int n = stmt.executeUpdate();
-			return n>0;
+			return n > 0;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -164,14 +170,15 @@ public class DAO_Sanpham {
 			return false;
 		}
 	}
+
 	public int getSoluongton(String tenSanpham) {
 		int soluongton = 0;
 		Connection con = ConnectDatabase.getConnection();
-		String sql = "select soluongton from sanpham where ten_sp = N'"+tenSanpham+"'";
+		String sql = "select soluongton from sanpham where ten_sp = N'" + tenSanpham + "'";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				soluongton = rs.getInt("soluongton");
 			}
 			return soluongton;
@@ -181,37 +188,39 @@ public class DAO_Sanpham {
 			return 0;
 		}
 	}
+
 	public boolean updateSoluongton(String tensp, int soluong) {
 		Connection con = ConnectDatabase.getConnection();
-		String sql = "update sanpham\r\n"
-				+ "set soluongton = "+soluong
-				+ " where ten_sp = N'"+tensp+"'";
+		String sql = "update sanpham\r\n" + "set soluongton = " + soluong + " where ten_sp = N'" + tensp + "'";
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			int n = stmt.executeUpdate();
-			return n>0;
+			return n > 0;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
 	}
+
 	public Sanpham getSanphamByName(String ten) {
 		Sanpham sanpham = new Sanpham();
 		Connection con = ConnectDatabase.getConnection();
-		String sql = "Select * from sanpham sp inner join loaisanpham lsp On sp.ma_loaisp = lsp.ma_loaisp inner join nhacungcap ncc On ncc.ma_ncc = sp.ma_ncc where sp.ten_sp = N'"+ten+"'";
-		
+		String sql = "Select * from sanpham sp inner join loaisanpham lsp On sp.ma_loaisp = lsp.ma_loaisp inner join nhacungcap ncc On ncc.ma_ncc = sp.ma_ncc where sp.ten_sp = N'"
+				+ ten + "'";
+
 		try {
 			PreparedStatement stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				sanpham.setMaSanpham(rs.getInt("ma_sanpham"));
 				sanpham.setTenSanpham(rs.getString("ten_sp"));
 				sanpham.setDongia(rs.getDouble("dongia"));
 				sanpham.setSoluongton(rs.getInt("soluongton"));
 				sanpham.setTrangthai(rs.getString("trangthai"));
-				sanpham.setLoaiSp(new LoaiSanpham(rs.getString("ma_loaisp"),rs.getString("tenloaisp")));
-				sanpham.setNhaCC(new NhaCungcap(rs.getString("ma_ncc"),rs.getString("ten_ncc"), rs.getString("diachi")));
+				sanpham.setLoaiSp(new LoaiSanpham(rs.getString("ma_loaisp"), rs.getString("tenloaisp")));
+				sanpham.setNhaCC(
+						new NhaCungcap(rs.getString("ma_ncc"), rs.getString("ten_ncc"), rs.getString("diachi")));
 				sanpham.setHinhanh(rs.getBytes("hinhanh"));
 				sanpham.setNhaXB(rs.getString("nhaxuatban"));
 				sanpham.setSotrang(rs.getInt("sotrang"));
@@ -223,6 +232,66 @@ public class DAO_Sanpham {
 			e.printStackTrace();
 			return null;
 		}
+
+	}
+
+	public List<Sanpham> getDsSach(){
+		List<Sanpham> dsSach = new ArrayList<Sanpham>();
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "Select * from sanpham sp inner join loaisanpham lsp On sp.ma_loaisp = lsp.ma_loaisp inner join nhacungcap ncc On ncc.ma_ncc = sp.ma_ncc where lsp.ma_loaisp = 'SA'";
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Sanpham sanpham = new Sanpham();
+				sanpham.setMaSanpham(rs.getInt("ma_sanpham"));
+				sanpham.setTenSanpham(rs.getString("ten_sp"));
+				sanpham.setDongia(rs.getDouble("dongia"));
+				sanpham.setSoluongton(rs.getInt("soluongton"));
+				sanpham.setTrangthai(rs.getString("trangthai"));
+				sanpham.setLoaiSp(new LoaiSanpham(rs.getString("ma_loaisp"), rs.getString("tenloaisp")));
+				sanpham.setNhaCC(new NhaCungcap(rs.getString("ma_ncc"), rs.getString("ten_ncc"), rs.getString("diachi")));
+//				sanpham.setHinhanh();
+				sanpham.setNhaXB(rs.getString("nhaxuatban"));
+				sanpham.setSotrang(rs.getInt("sotrang"));
+				sanpham.setTenTacgia(rs.getString("ten_tacgia"));
+				dsSach.add(sanpham);
+			}
+			return dsSach;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 		
+	}
+	public List<Sanpham> getDungcuhoctap(String ten){
+		List<Sanpham> dsDungcu = new ArrayList<Sanpham>();
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "Select * from sanpham sp inner join loaisanpham lsp On sp.ma_loaisp = lsp.ma_loaisp inner join nhacungcap ncc On ncc.ma_ncc = sp.ma_ncc where lsp.ma_loaisp != 'SA'and sp.ten_sp like N'%"+ten+"%'";
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Sanpham sanpham = new Sanpham();
+				sanpham.setMaSanpham(rs.getInt("ma_sanpham"));
+				sanpham.setTenSanpham(rs.getString("ten_sp"));
+				sanpham.setDongia(rs.getDouble("dongia"));
+				sanpham.setSoluongton(rs.getInt("soluongton"));
+				sanpham.setTrangthai(rs.getString("trangthai"));
+				sanpham.setLoaiSp(new LoaiSanpham(rs.getString("ma_loaisp"), rs.getString("tenloaisp")));
+				sanpham.setNhaCC(new NhaCungcap(rs.getString("ma_ncc"), rs.getString("ten_ncc"), rs.getString("diachi")));
+//				sanpham.setHinhanh();
+				sanpham.setNhaXB(rs.getString("nhaxuatban"));
+				sanpham.setSotrang(rs.getInt("sotrang"));
+				sanpham.setTenTacgia(rs.getString("ten_tacgia"));
+				dsDungcu.add(sanpham);
+			}
+			return dsDungcu;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
