@@ -252,6 +252,7 @@ public class AttendanceFrame extends javax.swing.JFrame {
 		ChitietCalam chitiet = revert();
 		if (new DAO_ChamCong().insertCongLam(chitiet)) {
 			JOptionPane.showMessageDialog(this, "Chấm công thành công!");
+			showCalam();
 		} else {
 			JOptionPane.showMessageDialog(this, "Chấm công thất bại! Vui lòng xem lại!!");
 		}

@@ -35,6 +35,28 @@ public class Nhanvien {
 	public Nhanvien() {
 		
 	}
+
+	public Nhanvien(String maNV, String tenNV, String sodienthoai, String chucvu, String diachi, String email,
+			String matkhau) {
+		super();
+		this.maNV = maNV;
+		this.tenNV = tenNV;
+		this.sodienthoai = sodienthoai;
+		this.chucvu = chucvu;
+		this.diachi = diachi;
+		this.email = email;
+		this.matkhau = matkhau;
+	}
+	
+	public Nhanvien(String maNV, String tenNV, String sodienthoai, String chucvu, String diachi, String email) {
+		super();
+		this.maNV = maNV;
+		this.tenNV = tenNV;
+		this.sodienthoai = sodienthoai;
+		this.chucvu = chucvu;
+		this.diachi = diachi;
+		this.email = email;
+	}
 	public String getMaNV() {
 		return maNV;
 	}
