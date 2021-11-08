@@ -923,7 +923,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private Hoadon taoHoadon(Khachhang khachhang) {
     	Hoadon hoadon = new Hoadon();
     	Nhanvien nhanvien = new Nhanvien();
-    	nhanvien.setMaNV("NVLam");
+    	nhanvien.setMaNV(manv);
     	hoadon.setKhachhang(khachhang);
     	hoadon.setNhanvien(nhanvien);
     	return hoadon;

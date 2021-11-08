@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="550" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d9ce31f7-7bf0-4139-8f79-9a7fcf4a76c6">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="128"/>
+	<property name="ireport.y" value="0"/>
 	<queryString language="SQL">
 		<![CDATA[select * from hoadon hd join khachhang kh
 on hd.makh = kh.ma_kh join chitiethoadon cthd
@@ -69,6 +69,20 @@ where hd.mahd = (SELECT IDENT_CURRENT('hoadon'))]]>
 				</textElement>
 				<text><![CDATA[HÓA ĐƠN BÁN HÀNG]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="0" y="39" width="100" height="20" uuid="400bd792-8843-408b-a582-fbbdc379cf68"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Mã hoá đơn: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="39" width="100" height="20" uuid="8a3e5d20-b7d7-4819-a0ba-708a3e964f9c"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mahd}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
