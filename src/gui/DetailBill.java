@@ -7,7 +7,9 @@ package gui;
 
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -35,7 +37,9 @@ public class DetailBill extends javax.swing.JFrame {
         
     }
     private void showData(String ma) throws SQLException {
-    	thongtinhoadon = dao_timkiem.searchHoaDon("mahd", ma);
+    	Map<String, String> map = new HashMap<String, String>();
+    	map.put("mahd", ma);
+    	thongtinhoadon = dao_timkiem.searchHoaDon(map);
     	listSP = dao_timkiem.getDanhSachSP(ma);
     	valueMaHD.setText(ma);
     	valueTenNV.setText(thongtinhoadon.get(0).get(1));

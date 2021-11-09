@@ -10,10 +10,15 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 
 import dao.DAO_TimKiem;
 
@@ -33,64 +38,43 @@ public class SearchBillFrame extends javax.swing.JFrame {
 	public SearchBillFrame() {
 		initComponents();
 		setLocationRelativeTo(null);
-
-		dateNgayLHD.setEnabled(false);
+		System.out.print(txtMaHD.getText());
 		tableModel = (DefaultTableModel) tableHD.getModel();
 	}
 
-//	private void checkNgayLapHD() {
-//		if (cbThuocTinhTK.getSelectedItem().toString().equals("Ngày lập hóa đơn")) {
-//			dateNgayLHD.setEnabled(true);
-//			txtSearch.setEnabled(false);
-//		} else {
-//			dateNgayLHD.setEnabled(false);
-//			txtSearch.setEnabled(true);
-//		}
-//	}
-//
-//	private void searchHoaDon(String thuoctinh, String tukhoa) throws SQLException {
-//		if (thuoctinh.equals("mahd") || thuoctinh.equals("tongtien")) {
-//			listHD = dao_timkiem.searchHoaDon(thuoctinh, tukhoa);
-//		} else {
-//			listHD = dao_timkiem.searchHoaDon(thuoctinh, "%" + tukhoa + "%");
-//		}
-//		if (listHD.size() == 0) {
-//			JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa", "Error!",
-//					JOptionPane.ERROR_MESSAGE);
-//		}
-//		tableModel.setRowCount(0);
-//		for (List<String> l : listHD) {
-//			tableModel.addRow(new Object[] { l.get(0), l.get(1), l.get(2), l.get(3), l.get(4) });
-//		}
-//	}
-//
-//	private void submitTimKiem() throws SQLException {
-//		String tukhoa = txtSearch.getText();
-//		String thuoctinh = cbThuocTinhTK.getSelectedItem().toString();
-//		if (thuoctinh.equals("Mã hóa đơn")) {
-//			searchHoaDon("mahd", tukhoa);
-//		}
-//		if (thuoctinh.equals("Tên nhân viên")) {
-//			searchHoaDon("ten__nv", tukhoa);
-//		}
-//		if (thuoctinh.equals("Tên khách hàng")) {
-//			searchHoaDon("tenkh", tukhoa);
-//		}
-//		if (thuoctinh.equals("Tổng tiền")) {
-//			searchHoaDon("tongtien", tukhoa);
-//		}
-//		if (thuoctinh.equals("Ngày lập hóa đơn")) {
-//			if (dateNgayLHD.getDate() == null) {
-//				JOptionPane.showMessageDialog(this, "Bạn chưa nhập đầy đủ các ngày", "Error!",
-//						JOptionPane.ERROR_MESSAGE);
-//			} else {
-//				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//				String date = df.format(dateNgayLHD.getDate());
-//				searchHoaDon("ngaylap_hd", date);
-//			}
-//		}
-//	}
-
+	private void submitTimKiem() throws SQLException {
+		Map<String, String> map = new HashMap<String, String>();
+		if(txtMaHD.getText().equals("") == false) {
+			map.put("mahd", txtMaHD.getText());
+		}
+		if(txtSDTKH.getText().equals("") == false) {
+			map.put("kh.sodienthoai", txtSDTKH.getText());
+		}
+		if(txtTenKH.getText().equals("") == false) {
+			map.put("tenkh", "%" + txtTenKH.getText() + "%");
+		}
+		if(txtTenNhanVien.getText().equals("") == false) {
+			map.put("ten__nv", "%" + txtTenNhanVien.getText() + "%");
+		}
+		if(dateNgayLHD.getDate() != null) {
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			map.put("ngaylap_hd", df.format(dateNgayLHD.getDate()));
+		}
+    	if(map.size() == 0) {
+    		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
+    	}else {
+    		listHD = dao_timkiem.searchHoaDon(map);
+    		if(listHD.size() == 0) {
+        		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
+        	}else {
+        		tableModel.setRowCount(0);
+            	for(List<String> l: listHD) {
+            		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),l.get(3),l.get(4)});
+            	}
+    		}
+		}
+		
+	}
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -310,7 +294,12 @@ public class SearchBillFrame extends javax.swing.JFrame {
 
     private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimDDHActionPerformed
         // TODO add your handling code here:
-
+    	try {
+			submitTimKiem();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }//GEN-LAST:event_btnTimDDHActionPerformed
 	private void tableHDMouseClicked(java.awt.event.MouseEvent evt) throws SQLException {// GEN-FIRST:event_tableHDMouseClicked
 		// TODO add your handling code here:

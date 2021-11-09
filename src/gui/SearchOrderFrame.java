@@ -9,7 +9,9 @@ import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -31,74 +33,45 @@ public class SearchOrderFrame extends javax.swing.JFrame {
     public SearchOrderFrame() {
         initComponents();
         setLocationRelativeTo(null);
-        dateNgayDat.setEnabled(false);
-        dateNgayGiao.setEnabled(false);
         tableModel = (DefaultTableModel) tableDDH.getModel();
     }
-//    private void checkNgay() {
-//    	if(cbThuocTinhTK.getSelectedItem().toString().equals("Ngày giao")) {
-//    		dateNgayDat.setEnabled(false);
-//    		dateNgayGiao.setEnabled(true);
-//    		txtSearch.setEnabled(false);
-//    	}else if (cbThuocTinhTK.getSelectedItem().toString().equals("Ngày đặt")) {
-//    		dateNgayDat.setEnabled(true);
-//    		dateNgayGiao.setEnabled(false);
-//    		txtSearch.setEnabled(false);
-//		}
-//    	else {
-//    		dateNgayDat.setEnabled(false);
-//    		dateNgayGiao.setEnabled(false);
-//    		txtSearch.setEnabled(true);
-//		}
-//    }
-//    private void searchDonDatHang(String thuoctinh, String tukhoa) throws SQLException {
-//    	if(thuoctinh.equals("madon") || thuoctinh.equals("tongtien")) {
-//    		listDDH = dao_timkiem.searchDonDatHang(thuoctinh, tukhoa);
-//    	}else {
-//			listDDH = dao_timkiem.searchDonDatHang(thuoctinh,"%" +tukhoa+"%");
-//		}
-//    	if(listDDH.size() == 0) {
-//    		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
-//    	}
-//    	tableModel.setRowCount(0);
-//    	for(List<String> l: listDDH) {
-//    		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),l.get(3),l.get(4),l.get(5)});
-//    	}
-//    }
-//    private void submitTimKiem() throws SQLException {
-//    	String tukhoa = txtSearch.getText();
-//    	String thuoctinh = cbThuocTinhTK.getSelectedItem().toString();
-//    	if(thuoctinh.equals("Mã đơn hàng")) {
-//    		searchDonDatHang("madon", tukhoa);
-//    	}
-//    	if(thuoctinh.equals("Tên khách hàng")) {
-//    		searchDonDatHang("tenkh", tukhoa);
-//    	}
-//    	if(thuoctinh.equals("Ngày đặt")) {
-//    		if(dateNgayDat.getDate() == null) {
-//    			JOptionPane.showMessageDialog(this, "Bạn chưa nhập ngày","Error!",JOptionPane.ERROR_MESSAGE);
-//    		}else {
-//    			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//        		String date = df.format(dateNgayDat.getDate());
-//        		searchDonDatHang("ngaydat", date);
-//			}
-//    	}
-//    	if(thuoctinh.equals("Ngày giao")) {
-//    		if(dateNgayGiao.getDate() == null) {
-//    			JOptionPane.showMessageDialog(this, "Bạn chưa nhập ngày","Error!",JOptionPane.ERROR_MESSAGE);
-//    		}else {
-//    			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//        		String date = df.format(dateNgayGiao.getDate());
-//        		searchDonDatHang("ngaygiao", date);
-//			}
-//    	}
-//    	if(thuoctinh.equals("Tổng tiền")) {
-//    		searchDonDatHang("tongtien", tukhoa);
-//    	}
-//    	if(thuoctinh.equals("Trạng thái")) {
-//    	    searchDonDatHang("ten_trangthai", tukhoa);
-//    	}
-//    }
+    private void submitTimKiem() throws SQLException {
+		Map<String, String> map = new HashMap<String, String>();
+		if(txtMaDH.getText().equals("") == false) {
+			map.put("madon", txtMaDH.getText());
+		}
+		if(txtSDTKH.getText().equals("") == false) {
+			map.put("kh.sodienthoai", txtSDTKH.getText());
+		}
+		if(txtTenKH.getText().equals("") == false) {
+			map.put("tenkh", "%" + txtTenKH.getText() + "%");
+		}
+		if(txtTrangThai.getText().equals("") == false) {
+			map.put("trangthai", "%" + txtTrangThai.getText() + "%");
+		}
+		if(dateNgayDat.getDate() != null) {
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			map.put("ngaygiao", df.format(dateNgayDat.getDate()));
+		}
+		if(dateNgayGiao.getDate() != null) {
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			map.put("ngaydat", df.format(dateNgayGiao.getDate()));
+		}
+    	if(map.size() == 0) {
+    		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
+    	}else {
+    		listDDH = dao_timkiem.searchDonDatHang(map);
+    		if(listDDH.size() == 0) {
+        		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
+        	}else {
+        		tableModel.setRowCount(0);
+            	for(List<String> l: listDDH) {
+            		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),l.get(3),l.get(4),l.get(5)});
+            	}
+    		}
+		}
+		
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -165,7 +138,12 @@ public class SearchOrderFrame extends javax.swing.JFrame {
         });
         tableDDH.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-//                tableDDHMouseClicked(evt);
+            	try {
+					tableHDMouseClicked(evt);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
         jScrollPane7.setViewportView(tableDDH);
@@ -325,7 +303,7 @@ public class SearchOrderFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTimDDHActionPerformed
         // TODO add your handling code here:
-//    	submitTimKiem();
+    	submitTimKiem();
     }//GEN-LAST:event_btnTimDDHActionPerformed
 
     private void tableHDMouseClicked(java.awt.event.MouseEvent evt) throws SQLException {//GEN-FIRST:event_tableHDMouseClicked

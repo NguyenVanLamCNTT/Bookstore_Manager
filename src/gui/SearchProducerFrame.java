@@ -7,12 +7,15 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import dao.DAO_TimKiem;
+import entity.LoaiSanpham;
 import entity.NhaCungcap;
 
 /**
@@ -32,29 +35,32 @@ public class SearchProducerFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         tableModel = (DefaultTableModel) tableNCC.getModel();
     }
-//    private void searchNCC(String thuoctinh, String tukhoa) throws SQLException {
-//    	listNCC = dao_timkiem.searchNhaCC(thuoctinh, tukhoa);
-//    	if(listNCC.size() == 0) {
-//    		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
-//    	}
-//    	tableModel.setRowCount(0);
-//    	for(NhaCungcap ncc: listNCC) {
-//    		tableModel.addRow(new Object[] {ncc.getMaNCC(),ncc.getTenNCC(),ncc.getDiachi()});
-//    	}
-//    }
-//    private void submitTimKiem() throws SQLException {
-//    	String tukhoa = txtSearch.getText();
-//    	String thuoctinh = cbThuocTinhTK.getSelectedItem().toString();
-//    	if(thuoctinh.equals("Mã nhà cung cấp")) {
-//    		searchNCC("ma_ncc", tukhoa);
-//    	}
-//    	if(thuoctinh.equals("Tên nhà cung cấp")) {
-//    		searchNCC("ten_ncc", tukhoa);
-//    	}
-//    	if(thuoctinh.equals("Địa chỉ")) {
-//    		searchNCC("diachi", tukhoa);
-//    	}
-//    }
+    private void submitTimKiem() throws SQLException {
+		Map<String, String> map = new HashMap<String, String>();
+		if(txtMaNCC.getText().equals("") == false) {
+			map.put("ma_ncc","%" + txtMaNCC.getText() + "%");
+		}
+		if(txtTenNCC.getText().equals("") == false) {
+			map.put("ten_ncc", "%" +txtTenNCC.getText() + "%");
+		}
+		if(txtDiaChi.getText().equals("") == false) {
+			map.put("diachi", "%" +txtDiaChi.getText() + "%");
+		}
+    	if(map.size() == 0) {
+    		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
+    	}else {
+    		listNCC = dao_timkiem.searchNhaCC(map);
+    		if(listNCC.size() == 0) {
+        		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
+        	}else {
+        		tableModel.setRowCount(0);
+            	for(NhaCungcap l: listNCC) {
+            		tableModel.addRow(new Object[] {l.getMaNCC(),l.getTenNCC(),l.getDiachi()});
+            	}
+    		}
+		}
+		
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -216,7 +222,7 @@ public class SearchProducerFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTimDDHActionPerformed
         // TODO add your handling code here:
-//    	submitTimKiem();
+    	submitTimKiem();
     }//GEN-LAST:event_btnTimDDHActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed

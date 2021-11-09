@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import connect.ConnectDatabase;
 import entity.Dondathang;
@@ -18,12 +20,24 @@ public class DAO_TimKiem {
 	public DAO_TimKiem() {
 		
 	}
-	public List<LoaiSanpham> searchLoaiSP(String thuocTinh, String tukhoa) throws SQLException{
-		String sql = "Select * from loaisanpham where "+ thuocTinh +" like ?";
+	public List<LoaiSanpham> searchLoaiSP(Map<String, String> mapTK) throws SQLException{
+		String sql = "Select * from loaisanpham where ";
+		ArrayList<String> list= new ArrayList<>();
+		Set<String> set = mapTK.keySet();
+		for(String key: set) {
+			list.add(" " + key + " like ?");
+		}
+		String[] arr = new String[list.size()];
+		list.toArray(arr);
+		sql = sql + String.join(" and ", arr);
 		List<LoaiSanpham> dslsp = new ArrayList<LoaiSanpham>();
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setString(1, "%"+tukhoa+"%");
+		int j = 1;
+		for(String key: set) {
+			stmt.setString(j, mapTK.get(key));
+			j++;
+		}
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			LoaiSanpham loaisp = new LoaiSanpham(rs.getString("ma_loaisp"), rs.getString("tenloaisp"));
@@ -31,12 +45,24 @@ public class DAO_TimKiem {
 		}
 		return dslsp;
 	}
-	public List<NhaCungcap> searchNhaCC(String thuocTinh, String tukhoa) throws SQLException{
-		String sql = "Select * from nhacungcap where "+ thuocTinh +" like ?";
+	public List<NhaCungcap> searchNhaCC(Map<String, String> mapTK) throws SQLException{
+		String sql = "Select * from nhacungcap where ";
+		ArrayList<String> list= new ArrayList<>();
+		Set<String> set = mapTK.keySet();
+		for(String key: set) {
+			list.add(" " + key + " like ?");
+		}
+		String[] arr = new String[list.size()];
+		list.toArray(arr);
+		sql = sql + String.join(" and ", arr);
 		List<NhaCungcap> dsncc = new ArrayList<NhaCungcap>();
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setString(1, "%"+tukhoa+"%");
+		int j = 1;
+		for(String key: set) {
+			stmt.setString(j, mapTK.get(key));
+			j++;
+		}
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			NhaCungcap ncc = new NhaCungcap(rs.getString("ma_ncc"), rs.getString("ten_ncc"), rs.getString("diachi"));
@@ -44,17 +70,28 @@ public class DAO_TimKiem {
 		}
 		return dsncc;
 	}
-	public List<List<String>> searchHoaDon(String thuoctinh, String tukhoa) throws SQLException{
+	public List<List<String>> searchHoaDon(Map<String, String> mapTK) throws SQLException{
+		ArrayList<String> list= new ArrayList<>();
 		String sql =  "select mahd,ten__nv,tenkh,tongtien,ngaylap_hd from nhanvien as nv join  hoadon as hd on hd.manv = nv.ma_nv join khachhang as kh on kh.ma_kh = hd.makh where ";
-		if(thuoctinh.equals("mahd") || thuoctinh.equals("tongtien")) {
-			sql = sql + thuoctinh + " = ?";
-		}else {
-			sql = sql + thuoctinh + " like ?";
+		Set<String> set = mapTK.keySet();
+		for(String key: set) {
+			if(key.equals("mahd") || key.equals("sodienthoai")) {
+				list.add(" " + key + " = ?");
+			}else {
+				list.add(" " + key + " like ?");
+			}
 		}
+		String[] arr = new String[list.size()];
+		list.toArray(arr);
+		sql = sql + String.join(" and ", arr);
 		List<List<String>> ds = new ArrayList<List<String>>();
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setString(1, tukhoa);
+		int j = 1;
+		for(String key: set) {
+			stmt.setString(j, mapTK.get(key));
+			j++;
+		}
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			List<String> item  = new ArrayList<String>();
@@ -84,17 +121,28 @@ public class DAO_TimKiem {
 		}
 		return ds;
 	}
-	public List<List<String>> searchDonDatHang(String thuoctinh, String tukhoa) throws SQLException{
-		String sql = "select madon,tenkh,ngaydat,ngaygiao,tongtien,ten_trangthai  from khachhang as kh join dondathang as d on d.makh = kh.ma_kh join trangthaidondathang as tt on tt.ma_trangthai = d.ma_trangthai where " + thuoctinh;
-		if(thuoctinh.equals("madon") || thuoctinh.equals("tongtien")) {
-			sql = sql + " = ?";
-		}else {
-			sql = sql + " like ?";
+	public List<List<String>> searchDonDatHang(Map<String, String> mapTK) throws SQLException{
+		String sql = "select madon,tenkh,ngaydat,ngaygiao,tongtien,ten_trangthai  from khachhang as kh join dondathang as d on d.makh = kh.ma_kh join trangthaidondathang as tt on tt.ma_trangthai = d.ma_trangthai where ";
+		ArrayList<String> list= new ArrayList<>();
+		Set<String> set = mapTK.keySet();
+		for(String key: set) {
+			if(key.equals("madon") || key.equals("kh.sodienthoai")) {
+				list.add(" " + key + " = ?");
+			}else {
+				list.add(" " + key + " like ?");
+			}
 		}
+		String[] arr = new String[list.size()];
+		list.toArray(arr);
+		sql = sql + String.join(" and ", arr);
 		List<List<String>> ds = new ArrayList<List<String>>();
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setString(1, tukhoa);
+		int j = 1;
+		for(String key: set) {
+			stmt.setString(j, mapTK.get(key));
+			j++;
+		}
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			List<String> item  = new ArrayList<String>();

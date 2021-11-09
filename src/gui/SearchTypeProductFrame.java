@@ -7,7 +7,11 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -34,26 +38,29 @@ public class SearchTypeProductFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         tableModel = (DefaultTableModel) tableLSP.getModel();
     }
-//    private void searchLoaiSP(String thuoctinh,String tuKhoa) throws SQLException {
-//    	listLSP =  dao_timkiem.searchLoaiSP(thuoctinh, tuKhoa);
-//    	if(listLSP.size() == 0) {
-//    		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
-//    	}
-//    	tableModel.setRowCount(0);
-//    	for(LoaiSanpham loaisp: listLSP) {
-//    		tableModel.addRow(new Object[] {loaisp.getMaLoaiSp(),loaisp.getTenLoaiSp()});
-//    	}
-//    }
-//    private void submitTimKiem() throws SQLException {
-//    	String tukhoa = txtSearch.getText();
-//    	String thuoctinh = cbThuocTinhTK.getSelectedItem().toString();
-//    	if(thuoctinh.equals("Mã loại sản phẩm")) {
-//    		searchLoaiSP("ma_loaisp", tukhoa);
-//    	}
-//    	if(thuoctinh.equals("Tên loại sản phẩm")) {
-//    		searchLoaiSP("tenloaisp", tukhoa);
-//    	}
-//    } 
+    private void submitTimKiem() throws SQLException {
+		Map<String, String> map = new HashMap<String, String>();
+		if(txtMaLoaiSP.getText().equals("") == false) {
+			map.put("ma_loaisp","%" + txtMaLoaiSP.getText() + "%");
+		}
+		if(txtTenLoaiSP.getText().equals("") == false) {
+			map.put("tenloaisp", "%" +txtTenLoaiSP.getText() + "%");
+		}
+    	if(map.size() == 0) {
+    		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
+    	}else {
+    		listLSP = dao_timkiem.searchLoaiSP(map);
+    		if(listLSP.size() == 0) {
+        		JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả! Vui lòng nhập lại từ khóa","Error!",JOptionPane.ERROR_MESSAGE);
+        	}else {
+        		tableModel.setRowCount(0);
+            	for(LoaiSanpham l: listLSP) {
+            		tableModel.addRow(new Object[] {l.getMaLoaiSp(),l.getTenLoaiSp()});
+            	}
+    		}
+		}
+		
+	}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -218,7 +225,7 @@ public class SearchTypeProductFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void btnTimDDHActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTimDDHActionPerformed
         // TODO add your handling code here:
-//    		submitTimKiem();
+    		submitTimKiem();
     }//GEN-LAST:event_btnTimDDHActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
