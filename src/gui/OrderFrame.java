@@ -663,25 +663,27 @@ public class OrderFrame extends javax.swing.JFrame {
 		if (txtSoLuong.getText().equals("")) {
 			JOptionPane.showMessageDialog(this, "Bạn chưa nhập số lượng cho sản phẩm!");
 		} else {
-			if (chucnang == 1) {
-				Sanpham sanpham = new DAO_Sanpham()
-						.getSanphamByName(tableSP.getValueAt(tableSP.getSelectedRow(), 1).toString());
-				chitietDondathang = taoChitietDonhang(dondathang, sanpham);
-				if (kiemtratrungSanpham(chitietDondathang)) {
-					dsChitietdonhang.add(chitietDondathang);
-					dondathang.addChitietdonhang(dondathang, sanpham, chitietDondathang.getSoluong(),
-							chitietDondathang.getDongia());
+			if(kiemtraSoluong(Integer.parseInt(txtSoLuong.getText()), getSoluongton(tableSP.getValueAt(tableSP.getSelectedRow(), 1).toString()))) {
+				if (chucnang == 1) {
+					Sanpham sanpham = new DAO_Sanpham()
+							.getSanphamByName(tableSP.getValueAt(tableSP.getSelectedRow(), 1).toString());
+					chitietDondathang = taoChitietDonhang(dondathang, sanpham);
+					if (kiemtratrungSanpham(chitietDondathang)) {
+						dsChitietdonhang.add(chitietDondathang);
+						dondathang.addChitietdonhang(dondathang, sanpham, chitietDondathang.getSoluong(),
+								chitietDondathang.getDongia());
+						docbangDonhang();
+					}
+				} else if (chucnang == 2) {
+					int maSua = Integer.parseInt(tableSPDH.getValueAt(tableSPDH.getSelectedRow(), 0).toString());
+					for (int i = 0; i < dsChitietdonhang.size(); i++) {
+						if (dsChitietdonhang.get(i).getSanpham().getMaSanpham() == maSua) {
+							dsChitietdonhang.get(i).setSoluong(Integer.parseInt(txtSoLuong.getText()));
+							dondathang.updateChitietdonhang(i, Integer.parseInt(txtSoLuong.getText()));
+						}
+					}
 					docbangDonhang();
 				}
-			} else if (chucnang == 2) {
-				int maSua = Integer.parseInt(tableSPDH.getValueAt(tableSPDH.getSelectedRow(), 0).toString());
-				for (int i = 0; i < dsChitietdonhang.size(); i++) {
-					if (dsChitietdonhang.get(i).getSanpham().getMaSanpham() == maSua) {
-						dsChitietdonhang.get(i).setSoluong(Integer.parseInt(txtSoLuong.getText()));
-						dondathang.updateChitietdonhang(i, Integer.parseInt(txtSoLuong.getText()));
-					}
-				}
-				docbangDonhang();
 			}
 			valTongtien.setText(formatMoney(dondathang.getTongtien()) + " VND");
 			txtSoLuong.setText("");
@@ -729,6 +731,14 @@ public class OrderFrame extends javax.swing.JFrame {
 	/**
 	 * @param args the command line arguments
 	 */
+	
+	public boolean kiemtraSoluong(int soluong, int soluongton) {
+		if(soluong > soluongton) {
+			JOptionPane.showMessageDialog(this, "Sản phẩm không đủ số lượng!", "Cảnh báo", JOptionPane.CLOSED_OPTION);
+			return false;
+		}
+		return true;
+	}
 	private String formatMoney(double tien) {
 		String matter;
 		DecimalFormat formatter = new DecimalFormat("###,###,###");
