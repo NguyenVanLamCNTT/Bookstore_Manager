@@ -5,6 +5,11 @@
  */
 package gui;
 
+import javax.swing.JOptionPane;
+
+import dao.DAO_HomeFrame;
+import entity.Khachhang;
+
 /**
  *
  * @author Lenovo
@@ -14,8 +19,14 @@ public class CustomerFrame extends javax.swing.JFrame {
     /**
      * Creates new form CustomerFrame
      */
+	DAO_HomeFrame daoHome=new DAO_HomeFrame();
+	String manv=new LoginFrame().getMaNVText();
+	String ten=daoHome.getTenNV(manv);
+	Khachhang khachhang ;
     public CustomerFrame() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        disabled();
     }
 
     /**
@@ -39,7 +50,7 @@ public class CustomerFrame extends javax.swing.JFrame {
         txtSDT = new javax.swing.JTextField();
         labelEmail = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
-        btnThemSP = new javax.swing.JButton();
+        btnThemKH = new javax.swing.JButton();
         btnQuayLai = new javax.swing.JButton();
         btnHoaDonMoi = new javax.swing.JButton();
 
@@ -70,12 +81,12 @@ public class CustomerFrame extends javax.swing.JFrame {
         labelEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelEmail.setText("Email");
 
-        btnThemSP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnThemSP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add.png"))); // NOI18N
-        btnThemSP.setText("Thêm khách hàng");
-        btnThemSP.addActionListener(new java.awt.event.ActionListener() {
+        btnThemKH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnThemKH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add.png"))); // NOI18N
+        btnThemKH.setText("Thêm khách hàng");
+        btnThemKH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemSPActionPerformed(evt);
+                btnThemKHActionPerformed(evt);
             }
         });
 
@@ -117,12 +128,12 @@ public class CustomerFrame extends javax.swing.JFrame {
                         .addGap(42, 42, 42)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnThemSP, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnThemKH, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(labelTenKH)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(labelSDT)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -165,7 +176,7 @@ public class CustomerFrame extends javax.swing.JFrame {
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnThemSP)
+                    .addComponent(btnThemKH)
                     .addComponent(btnQuayLai)
                     .addComponent(btnHoaDonMoi))
                 .addGap(59, 59, 59))
@@ -195,9 +206,9 @@ public class CustomerFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnThoatActionPerformed
 
-    private void btnThemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPActionPerformed
-       
-    }//GEN-LAST:event_btnThemSPActionPerformed
+    private void btnThemKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKHActionPerformed
+       enabled();
+    }//GEN-LAST:event_btnThemKHActionPerformed
 
     private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuayLaiActionPerformed
         // TODO add your handling code here:
@@ -206,9 +217,47 @@ public class CustomerFrame extends javax.swing.JFrame {
 
     private void btnHoaDonMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonMoiActionPerformed
         // TODO add your handling code here:
-       
+       if(kiemtratrong()) {
+    	   khachhang = taoKhachhang();
+    	   dispose();
+    	   new NewJFrame(khachhang).setVisible(true);
+    	   
+       }
     }
-
+    
+    private void disabled() {
+    	txtDiaChi.setEnabled(false);
+    	txtEmail.setEnabled(false);
+    	txtSDT.setEnabled(false);
+    	txtTenKH.setEnabled(false);
+    	txtDiaChi.setText("");
+    	txtEmail.setText("");
+    	txtSDT.setText("");
+    	txtTenKH.setText("");
+    	btnHoaDonMoi.setEnabled(false);
+    }
+    private void enabled() {
+    	txtDiaChi.setEnabled(true);
+    	txtEmail.setEnabled(true);
+    	txtSDT.setEnabled(true);
+    	txtTenKH.setEnabled(true);
+    	btnHoaDonMoi.setEnabled(true);
+    }
+    private Khachhang taoKhachhang() {
+    	Khachhang khachhang = new Khachhang();
+    	khachhang.setDiachi(txtDiaChi.getText());
+    	khachhang.setEmail(txtEmail.getText());
+    	khachhang.setSodienthoai(txtSDT.getText());
+    	khachhang.setTenKH(txtTenKH.getText());
+    	return khachhang;
+    }
+    private boolean kiemtratrong() {
+    	if(txtDiaChi.getText().equals("")||txtEmail.getText().equals("")||txtSDT.getText().equals("")||txtTenKH.getText().equals("")) {
+    		JOptionPane.showMessageDialog(this, "Bạn chưa nhập đủ thông tin khách hang!\nVui lòng nhập đủ thông tin!");
+    		return false;
+    	}
+    	return true;
+    }
 //GEN-LAST:event_btnHoaDonMoiActionPerformed
 
     /**
@@ -249,7 +298,7 @@ public class CustomerFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHoaDonMoi;
     private javax.swing.JButton btnQuayLai;
-    private javax.swing.JButton btnThemSP;
+    private javax.swing.JButton btnThemKH;
     private javax.swing.JButton btnThoat;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;

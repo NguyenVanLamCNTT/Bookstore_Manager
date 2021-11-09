@@ -2,13 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7452f042-fa3c-4656-9c74-bad31e0764f2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/dao/DAO_TimKiem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/DAO_TimKiem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/DetailBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/DetailBill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/DetailOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/DetailOrder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/SearchBillFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SearchBillFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/SearchOrderFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SearchOrderFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/SearchProducerFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SearchProducerFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/SearchTypeProductFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SearchTypeProductFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/private/private.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/DAO_Loaisanpham.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/DAO_Loaisanpham.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/DAO_Sanpham.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/DAO_Sanpham.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/BookFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/BookFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/CustomerFrame.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/CustomerFrame.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/CustomerFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/CustomerFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/NewJFrame.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/NewJFrame.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/NewJFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/NewJFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/ProductFrame.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/ProductFrame.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/ProductFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/ProductFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hoadon/hoadon.jasper" beforeDir="false" afterPath="$PROJECT_DIR$/src/hoadon/hoadon.jasper" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hoadon/hoadon.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/hoadon/hoadon.jrxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,7 +23,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="feature/nhanvien" />
+    <option name="BRANCH" value="origin/feature/update" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
