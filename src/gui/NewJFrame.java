@@ -615,8 +615,9 @@ public class NewJFrame extends javax.swing.JFrame {
     				themChitietHD(dsChitiethoadon, hoadon);
     			}else {
     				insertKhachhang(khachhang);
-    				khachhang = getKhachhang(labelSDT.getText());
-    	    		hoadon.setKhachhang(khachhang);
+    				Khachhang kh = new Khachhang();
+    				kh = getKhachhang(labelValueSoDienThoai.getText());
+    	    		hoadon.setKhachhang(kh);
     				hoadon.setSotiennhan(convertedToNumbers(txtTienNhanTuKH.getText()));
     				hoadon.setSotientralai(convertedToNumbers(labelValueTienDu.getText()));
     				insertHoadon(hoadon);
@@ -660,8 +661,6 @@ public class NewJFrame extends javax.swing.JFrame {
             double tiendu = convertedToNumbers(txtTienNhanTuKH.getText())- hoadon.getTongtien();
             labelValueTienDu.setText(formatMoney(tiendu));
     	}
-
-                
 
     }//GEN-LAST:event_txtTienNhanTuKHKeyReleased
 
@@ -923,7 +922,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private Hoadon taoHoadon(Khachhang khachhang) {
     	Hoadon hoadon = new Hoadon();
     	Nhanvien nhanvien = new Nhanvien();
-    	nhanvien.setMaNV(manv);
+    	nhanvien.setMaNV("NVLam");
     	hoadon.setKhachhang(khachhang);
     	hoadon.setNhanvien(nhanvien);
     	return hoadon;
