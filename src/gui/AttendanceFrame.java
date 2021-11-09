@@ -99,6 +99,14 @@ public class AttendanceFrame extends javax.swing.JFrame {
 
 		btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
 		btnThoat.setText("Thoát");
+		btnThoat.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				btnThoatSPActionPerformed(e);
+			}
+		});
 
 		cbThang.setModel(new javax.swing.DefaultComboBoxModel<>(
 				new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));

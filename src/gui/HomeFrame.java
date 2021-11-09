@@ -86,22 +86,24 @@ public class HomeFrame extends JFrame{
         labelvalueTenNV = new javax.swing.JLabel();
         menuBarHome = new javax.swing.JMenuBar();
         mnuDanhMuc = new javax.swing.JMenu();
-        mnuItemSP = new javax.swing.JMenuItem();
-        mnuItemDH = new javax.swing.JMenuItem();
+        mnuItemDCHT = new javax.swing.JMenuItem();
         mnuItemNV = new javax.swing.JMenuItem();
         mnuItemLSP = new javax.swing.JMenuItem();
         mnuItemNCC = new javax.swing.JMenuItem();
+        mnuItemSach = new javax.swing.JMenuItem();
         mnuTmKiem = new javax.swing.JMenu();
-        mnuItemTKSP = new javax.swing.JMenuItem();
+        mnuItemTKSach = new javax.swing.JMenuItem();
         mnuItemTKHD = new javax.swing.JMenuItem();
         mnuItemTKDH = new javax.swing.JMenuItem();
         mnuItemTKNCC = new javax.swing.JMenuItem();
         mnuitemTKLSP = new javax.swing.JMenuItem();
+        mnuItemTKDDHT = new javax.swing.JMenuItem();
         mnuXuLy = new javax.swing.JMenu();
         mnuItemChamCong = new javax.swing.JMenuItem();
         mnuItemBanHang = new javax.swing.JMenuItem();
         mnuItemDoiMatKhau = new javax.swing.JMenuItem();
         mnuItemDatHang = new javax.swing.JMenuItem();
+        mnuItemDangxuat = new javax.swing.JMenuItem();
         mnuThongKe = new javax.swing.JMenu();
         mnuItemThongKeSP = new javax.swing.JMenuItem();
         mnuItemThongKeDT = new javax.swing.JMenuItem();
@@ -379,21 +381,13 @@ public class HomeFrame extends JFrame{
 
         mnuDanhMuc.setText("Danh mục");
 
-        mnuItemSP.setText("Sản phẩm");
-        mnuItemSP.addActionListener(new java.awt.event.ActionListener() {
+        mnuItemDCHT.setText("Dụng cụ học tập");
+        mnuItemDCHT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuItemSPActionPerformed(evt);
+                mnuItemDCHTActionPerformed(evt);
             }
         });
-        mnuDanhMuc.add(mnuItemSP);
-
-        mnuItemDH.setText("Đơn hàng");
-        mnuItemDH.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuItemDHActionPerformed(evt);
-            }
-        });
-        mnuDanhMuc.add(mnuItemDH);
+        mnuDanhMuc.add(mnuItemDCHT);
 
         mnuItemNV.setText("Nhân viên");
         mnuItemNV.addActionListener(new java.awt.event.ActionListener() {
@@ -419,17 +413,25 @@ public class HomeFrame extends JFrame{
         });
         mnuDanhMuc.add(mnuItemNCC);
 
+        mnuItemSach.setText("Sách");
+        mnuItemSach.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuItemSachActionPerformed(evt);
+            }
+        });
+        mnuDanhMuc.add(mnuItemSach);
+
         menuBarHome.add(mnuDanhMuc);
 
         mnuTmKiem.setText("Tìm kiếm");
 
-        mnuItemTKSP.setText("Tìm kiếm sản phẩm");
-        mnuItemTKSP.addActionListener(new java.awt.event.ActionListener() {
+        mnuItemTKSach.setText("Tìm kiếm sách");
+        mnuItemTKSach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuItemTKSPActionPerformed(evt);
+                mnuItemTKSachActionPerformed(evt);
             }
         });
-        mnuTmKiem.add(mnuItemTKSP);
+        mnuTmKiem.add(mnuItemTKSach);
 
         mnuItemTKHD.setText("Tìm kiếm hóa đơn");
         mnuItemTKHD.addActionListener(new java.awt.event.ActionListener() {
@@ -462,6 +464,14 @@ public class HomeFrame extends JFrame{
             }
         });
         mnuTmKiem.add(mnuitemTKLSP);
+
+        mnuItemTKDDHT.setText("Tìm kiếm đồ dùng học tập");
+        mnuItemTKDDHT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuItemTKDDHTActionPerformed(evt);
+            }
+        });
+        mnuTmKiem.add(mnuItemTKDDHT);
 
         menuBarHome.add(mnuTmKiem);
 
@@ -498,6 +508,14 @@ public class HomeFrame extends JFrame{
             }
         });
         mnuXuLy.add(mnuItemDatHang);
+
+        mnuItemDangxuat.setText("Đăng xuất");
+        mnuItemDangxuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuItemDangxuatActionPerformed(evt);
+            }
+        });
+        mnuXuLy.add(mnuItemDangxuat);
 
         menuBarHome.add(mnuXuLy);
 
@@ -578,7 +596,7 @@ public class HomeFrame extends JFrame{
     private void btnBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanHangActionPerformed
         // TODO add your handling code here:
     	dispose();
-    	new SaleFrame().setVisible(true);
+    	new CustomerFrame().setVisible(true);;
     }//GEN-LAST:event_btnBanHangActionPerformed
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
@@ -631,24 +649,11 @@ public class HomeFrame extends JFrame{
         statisticalFrame.setVisible(true);
     }//GEN-LAST:event_mnuItemThongKeDTActionPerformed
 
-    private void mnuItemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemSPActionPerformed
-        try {
-            // TODO add your handling code here:
-            BookFrame productFrame = new BookFrame();
-            dispose();
-            productFrame.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(HomeFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }//GEN-LAST:event_mnuItemSPActionPerformed
-
-    private void mnuItemDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemDHActionPerformed
-        // TODO add your handling code here:
-        OrderFrame orderFrame = new OrderFrame();
-        dispose();
-        orderFrame.setVisible(true);
-    }//GEN-LAST:event_mnuItemDHActionPerformed
+    private void mnuItemDCHTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemDCHTActionPerformed
+    	 ProductFrame productFrame = new ProductFrame();
+         dispose();
+         productFrame.setVisible(true);
+    }//GEN-LAST:event_mnuItemDCHTActionPerformed
 
     private void mnuItemLSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemLSPActionPerformed
         // TODO add your handling code here:
@@ -675,11 +680,11 @@ public class HomeFrame extends JFrame{
 		}
     }//GEN-LAST:event_mnuItemNCCActionPerformed
 
-    private void mnuItemTKSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemTKSPActionPerformed
+    private void mnuItemTKSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemTKSachActionPerformed
         // TODO add your handling code here:
     	dispose();
-    	new SearchProductFrame().setVisible(true);
-    }//GEN-LAST:event_mnuItemTKSPActionPerformed
+    	new SearchBookFrame().setVisible(true);
+    }//GEN-LAST:event_mnuItemTKSachActionPerformed
 
     private void mnuItemDoiMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemDoiMatKhauActionPerformed
         // TODO add your handling code here:
@@ -690,7 +695,7 @@ public class HomeFrame extends JFrame{
     private void mnuItemBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemBanHangActionPerformed
         // TODO add your handling code here:
     	dispose();
-		new SaleFrame().setVisible(true);
+		new CustomerFrame().setVisible(true);
     }//GEN-LAST:event_mnuItemBanHangActionPerformed
 
     private void mnuItemChamCongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemChamCongActionPerformed
@@ -739,7 +744,30 @@ public class HomeFrame extends JFrame{
         new OrderFrame().setVisible(true);
     }//GEN-LAST:event_mnuItemDatHangActionPerformed
 
-    private void btnChamCongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChamCongActionPerformed
+    private void mnuItemSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemSachActionPerformed
+        // TODO add your handling code here:
+    	try {
+    		dispose();
+			new BookFrame().setVisible(true);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }//GEN-LAST:event_mnuItemSachActionPerformed
+
+    private void mnuItemTKDDHTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemTKDDHTActionPerformed
+        // TODO add your handling code here:
+    	dispose();
+    	new SearchProductFrame().setVisible(true);
+    }//GEN-LAST:event_mnuItemTKDDHTActionPerformed
+
+    private void mnuItemDangxuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuItemDangxuatActionPerformed
+        // TODO add your handling code here:
+    	dispose();
+    	new LoginFrame().setVisible(true);
+    }//GEN-LAST:event_mnuItemDangxuatActionPerformed
+
+    private void btnChamCongActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
         dispose();
         try {
@@ -806,17 +834,19 @@ public class HomeFrame extends JFrame{
     private javax.swing.JMenu mnuDanhMuc;
     private javax.swing.JMenuItem mnuItemBanHang;
     private javax.swing.JMenuItem mnuItemChamCong;
-    private javax.swing.JMenuItem mnuItemDH;
+    private javax.swing.JMenuItem mnuItemDCHT;
+    private javax.swing.JMenuItem mnuItemDangxuat;
     private javax.swing.JMenuItem mnuItemDatHang;
     private javax.swing.JMenuItem mnuItemDoiMatKhau;
     private javax.swing.JMenuItem mnuItemLSP;
     private javax.swing.JMenuItem mnuItemNCC;
     private javax.swing.JMenuItem mnuItemNV;
-    private javax.swing.JMenuItem mnuItemSP;
+    private javax.swing.JMenuItem mnuItemSach;
+    private javax.swing.JMenuItem mnuItemTKDDHT;
     private javax.swing.JMenuItem mnuItemTKDH;
     private javax.swing.JMenuItem mnuItemTKHD;
     private javax.swing.JMenuItem mnuItemTKNCC;
-    private javax.swing.JMenuItem mnuItemTKSP;
+    private javax.swing.JMenuItem mnuItemTKSach;
     private javax.swing.JMenuItem mnuItemThongKeDT;
     private javax.swing.JMenuItem mnuItemThongKeSP;
     private javax.swing.JMenu mnuThongKe;

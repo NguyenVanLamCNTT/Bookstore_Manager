@@ -220,7 +220,7 @@ public class CustomerFrame extends javax.swing.JFrame {
        if(kiemtratrong()) {
     	   khachhang = taoKhachhang();
     	   dispose();
-    	   new NewJFrame(khachhang).setVisible(true);
+    	   new SaleFrame(khachhang).setVisible(true);
     	   
        }
     }

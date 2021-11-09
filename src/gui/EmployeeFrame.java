@@ -497,7 +497,6 @@ public class EmployeeFrame extends javax.swing.JFrame {
 	private void btnTinhLuongActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTinhLuongActionPerformed
 		// TODO add your handling code here:
 		manv=txtMaNV.getText();
-		dispose();
 		new DetailWageFrame(manv).setVisible(true);
 	}// GEN-LAST:event_btnTinhLuongActionPerformed
     

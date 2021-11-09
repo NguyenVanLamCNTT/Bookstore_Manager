@@ -49,7 +49,7 @@ public class DetailWageFrame extends javax.swing.JFrame {
         labelValueTongLuong = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+      
 
         panelLuong.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
