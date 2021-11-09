@@ -16,6 +16,7 @@ public class ReportFrame extends javax.swing.JFrame {
      */
     public ReportFrame(String spbcn, String spbin,int tong) {
         initComponents();
+        setLocationRelativeTo(null);
         labelValueSPBCN.setText(spbcn);
         labelValueSPBIN.setText(spbin);
         labelValueTong.setText(String.valueOf(tong));

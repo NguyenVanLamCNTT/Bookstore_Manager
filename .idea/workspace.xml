@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7452f042-fa3c-4656-9c74-bad31e0764f2" name="Default Changelist" comment="" />
+    <list default="true" id="7452f042-fa3c-4656-9c74-bad31e0764f2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/dao/DAO_TimKiem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/DAO_TimKiem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/DetailBill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/DetailBill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/DetailOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/DetailOrder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/SearchBillFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SearchBillFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/SearchOrderFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SearchOrderFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/SearchProducerFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SearchProducerFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/SearchTypeProductFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SearchTypeProductFrame.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,6 +46,7 @@
       <workItem from="1635303856018" duration="628000" />
       <workItem from="1636038039704" duration="198000" />
       <workItem from="1636045205697" duration="347000" />
+      <workItem from="1636457103709" duration="621000" />
     </task>
     <servers />
   </component>
