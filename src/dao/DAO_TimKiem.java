@@ -172,17 +172,28 @@ public class DAO_TimKiem {
 		}
 		return ds;
 	}
-	public List<List<String>> searchSanPham(String thuoctinh, String tukhoa) throws SQLException{
-		String sql = "select ma_sanpham,ten_sp,dongia,soluongton,ten_tacgia,sotrang,nhaxuatban,trangthai from sanpham where ";
-		if(thuoctinh.equals("ma_sanpham") || thuoctinh.equals("sotrang") || thuoctinh.equals("soluongton") || thuoctinh.equals("dongia")) {
-			sql = sql + thuoctinh + " = ?";
-		}else {
-			sql = sql + thuoctinh + " like ?";
+	public List<List<String>> searchSanPhamSach(Map<String, String> mapTK) throws SQLException{
+		String sql = "select ma_sanpham,ten_sp,dongia,soluongton,ten_tacgia,sotrang,nhaxuatban,trangthai from sanpham as sp join nhacungcap as ncc on sp.ma_ncc = ncc.ma_ncc  where ma_loaisp = 'SA' and ";
+		ArrayList<String> list= new ArrayList<>();
+		Set<String> set = mapTK.keySet();
+		for(String key: set) {
+			if(key.equals("ma_sanpham")) {
+				list.add(" " + key + " = ?");
+			}else {
+				list.add(" " + key + " like ?");
+			}
 		}
+		String[] arr = new String[list.size()];
+		list.toArray(arr);
+		sql = sql + String.join(" and ", arr);
 		List<List<String>> dssp = new ArrayList<List<String>>();
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setString(1, tukhoa);
+		int j = 1;
+		for(String key: set) {
+			stmt.setString(j, mapTK.get(key));
+			j++;
+		}
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			List<String> item = new ArrayList<String>();
@@ -191,8 +202,43 @@ public class DAO_TimKiem {
 			item.add(rs.getString("dongia"));
 			item.add(rs.getString("soluongton"));
 			item.add(rs.getString("ten_tacgia"));
-			item.add(rs.getString("sotrang"));
 			item.add(rs.getString("nhaxuatban"));
+			item.add(rs.getString("sotrang"));
+			item.add(rs.getString("trangthai"));
+			dssp.add(item);
+		}
+		return dssp;
+	}
+	
+	public List<List<String>> searchSanPham(Map<String, String> mapTK) throws SQLException{
+		String sql = "select ma_sanpham,ten_sp,dongia,soluongton,trangthai from sanpham as sp join nhacungcap as ncc on sp.ma_ncc = ncc.ma_ncc  where ma_loaisp != 'SA' and ";
+		ArrayList<String> list= new ArrayList<>();
+		Set<String> set = mapTK.keySet();
+		for(String key: set) {
+			if(key.equals("ma_sanpham")) {
+				list.add(" " + key + " = ?");
+			}else {
+				list.add(" " + key + " like ?");
+			}
+		}
+		String[] arr = new String[list.size()];
+		list.toArray(arr);
+		sql = sql + String.join(" and ", arr);
+		List<List<String>> dssp = new ArrayList<List<String>>();
+		Connection con = ConnectDatabase.getConnection();
+		PreparedStatement stmt = con.prepareStatement(sql);
+		int j = 1;
+		for(String key: set) {
+			stmt.setString(j, mapTK.get(key));
+			j++;
+		}
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			List<String> item = new ArrayList<String>();
+			item.add(rs.getString("ma_sanpham"));
+			item.add(rs.getString("ten_sp"));
+			item.add(rs.getString("dongia"));
+			item.add(rs.getString("soluongton"));
 			item.add(rs.getString("trangthai"));
 			dssp.add(item);
 		}

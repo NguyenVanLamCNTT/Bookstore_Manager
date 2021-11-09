@@ -38,7 +38,6 @@ public class SearchBillFrame extends javax.swing.JFrame {
 	public SearchBillFrame() {
 		initComponents();
 		setLocationRelativeTo(null);
-		System.out.print(txtMaHD.getText());
 		tableModel = (DefaultTableModel) tableHD.getModel();
 	}
 
