@@ -9,7 +9,9 @@ import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +39,9 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
 	DAO_ThongKe dao_thongke = new DAO_ThongKe();
 	DefaultTableModel tableModel;
 	List<List<String>> listSP;
+	String sanphambanchaynhat;
+	String spbanitnhat;
+	int tongspbanduoc;
     /**
      * Creates new form ProductStatisticsFrame
      * @throws SQLException 
@@ -45,6 +50,45 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         tableModel = (DefaultTableModel) tableQuanLySP.getModel();
+        dateNgayBatDau.setEnabled(false);
+        dateNgayKetThuc.setEnabled(false);
+    }
+    private void getbaocao() {
+    	if(listSP == null) {
+    		JOptionPane.showMessageDialog(this, "Bạn cần tìm kiếm khoảng thời gian bạn muốn thống kê","Error!",JOptionPane.ERROR_MESSAGE);
+    	}else {
+    		int max = Integer.parseInt( listSP.get(0).get(8));
+        	sanphambanchaynhat = listSP.get(0).get(1);
+        	for(List<String> item: listSP) {
+        		if(Integer.parseInt(item.get(8)) > max) {
+        			max = Integer.parseInt(item.get(8));
+        			sanphambanchaynhat = item.get(1);
+        		}
+        	}
+        	int min = Integer.parseInt( listSP.get(0).get(8));
+        	spbanitnhat = listSP.get(0).get(1);
+        	for(List<String> item: listSP) {
+        		if(Integer.parseInt(item.get(8)) < min) {
+        			min = Integer.parseInt(item.get(8));
+        			spbanitnhat = item.get(1);
+        		}
+        	}
+        	int tong = 0;
+        	for(List<String> list: listSP) {
+        		tong = tong + Integer.parseInt(list.get(8));
+        	}
+        	tongspbanduoc = tong;
+        	new ReportFrame(sanphambanchaynhat, spbanitnhat, tong).setVisible(true);
+		}
+    }
+    private void checkLoaiThongKe() {
+    	if(cbLoaiThongKe.getSelectedItem().toString().equals("Tùy chọn")){
+    		dateNgayBatDau.setEnabled(true);
+    		dateNgayKetThuc.setEnabled(true);
+    	}else {
+    		dateNgayBatDau.setEnabled(false);
+    		dateNgayKetThuc.setEnabled(false);
+    	}
     }
     private void getSanPham() throws SQLException {
     	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -81,10 +125,121 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
 	               }
 	            }
 	    	}
+	    	tableModel.setRowCount(0);
 	    	for(List<String> l: listSP) {
 	    		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),l.get(3),l.get(4),l.get(5),l.get(6),l.get(7),l.get(8)});
 	    	}
 		}
+    }
+    public void submirTimKiem() throws SQLException {
+    	if(cbLoaiThongKe.getSelectedItem().toString().equals("Thống kê trong ngày")) {
+    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    		Date date = new Date();
+    		String datenow = df.format(date);
+    		List<Sanpham> lsp = dao_thongke.getSanpham();
+	    	List<String> listMaSP = new ArrayList<String>();
+	    	for(Sanpham sp: lsp) {
+	    		listMaSP.add(String.valueOf(sp.getMaSanpham()));
+	    	}
+	    	Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+	    	map = dao_thongke.getCountSP(listMaSP, datenow, datenow);
+	    	Set<Integer> set = map.keySet();
+	    	listSP = new ArrayList<List<String>>();
+	    	for(Sanpham sp: lsp) {
+	    		for (Integer key : set) {
+	               if(key == sp.getMaSanpham()) {
+	            	   List<String> item = new ArrayList<String>();
+	            	   item.add(String.valueOf(sp.getMaSanpham()));
+	            	   item.add(sp.getTenSanpham());
+	            	   item.add(String.valueOf(sp.getDongia()));
+	            	   item.add(String.valueOf(sp.getSoluongton()));
+	            	   item.add(sp.getTrangthai());
+	            	   item.add(sp.getTenTacgia());
+	            	   item.add(String.valueOf(sp.getSotrang()));
+	            	   item.add(sp.getNhaXB());
+	            	   item.add(String.valueOf(map.get(key)));
+	            	   listSP.add(item);
+	               }
+	            }
+	    	}
+	    	tableModel.setRowCount(0);
+	    	for(List<String> l: listSP) {
+	    		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),l.get(3),l.get(4),l.get(5),l.get(6),l.get(7),l.get(8)});
+	    	}
+    	}
+    	if(cbLoaiThongKe.getSelectedItem().toString().equals("Thống kê trong tháng")) {
+    		LocalDate initial = LocalDate.now();
+    		LocalDate start = initial.withDayOfMonth(1);
+    		LocalDate end = initial.withDayOfMonth(initial.lengthOfMonth());
+    		List<Sanpham> lsp = dao_thongke.getSanpham();
+	    	List<String> listMaSP = new ArrayList<String>();
+	    	for(Sanpham sp: lsp) {
+	    		listMaSP.add(String.valueOf(sp.getMaSanpham()));
+	    	}
+	    	Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+	    	map = dao_thongke.getCountSP(listMaSP, start.toString(), end.toString());
+	    	Set<Integer> set = map.keySet();
+	    	listSP = new ArrayList<List<String>>();
+	    	for(Sanpham sp: lsp) {
+	    		for (Integer key : set) {
+	               if(key == sp.getMaSanpham()) {
+	            	   List<String> item = new ArrayList<String>();
+	            	   item.add(String.valueOf(sp.getMaSanpham()));
+	            	   item.add(sp.getTenSanpham());
+	            	   item.add(String.valueOf(sp.getDongia()));
+	            	   item.add(String.valueOf(sp.getSoluongton()));
+	            	   item.add(sp.getTrangthai());
+	            	   item.add(sp.getTenTacgia());
+	            	   item.add(String.valueOf(sp.getSotrang()));
+	            	   item.add(sp.getNhaXB());
+	            	   item.add(String.valueOf(map.get(key)));
+	            	   listSP.add(item);
+	               }
+	            }
+	    	}
+	    	tableModel.setRowCount(0);
+	    	for(List<String> l: listSP) {
+	    		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),l.get(3),l.get(4),l.get(5),l.get(6),l.get(7),l.get(8)});
+	    	}
+    	}
+    	if(cbLoaiThongKe.getSelectedItem().toString().equals("Thống kê trong năm")) {
+    		LocalDate initial = LocalDate.now();
+    		LocalDate start = initial.withDayOfYear(1);
+    		LocalDate end = initial.withDayOfYear(initial.lengthOfYear());
+    		List<Sanpham> lsp = dao_thongke.getSanpham();
+	    	List<String> listMaSP = new ArrayList<String>();
+	    	for(Sanpham sp: lsp) {
+	    		listMaSP.add(String.valueOf(sp.getMaSanpham()));
+	    	}
+	    	Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+	    	map = dao_thongke.getCountSP(listMaSP, start.toString(), end.toString());
+	    	Set<Integer> set = map.keySet();
+	    	listSP = new ArrayList<List<String>>();
+	    	for(Sanpham sp: lsp) {
+	    		for (Integer key : set) {
+	               if(key == sp.getMaSanpham()) {
+	            	   List<String> item = new ArrayList<String>();
+	            	   item.add(String.valueOf(sp.getMaSanpham()));
+	            	   item.add(sp.getTenSanpham());
+	            	   item.add(String.valueOf(sp.getDongia()));
+	            	   item.add(String.valueOf(sp.getSoluongton()));
+	            	   item.add(sp.getTrangthai());
+	            	   item.add(sp.getTenTacgia());
+	            	   item.add(String.valueOf(sp.getSotrang()));
+	            	   item.add(sp.getNhaXB());
+	            	   item.add(String.valueOf(map.get(key)));
+	            	   listSP.add(item);
+	               }
+	            }
+	    	}
+	    	tableModel.setRowCount(0);
+	    	for(List<String> l: listSP) {
+	    		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),l.get(3),l.get(4),l.get(5),l.get(6),l.get(7),l.get(8)});
+	    	}
+    	}
+    	if(cbLoaiThongKe.getSelectedItem().toString().equals("Tùy chọn")) {
+    		getSanPham();
+    	}
     }
     private PieDataset createDataset() {
     	Double tongsp = 0.0;
@@ -151,7 +306,12 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
         labelThongKeSP.setText("THỐNG KÊ SẢN PHẨM");
 
         btnIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/printer.png"))); // NOI18N
-        btnIn.setText("In thống kê");
+        btnIn.setText("Xuất báo cáo");
+        btnIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInActionPerformed(evt);
+            }
+        });
 
         labelNgayBatDau.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         labelNgayBatDau.setText("Thống kê từ ngày");
@@ -197,6 +357,11 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
 
         cbLoaiThongKe.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cbLoaiThongKe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thống kê trong ngày", "Thống kê trong tháng", "Thống kê trong năm", "Tùy chọn" }));
+        cbLoaiThongKe.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbLoaiThongKeItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelThongKeLayout = new javax.swing.GroupLayout(panelThongKe);
         panelThongKe.setLayout(panelThongKeLayout);
@@ -243,13 +408,14 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
-                .addGroup(panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnIn)
-                    .addComponent(btnThongKe)
-                    .addComponent(btnTim)
+                .addGroup(panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cbLoaiThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelLoaiThongKe)))
+                        .addComponent(labelLoaiThongKe))
+                    .addGroup(panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnIn)
+                        .addComponent(btnThongKe)
+                        .addComponent(btnTim)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(panelThongKeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(labelNgayKetThuc)
@@ -305,7 +471,7 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
 
     private void btnTimActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnTimActionPerformed
         // TODO add your handling code here:
-    	getSanPham();
+    	submirTimKiem();
     }//GEN-LAST:event_btnTimActionPerformed
 
     private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
@@ -318,6 +484,16 @@ public class ProductStatisticsFrame extends javax.swing.JFrame {
     	dispose();
 		new HomeFrame().setVisible(true);
     }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void cbLoaiThongKeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLoaiThongKeItemStateChanged
+        // TODO add your handling code here:
+    	checkLoaiThongKe();
+    }//GEN-LAST:event_cbLoaiThongKeItemStateChanged
+
+    private void btnInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInActionPerformed
+        // TODO add your handling code here:
+    	getbaocao();
+    }//GEN-LAST:event_btnInActionPerformed
 
 			
 			

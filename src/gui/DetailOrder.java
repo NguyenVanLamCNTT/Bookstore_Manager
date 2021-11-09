@@ -6,7 +6,9 @@
 package gui;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -34,7 +36,9 @@ public class DetailOrder extends javax.swing.JFrame {
         showData(madonhang);
     }
     private void showData(String ma) throws SQLException {
-    	thongtindonhang = dao_timkiem.searchDonDatHang("madon", ma);
+    	Map<String,String> map = new HashMap<String, String>();
+    	map.put("madon", ma);
+    	thongtindonhang = dao_timkiem.searchDonDatHang(map);
     	listSP = dao_timkiem.getDanhSachSPDDH(ma);
     	valueMaDH.setText(ma);
     	valueTenKH.setText(thongtindonhang.get(0).get(1));
