@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -49,6 +50,7 @@ public class StatisticalFrame extends javax.swing.JFrame {
         tableModel = (DefaultTableModel) tableThongKe.getModel();
         dateNgayBatDau.setEnabled(false);
 		dateNgayKetThuc.setEnabled(false);
+		labelValueDoanhThu.setText("0");
     }
     private void checkLoaiThongKe() {
     	if(cbLoaiThongKe.getSelectedItem().toString().equals("Tùy chọn")){
@@ -130,9 +132,11 @@ public class StatisticalFrame extends javax.swing.JFrame {
     	DefaultCategoryDataset dataset_1 = new DefaultCategoryDataset();
     	Map<String, String> map = dao_thongke.getThongkeHDTheoNgay(ngaybatdau, ngayketthuc);
     	Set<String> set = map.keySet();
-    	for(String key: set) {
-    		dataset_1.addValue(Double.parseDouble(map.get(key)), "Tổng tiền", key);
-    	}
+    	 TreeMap<String, String> sorted = new TreeMap<String, String>(map);
+    	 Set<Map.Entry<String, String>> mappings = sorted.entrySet();
+    	 for (Map.Entry<String, String> mapping : mappings) {
+    		 dataset_1.addValue(Double.parseDouble(mapping.getValue()), "Tổng tiền", mapping.getKey());
+    	  }   
     	return dataset_1;
     }
     private JFreeChart createLineChart() throws SQLException {
