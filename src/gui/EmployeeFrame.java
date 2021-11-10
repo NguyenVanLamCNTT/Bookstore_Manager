@@ -26,6 +26,7 @@ public class EmployeeFrame extends javax.swing.JFrame {
 	 * Creates new form EmployeeFrame
 	 */
 	String manv;
+	int option=0;
 	public EmployeeFrame() {
 		initComponents();
 		setLocationRelativeTo(null);
@@ -149,6 +150,7 @@ public class EmployeeFrame extends javax.swing.JFrame {
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLuuActionPerformed(evt);
+          
             }
         });
 
@@ -339,9 +341,16 @@ public class EmployeeFrame extends javax.swing.JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        txtChucVu.setEnabled(false); labelChucVu.setEnabled(false); 
+        txtDiaChi.setEnabled(false); labelDiaChi.setEnabled(false);
+        txtEmail.setEnabled(false); labelEmail.setEnabled(false);
+        txtMaNV.setEnabled(false); labelMaNV.setEnabled(false);
+        txtSDT.setEnabled(false); labelSDT.setEnabled(false);
+        txtTenNV.setEnabled(false); labelTenNV.setEnabled(false);
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void showThongTin() throws SQLException {
+
+	private void showThongTin() throws SQLException {
     	DefaultTableModel tableModel= new DefaultTableModel(new Object[] {"Mã nhân viên", "Tên nhân viên", "Số điện thoại", "Chức vụ", "Địa chỉ", "Email", "Mật khẩu"},0);
     	ArrayList<Nhanvien> dsnv;
     	dsnv=new DAO_NhanVien().getDSNV();
@@ -386,6 +395,17 @@ public class EmployeeFrame extends javax.swing.JFrame {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
+    	
+			 txtChucVu.setEnabled(true); labelChucVu.setEnabled(true); 
+		        txtDiaChi.setEnabled(true); labelDiaChi.setEnabled(true);
+		        txtEmail.setEnabled(true); labelEmail.setEnabled(true);
+		        txtMaNV.setEnabled(true); labelMaNV.setEnabled(true);
+		        txtSDT.setEnabled(true); labelSDT.setEnabled(true);
+		        txtTenNV.setEnabled(true); labelTenNV.setEnabled(true);
+		        option=2;
+		 }
+    //GEN-LAST:event_btnSuaActionPerformed
+    private void updateNV() {
     	Nhanvien nv= revertNV2();
     	int yes = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa nhân viên!", "Warnning!", JOptionPane.YES_NO_CANCEL_OPTION);
 		 if(yes == JOptionPane.YES_OPTION) {
@@ -399,12 +419,44 @@ public class EmployeeFrame extends javax.swing.JFrame {
 				}
 				 clearData();
 			 }else JOptionPane.showMessageDialog(this, "Sửa thất bại !Vui lòng xem  lại");
-		 }
-    }//GEN-LAST:event_btnSuaActionPerformed
-
+    }
+    }
+     private void insertNV() {
+    	 Nhanvien nv= revertNV();
+ 		String manv=txtMaNV.getText();
+ 		String tennv=txtTenNV.getText();
+ 		String sdt=txtSDT.getText();
+ 		String chucvu=txtChucVu.getText();
+ 		String diachi=txtDiaChi.getText();
+ 		String email=txtEmail.getText();
+ 			if(manv.equals("")||tennv.equals("")||sdt.equals("")||chucvu.equals("")||diachi.equals("")||email.equals("")) {
+ 				JOptionPane.showMessageDialog(this,"Vui lòng nhập đầy đủ thông tin!");
+ 				return;
+ 			}
+ 			else {
+ 				 if(new DAO_NhanVien().insert(nv)) {
+ 				
+ 				JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công");
+ 				clearData();
+ 				try {
+ 					showThongTin();
+ 				} catch (SQLException e) {
+ 					// TODO Auto-generated catch block
+ 					e.printStackTrace();
+ 				}
+ 			}else JOptionPane.showMessageDialog(this, "Thêm nhân viên thất bại! Vui lòng xem lại!");
+ 			}
+ 		 }
+     
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
-    	JOptionPane.showMessageDialog(this, "Lưu thành công!");
+    	if(option==1) {
+    		insertNV();
+    		
+    	}else if(option==2) {
+    		updateNV();
+    	}
+			
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void tableQLNVMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableQLNVMouseClicked
@@ -444,29 +496,17 @@ public class EmployeeFrame extends javax.swing.JFrame {
 
 	private void btnThemActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {// GEN-FIRST:event_btnThemActionPerformed
 		// TODO add your handling code here:\?
-		Nhanvien nv= revertNV();
-		String manv=txtMaNV.getText();
-		String tennv=txtTenNV.getText();
-		String sdt=txtSDT.getText();
-		String chucvu=txtChucVu.getText();
-		String diachi=txtDiaChi.getText();
-		String email=txtEmail.getText();
 		int yes = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn thêm nhân viên!", "Warnning!", JOptionPane.YES_NO_CANCEL_OPTION);
 		 if(yes == JOptionPane.YES_OPTION) {
-			if(manv.equals("")||tennv.equals("")||sdt.equals("")||chucvu.equals("")||diachi.equals("")||email.equals("")) {
-				JOptionPane.showMessageDialog(this,"Vui lòng nhập đầy đủ thông tin!");
-				return;
-			}
-			else {
-				 if(new DAO_NhanVien().insert(nv)) {
-				
-				JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công");
-				clearData();
-				showThongTin();
-			}else JOptionPane.showMessageDialog(this, "Thêm nhân viên thất bại! Vui lòng xem lại!");
-			}
+			 txtChucVu.setEnabled(true); labelChucVu.setEnabled(true); 
+		        txtDiaChi.setEnabled(true); labelDiaChi.setEnabled(true);
+		        txtEmail.setEnabled(true); labelEmail.setEnabled(true);
+		        txtMaNV.setEnabled(true); labelMaNV.setEnabled(true);
+		        txtSDT.setEnabled(true); labelSDT.setEnabled(true);
+		        txtTenNV.setEnabled(true); labelTenNV.setEnabled(true);
+		        option=1;
 		 }
-			
+		
 	
 		
 	}// GEN-LAST:event_btnThemActionPerformed

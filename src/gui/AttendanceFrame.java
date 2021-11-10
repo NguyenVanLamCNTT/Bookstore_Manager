@@ -16,8 +16,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.event.PopupMenuEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -37,7 +39,7 @@ public class AttendanceFrame extends javax.swing.JFrame {
 	 * Creates new form AttendanceFrame
 	 */
 	String manv = new LoginFrame().getMaNVText();
-
+	int month=(new Date().getMonth())+1;
 	public AttendanceFrame() throws SQLException {
 
 		initComponents();
@@ -115,11 +117,18 @@ public class AttendanceFrame extends javax.swing.JFrame {
 			public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
 			}
 
-			public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
-				cbThangPopupMenuWillBecomeInvisible(evt);
+
+			@Override
+			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 
-			public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+
+			@Override
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+				// TODO Auto-generated method stub
+				cbThangPopupMenuWillBecomeInvisible(e);
 			}
 
 		});
@@ -237,11 +246,13 @@ public class AttendanceFrame extends javax.swing.JFrame {
 			}
 		});
         
-        showCalam();
+
+        	cbThang.setSelectedItem(String.valueOf(month));
+        showCalam(month);
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void cbThangPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {// GEN-FIRST:event_cbThangPopupMenuWillBecomeInvisible
+	private void cbThangPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent e) {// GEN-FIRST:event_cbThangPopupMenuWillBecomeInvisible
 		// TODO add your handling code here:
 		String s = cbThang.getSelectedItem().toString();
 		String manv = new LoginFrame().getMaNVText();
@@ -260,20 +271,21 @@ public class AttendanceFrame extends javax.swing.JFrame {
 		ChitietCalam chitiet = revert();
 		if (new DAO_ChamCong().insertCongLam(chitiet)) {
 			JOptionPane.showMessageDialog(this, "Chấm công thành công!");
-			showCalam();
+			showCalam(month);
 		} else {
-			JOptionPane.showMessageDialog(this, "Chấm công thất bại! Vui lòng xem lại!!");
+			JOptionPane.showMessageDialog(this, "Chấm công thất bại! Mỗi ngày chỉ được chấm công 1 ca!");
 		}
 
 	}
 
-	private void showCalam() {
+	private void showCalam(int month) {
 		// TODO Auto-generated method stub
 		DefaultTableModel newRow;
 		newRow = new DefaultTableModel(new Object[] { "Ngày làm", "Ca", "Trạng thái" }, 0);
 		ArrayList<ChitietCalam> chitiet;
+
 		try {
-			chitiet = new DAO_ChamCong().getValues(manv);
+			chitiet = new DAO_ChamCong().getValues(manv,month);
 			for (ChitietCalam calam : chitiet) {
 				newRow.addRow(new Object[] { calam.getNgaylam(), calam.getCalam().getMaCalam(), calam.getTrangthai()});
 			}
