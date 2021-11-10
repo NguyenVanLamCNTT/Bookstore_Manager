@@ -33,6 +33,7 @@ public class HomeFrame extends JFrame{
     	
         initComponents();
         setLocationRelativeTo(null);
+        phanquyen();
         new Thread(){
             public void run(){
                 while(true){
@@ -56,6 +57,38 @@ public class HomeFrame extends JFrame{
         labelvalueTenNV.setText(daohome.getTenNV(login.getMaNVText()));
     }
 
+    private void phanquyen() {
+    	String manv = new LoginFrame().getMaNVText();
+    	String chucvu = daohome.getChucVu(manv);
+    	if(chucvu.equals("NVBH")) {
+    		mnuItemDCHT.setEnabled(false);
+    		mnuItemLSP.setEnabled(false);
+    		mnuItemNCC.setEnabled(false);
+    		mnuItemNV.setEnabled(false);
+    		mnuItemSach.setEnabled(false);
+    		mnuItemThongKeDT.setEnabled(false);
+    		mnuItemThongKeSP.setEnabled(false);
+    		btnCapNhatLSP.setEnabled(false);
+    		btnCapNhatNCC.setEnabled(false);
+    		btnQuanLyDH.setEnabled(false);
+    		btnQuanLyNV.setEnabled(false);
+    		btnQuanLySP.setEnabled(false);
+    		btnThongKeDT.setEnabled(false);
+    		btnThongKeSP.setEnabled(false);
+    	}
+    	if(chucvu.equals("NVNK")) {
+    		mnuItemBanHang.setEnabled(false);
+    		mnuItemDatHang.setEnabled(false);
+    		mnuItemNV.setEnabled(false);
+    		mnuItemThongKeDT.setEnabled(false);
+    		mnuItemThongKeSP.setEnabled(false);
+    		btnBanHang.setEnabled(false);
+    		btnQuanLyDH.setEnabled(false);
+    		btnQuanLyNV.setEnabled(false);
+    		btnThongKeDT.setEnabled(false);
+    		btnThongKeSP.setEnabled(false);
+    	}
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

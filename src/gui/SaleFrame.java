@@ -60,6 +60,7 @@ public class SaleFrame extends javax.swing.JFrame {
 	List<ChitietHoadon> dsChitiethoadon;
     public SaleFrame(Khachhang khachhang ) {
         initComponents();
+        labelTenNV.setText("Họ tên nhân viên: "+ ten);
         SaleFrame.khachhang = khachhang;
         hienThongtinKhachhang();
         this.setLocationRelativeTo(null);
@@ -629,6 +630,9 @@ public class SaleFrame extends javax.swing.JFrame {
     			JOptionPane.showMessageDialog(this, "Thanh toán thành công!\n Mã hóa đơn của bạn là: "+new DAO_Hoadon().getMahoadon());
     			System.out.println(manv);
     		}
+    		btnSua.setEnabled(false);
+    		btnXoa.setEnabled(false);
+    		btnThanhToan.setEnabled(false);
     	}
         
     }//GEN-LAST:event_btnThanhToanActionPerformed

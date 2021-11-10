@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -44,6 +45,12 @@ public class StatisticalFrame extends javax.swing.JFrame {
     /**
      * Creates new form StatisticalFrame
      */
+	private String formatMoney(double tien) {
+		String matter;
+		DecimalFormat formatter = new DecimalFormat("###,###,###");
+		matter = formatter.format(tien);
+		return matter;
+	}
     public StatisticalFrame() {
         initComponents();
         setLocationRelativeTo(null);
@@ -426,7 +433,8 @@ public class StatisticalFrame extends javax.swing.JFrame {
         	for(List<String> i: listHD) {
         		tong = tong + Double.parseDouble(i.get(7));
         	}
-        	labelValueDoanhThu.setText(tong.toString());
+        	
+        	labelValueDoanhThu.setText(formatMoney(tong) + " VND");
 		}
     }//GEN-LAST:event_btnInActionPerformed
     /**

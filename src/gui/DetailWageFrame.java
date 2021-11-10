@@ -163,22 +163,22 @@ public class DetailWageFrame extends javax.swing.JFrame {
 
     private void checkInput(String manv) {
 		// TODO Auto-generated method stub
-    	int tre=new DAO_NhanVien().getNgayDiTre(manv);
-        int dung=new DAO_NhanVien().getNgayDungGio(manv);
-        int month=new DAO_NhanVien().getMonth(manv);
+    	int month=new DAO_NhanVien().getMonth(manv);
+    	int tre=new DAO_NhanVien().getNgayDiTre(manv,month);
+        int dung=new DAO_NhanVien().getNgayDungGio(manv,month);
         int currentMonth=(new Date().getMonth())+1;
         float trutre= (3000000/100)*2;
         
         
-        if(tre+dung>26||tre+dung<24||manv.equals("")||month>=currentMonth) {
+        if(tre+dung<26||tre+dung<24||manv.equals("")||month>=currentMonth) {
         	labelValueSoNgayTre.setText("0");
         	labelValueSoNgayDungGio.setText("0");
         	labelValueLuongCoBan.setText("0");
         	labelValueTongLuong.setText("0");
         	JOptionPane.showMessageDialog(this, "Chưa chọn nhân viên hoặc chưa đủ số công hoặc chưa đến thời hạn chấm công!");
         }else if(tre+dung<=26||tre+dung>=24||month<currentMonth) {
-        	labelValueSoNgayTre.setText(""+new DAO_NhanVien().getNgayDiTre(manv)+" ( Số lương bị trừ: "+ tre + "*"+ trutre+"=" +tre*trutre+")" );
-        labelValueSoNgayDungGio.setText(""+new DAO_NhanVien().getNgayDungGio(manv));
+        	labelValueSoNgayTre.setText(""+new DAO_NhanVien().getNgayDiTre(manv,month)+" ( Số lương bị trừ: "+ tre + "*"+ trutre+"=" +tre*trutre+")" );
+        labelValueSoNgayDungGio.setText(""+new DAO_NhanVien().getNgayDungGio(manv,month));
         labelValueLuongCoBan.setText("3000000");
         labelValueTongLuong.setText(""+(3000000-(tre*trutre)));
         }
@@ -189,7 +189,6 @@ public class DetailWageFrame extends javax.swing.JFrame {
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     	dispose();
-    	new EmployeeFrame().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
    
     /**
