@@ -107,7 +107,7 @@ public class SearchProductFrame extends javax.swing.JFrame {
         });
 
         labelTkSP.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        labelTkSP.setText("Tìm kiếm sách");
+        labelTkSP.setText("Tìm kiếm đồ dùng học tập");
 
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");

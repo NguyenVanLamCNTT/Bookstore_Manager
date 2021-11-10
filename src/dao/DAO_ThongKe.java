@@ -73,7 +73,8 @@ public class DAO_ThongKe {
 	}
 	public Map<String, String> getThongkeHDTheoNgay(String dateBatDau,String dateKetThuc) throws SQLException{
 		String sql = "select sum(tongtien) as tong,ngaylap_hd from hoadon where ngaylap_hd between ? and ? "
-				+ "group by ngaylap_hd";
+				+ "group by ngaylap_hd"
+				+ " ORDER BY ngaylap_hd ASC";
 		Map<String,String> map = new HashMap<String, String>();
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = con.prepareStatement(sql);
