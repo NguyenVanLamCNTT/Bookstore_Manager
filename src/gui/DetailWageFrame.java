@@ -7,6 +7,8 @@ package gui;
 
 
 
+import java.util.Date;
+
 import javax.swing.JOptionPane;
 
 import dao.DAO_NhanVien;
@@ -163,16 +165,18 @@ public class DetailWageFrame extends javax.swing.JFrame {
 		// TODO Auto-generated method stub
     	int tre=new DAO_NhanVien().getNgayDiTre(manv);
         int dung=new DAO_NhanVien().getNgayDungGio(manv);
+        int month=new DAO_NhanVien().getMonth(manv);
+        int currentMonth=(new Date().getMonth())+1;
         float trutre= (3000000/100)*2;
         
         
-        if(tre+dung>30||tre+dung<24||manv.equals("")) {
+        if(tre+dung>26||tre+dung<24||manv.equals("")||month>=currentMonth) {
         	labelValueSoNgayTre.setText("0");
         	labelValueSoNgayDungGio.setText("0");
         	labelValueLuongCoBan.setText("0");
         	labelValueTongLuong.setText("0");
-        	JOptionPane.showMessageDialog(this, "Chưa chọn nhân viên hoặc chưa đủ số công!");
-        }else if(tre+dung<=30||tre+dung>=24) {
+        	JOptionPane.showMessageDialog(this, "Chưa chọn nhân viên hoặc chưa đủ số công hoặc chưa đến thời hạn chấm công!");
+        }else if(tre+dung<=26||tre+dung>=24||month<currentMonth) {
         	labelValueSoNgayTre.setText(""+new DAO_NhanVien().getNgayDiTre(manv)+" ( Số lương bị trừ: "+ tre + "*"+ trutre+"=" +tre*trutre+")" );
         labelValueSoNgayDungGio.setText(""+new DAO_NhanVien().getNgayDungGio(manv));
         labelValueLuongCoBan.setText("3000000");

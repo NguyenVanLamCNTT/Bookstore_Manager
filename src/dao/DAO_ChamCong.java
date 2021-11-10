@@ -31,8 +31,8 @@ public class DAO_ChamCong {
 		}
     	 return n>0;
      }
-     public ArrayList<ChitietCalam> getValues(String manv) throws SQLException{
-    	 String sql="select ngaylam,macalam,trangthai from chitietcalam where manv='"+manv+"'";
+     public ArrayList<ChitietCalam> getValues(String manv,int month) throws SQLException{
+    	 String sql="select ngaylam,macalam,trangthai from chitietcalam where manv='"+manv+"' and MONTH(ngaylam)='"+month+"'";
     	 Connection conn=ConnectDatabase.getConnection();
     	 PreparedStatement ps=conn.prepareStatement(sql);
     	 ArrayList<ChitietCalam> chitiet=new ArrayList<ChitietCalam>();

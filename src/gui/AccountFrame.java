@@ -183,6 +183,7 @@ public class AccountFrame extends javax.swing.JFrame {
         
         txtMaNV.setText(manv);
         txtMatKhau1.setText(mk);
+        
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

@@ -157,4 +157,24 @@ public class DAO_NhanVien {
 		}
     	
       }
+      public int getMonth(String manv) {
+    	  String sql="select top 1 thang=MONTH(ngaylam) from chitietcalam where manv='"+manv+"'";
+    	  Connection conn=ConnectDatabase.getConnection();
+    	  int month=0;
+    	  try {
+			  PreparedStatement ps=conn.prepareStatement(sql);
+			  ResultSet rs=ps.executeQuery();
+			  while(rs.next()) {
+				  month=rs.getInt("thang");
+			  }
+					return month;  
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return 0;
+		}
+    	
+      }
+      
+      
 }
