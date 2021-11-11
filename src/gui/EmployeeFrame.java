@@ -452,9 +452,10 @@ public class EmployeeFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     	if(option==1) {
     		insertNV();
-    		
+    		reset();
     	}else if(option==2) {
     		updateNV();
+    		reset();
     	}
 			
     }//GEN-LAST:event_btnLuuActionPerformed
@@ -511,6 +512,20 @@ public class EmployeeFrame extends javax.swing.JFrame {
 		
 	}// GEN-LAST:event_btnThemActionPerformed
 
+	private void reset() {
+		txtChucVu.setEnabled(false);  
+        txtDiaChi.setEnabled(false); 
+        txtEmail.setEnabled(false); 
+        txtMaNV.setEnabled(false); 
+        txtSDT.setEnabled(false); 
+        txtTenNV.setEnabled(false);
+        txtChucVu.setText("");
+        txtDiaChi.setText(""); 
+        txtEmail.setText("");; 
+        txtMaNV.setText("");; 
+        txtSDT.setText("");; 
+        txtTenNV.setText("");; 
+	}
 	private Nhanvien revertNV() {
 		// TODO Auto-generated method stub
 		String manv=txtMaNV.getText();
