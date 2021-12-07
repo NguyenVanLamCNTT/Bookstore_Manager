@@ -22,7 +22,7 @@ import dao.DAO_TimKiem;
  *
  * @author Lenovo
  */
-public class SearchOrderFrame extends javax.swing.JFrame {
+public class OrderManagementFrame extends javax.swing.JFrame {
 
 	DAO_TimKiem dao_timkiem = new DAO_TimKiem();
 	DefaultTableModel tableModel;
@@ -30,7 +30,7 @@ public class SearchOrderFrame extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    public SearchOrderFrame() {
+    public OrderManagementFrame() {
         initComponents();
         setLocationRelativeTo(null);
         tableModel = (DefaultTableModel) tableDDH.getModel();
@@ -149,7 +149,7 @@ public class SearchOrderFrame extends javax.swing.JFrame {
         jScrollPane7.setViewportView(tableDDH);
 
         labelTkDDH.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        labelTkDDH.setText("Tìm kiếm đơn hàng");
+        labelTkDDH.setText("Quản lý đơn hàng");
 
         btnThoat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/out.png"))); // NOI18N
         btnThoat.setText("Thoát");
@@ -334,13 +334,13 @@ public class SearchOrderFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SearchOrderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderManagementFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SearchOrderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderManagementFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SearchOrderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderManagementFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SearchOrderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OrderManagementFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -348,7 +348,7 @@ public class SearchOrderFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SearchOrderFrame().setVisible(true);
+                new OrderManagementFrame().setVisible(true);
             }
         });
     }
