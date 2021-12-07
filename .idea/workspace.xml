@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7452f042-fa3c-4656-9c74-bad31e0764f2" name="Default Changelist" comment="" />
+    <list default="true" id="7452f042-fa3c-4656-9c74-bad31e0764f2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/gui/SaleFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/SaleFrame.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,6 +41,7 @@
       <workItem from="1636038039704" duration="198000" />
       <workItem from="1636045205697" duration="347000" />
       <workItem from="1636457103709" duration="621000" />
+      <workItem from="1637141720358" duration="288000" />
     </task>
     <servers />
   </component>

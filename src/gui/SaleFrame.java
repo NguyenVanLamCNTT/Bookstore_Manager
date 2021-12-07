@@ -760,7 +760,6 @@ public class SaleFrame extends javax.swing.JFrame {
 					new Object[] { "Mã sản phẩm", "Tên sản phẩm", "Đơn giá" }, 0);
 			modelSanpham.addRow(tableModel1);
 			tableSP.setModel(modelSanpham);
-
 			hienthiHinhanh(tableModel.getValueAt(click, 0).toString());
 			tableSP.setRowSelectionInterval(0, 0);
 		} catch (SQLException e) {
