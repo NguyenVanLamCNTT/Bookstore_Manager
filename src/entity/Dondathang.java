@@ -36,7 +36,10 @@ public class Dondathang {
 		this.chitietDondathangs = new ArrayList<ChitietDondathang>();
 		this.tongtien = 0;
 	}
-
+	
+	public Dondathang(int maDonhang) {
+		this.maDonhang = maDonhang;
+	}
 	public void addChitietdonhang(Dondathang donhang, Sanpham sanpham, int soluong, double thanhtien) {
 		ChitietDondathang ctdh = new ChitietDondathang(donhang, sanpham, soluong, thanhtien);
 		this.chitietDondathangs.add(ctdh);
@@ -118,17 +121,6 @@ public class Dondathang {
 		this.thanhtoan = thanhtoan;
 	}
 
-
-	public List<ChitietDondathang> getChitietDondathangs() {
-		return chitietDondathangs;
-	}
-
-
-	public void setChitietDondathangs(List<ChitietDondathang> chitietDondathangs) {
-		this.chitietDondathangs = chitietDondathangs;
-	}
-
-
 	public void setTongtien(double tongtien) {
 		this.tongtien = tongtien;
 	}
@@ -137,6 +129,10 @@ public class Dondathang {
 	@Override
 	public String toString() {
 		return "Dondathang [maDonhang=" + maDonhang + ", khachHang=" + khachHang + ", nhanvien=" + nhanvien
-				+ ", ngaydat=" + ngaydat + ", ngaygiao=" + ngaygiao + ", tongtien=" + tongtien + "]";
+				+ ", ngaydat=" + ngaydat + ", ngaygiao=" + ngaygiao + ", tongtien=" + tongtien + ", thanhtoan="
+				+ thanhtoan + ", trangthai=" + trangthai + "]";
 	}
+
+
+	
 }

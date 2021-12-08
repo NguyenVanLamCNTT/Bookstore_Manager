@@ -10,10 +10,8 @@ import java.util.Map;
 import java.util.Set;
 
 import connect.ConnectDatabase;
-import entity.Dondathang;
 import entity.LoaiSanpham;
 import entity.NhaCungcap;
-import entity.Sanpham;
 
 public class DAO_TimKiem {
 	

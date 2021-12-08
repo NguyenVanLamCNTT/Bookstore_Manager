@@ -69,4 +69,25 @@ public class DAO_Khachhang {
 			return null;
 		}
 	}
+	public boolean updateKhachhang(Khachhang khachhang) {
+		Connection con = ConnectDatabase.getConnection();
+
+		String sql = "update khachhang\r\n"
+				+ "set diachi = ?, email = ?, sodienthoai = ?, tenkh = ?\r\n"
+				+ "where ma_kh = ?";
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, khachhang.getDiachi());
+			stmt.setString(2, khachhang.getEmail());
+			stmt.setString(3, khachhang.getSodienthoai());
+			stmt.setString(4, khachhang.getTenKH());
+			stmt.setInt(5, khachhang.getMaKH());
+			int n = stmt.executeUpdate();
+			return n>0;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

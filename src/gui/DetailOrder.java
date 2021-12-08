@@ -12,7 +12,10 @@ import java.util.Map;
 
 import javax.swing.table.DefaultTableModel;
 
+import dao.DAO_Dondathang;
 import dao.DAO_TimKiem;
+import entity.Dondathang;
+import entity.Khachhang;
 
 /**
  *
@@ -22,9 +25,13 @@ public class DetailOrder extends javax.swing.JFrame {
 
 	
 	DAO_TimKiem dao_timkiem = new DAO_TimKiem();
+	DAO_Dondathang dao_Dondathang = new DAO_Dondathang();
 	DefaultTableModel tableModel;
 	List<List<String>> listSP;
 	List<List<String>> thongtindonhang;
+	Khachhang khachhang;
+	Dondathang dondathang;
+	int madon = 0;
     /**
      * Creates new form DetailOrder
      * @throws SQLException 
@@ -34,6 +41,11 @@ public class DetailOrder extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         tableModel = (DefaultTableModel) tableDanhSachSP.getModel();
         showData(madonhang);
+        madon = Integer.parseInt(madonhang);
+        dondathang = dao_Dondathang.getDonhang(madon);
+        khachhang = dao_Dondathang.getKhachhang(madon);
+        System.out.println(dondathang.toString());
+        System.out.println(khachhang.toString());
     }
     private void showData(String ma) throws SQLException {
     	Map<String,String> map = new HashMap<String, String>();
@@ -282,7 +294,7 @@ public class DetailOrder extends javax.swing.JFrame {
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {                                       
         // TODO add your handling code here:
     	dispose();
-    	new OrderFrame().setVisible(true);
+    	new OrderFrame(khachhang, dondathang).setVisible(true);
     }                                      
 
     /**

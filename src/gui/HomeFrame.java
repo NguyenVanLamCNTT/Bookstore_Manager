@@ -768,7 +768,7 @@ public class HomeFrame extends JFrame{
     private void mnuItemDatHangActionPerformed(java.awt.event.ActionEvent evt) {                                               
         // TODO add your handling code here:
         dispose();
-        new OrderFrame().setVisible(true);
+        new OrderFrame(null, null).setVisible(true);
     }                                              
 
     private void mnuItemSachActionPerformed(java.awt.event.ActionEvent evt) {                                            

@@ -17,6 +17,9 @@ public class Khachhang {
 		this.diachi = diachi;
 		this.email = email;
 	}
+	public Khachhang(int maKH) {
+		this.maKH = maKH;
+	}
 	public int getMaKH() {
 		return maKH;
 	}
