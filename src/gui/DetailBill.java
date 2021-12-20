@@ -48,7 +48,7 @@ public class DetailBill extends javax.swing.JFrame {
     	valueNgayLHD.setText(thongtinhoadon.get(0).get(4));
     	tableModel.setRowCount(0);
     	for(List<String> l: listSP) {
-    		tableModel.addRow(new Object[] {l.get(1),l.get(2),l.get(3),Double.parseDouble(l.get(3))*Double.parseDouble(l.get(2))});
+    		tableModel.addRow(new Object[] {l.get(1),l.get(3),l.get(2),Double.parseDouble(l.get(3))*Double.parseDouble(l.get(2))});
     	}
     }
 

@@ -60,7 +60,7 @@ public class DetailOrder extends javax.swing.JFrame {
     	valueTrangThai.setText(thongtindonhang.get(0).get(5));
     	tableModel.setRowCount(0);
     	for(List<String> l: listSP) {
-    		tableModel.addRow(new Object[] {l.get(0),l.get(1),l.get(2),Double.parseDouble(l.get(1))*Double.parseDouble(l.get(2))});
+    		tableModel.addRow(new Object[] {l.get(0),l.get(2),l.get(1),Double.parseDouble(l.get(1))*Double.parseDouble(l.get(2))});
     	}
     }
     /**
